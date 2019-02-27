@@ -21,12 +21,22 @@ class Front
     $content .= $post->listPost();
 
     return [
-      "{{ pageTitle }}"=>"bievenue",
+      "{{ pageTitle }}"=>"bienvenue",
       "{{ content }}"  =>$content
     ];
   }
 
   private function chapitre(){                              // affiche la page d'un chapitre
+    require_once "controller/Post.php";
+    $post = new Post()
+
+    //affiche l'article selectionner
+    $content = $post->post();
+
+    return [
+      "{{ pageTitle }}"=> "{{ title }}",
+      "{{ content }}"  =>$content
+    ];
   }
 
   private function chapitres(){                             // affiche une page listant les chapitres
