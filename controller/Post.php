@@ -15,7 +15,7 @@ class Post
   }
 
   public function showFeaturedPost(){
-    //affiche arcticle à la une 
+    //affiche arcticle à la une
     $req = [
         "data"  => [
           'ID',
@@ -34,7 +34,7 @@ class Post
   }
 
   public function listPost(){
-    //affcihe la liste des articles
+    //affiche la liste des articles
     $req = [
         "data"  => [
           'ID AS "{{ id }}"',
@@ -47,6 +47,21 @@ class Post
     $html = $this->view->makeLoopHtml($data["data"], "titreArticle");
 
     return $html;
-    
+  }
+
+  public function post($postId){
+    //affiche un article
+    $req = [
+      "data" => [
+        'ID AS "{{ id }}" ',
+        'title AS "{{ title }}" ',
+        'content AS "{{ content }}"" ',
+        'DATE_FORMAT(published, \'%d/%m/%Y\') AS "{{ published }}"'
+      ],
+      "from" => "post",
+      "where" => [ "ID=" .$postId ]
+    ];
+    $data = $this->model->request($req, $postId);
+    $html = $this->view->makeHtml($data["data"], "article");
   }
 }
