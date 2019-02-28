@@ -28,7 +28,7 @@ class Front
 
   private function chapitre(){                              // affiche la page d'un chapitre
     require_once "controller/Post.php";
-    $post = new Post()
+    $post = new Post();
 
     //affiche l'article selectionner
     $content = $post->post();
@@ -40,5 +40,14 @@ class Front
   }
 
   private function chapitres(){                             // affiche une page listant les chapitres
+    require_once "controller/Post.php";
+    $posts = new Post();
+
+    $content = $posts->posts();
+
+    return [
+      "{{ pageTitle }}"=> "Ensemble des chapitres",
+      "{{ content }}"  =>$content
+    ]
   }
 }
