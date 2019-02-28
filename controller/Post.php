@@ -65,3 +65,20 @@ class Post
     $html = $this->view->makeHtml($data["data"], "article");
   }
 }
+
+public function posts(){
+  //affiche la liste des articles
+  $req = [
+      "data"  => [
+        'ID AS "{{ id }}"',
+        'title AS "{{ title }}"'
+        'content AS "{{ content }}"" ',
+        'DATE_FORMAT(published, \'%d/%m/%Y\') AS "{{ published }}"'
+      ],
+      "from"  => "posts"
+  ];
+  $data = $this->model->select($req);
+  $html = $this->view->makeLoopHtml($data["data"], "article");
+
+  return $html;
+}
