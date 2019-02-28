@@ -14,25 +14,6 @@ class Post
     $this->view = new View();
   }
 
-  public function showFeaturedPost(){
-    //affiche arcticle à la une
-    $req = [
-        "data"  => [
-          'ID',
-          'title AS "{{ title }}"',
-          'content AS "{{ content }}"',
-          'DATE_FORMAT(published, \'%d/%m/%Y\') AS "{{ published }}"'
-        ],
-        "where" => [ "featured = 1" ],
-        "from"  => "posts",
-        "limit" => 1
-      ];
-    $data = $this->model->select($req);
-    $html = $this->view->makeHtml($data["data"], "article");
-
-    return $html;
-  }
-
   public function listPost(){
     //affiche la liste des articles
     $req = [
@@ -40,8 +21,7 @@ class Post
           'ID AS "{{ id }}"',
           'title AS "{{ title }}"'
         ],
-        "from"  => "posts",
-        "where" => [ "published IS NOT NULL" ],
+        "from"  => "posts"
     ];
     $data = $this->model->select($req);
     $html = $this->view->makeLoopHtml($data["data"], "titreArticle");
@@ -64,21 +44,21 @@ class Post
     $data = $this->model->request($req, $postId);
     $html = $this->view->makeHtml($data["data"], "article");
   }
+
+  public function posts(){
+    //affiche la liste des articles
+    $req = [
+        "data"  => [
+          'ID AS "{{ id }}"',
+          'title AS "{{ title }}"',
+          'content AS "{{ content }}" ',
+          'DATE_FORMAT(published, \'%d/%m/%Y\') AS "{{ published }}"'
+        ],
+        "from"  => "posts"
+    ];
+    $data = $this->model->select($req);
+    $html = $this->view->makeLoopHtml($data["data"], "article");
+
+    return $html;
 }
-
-public function posts(){
-  //affiche la liste des articles
-  $req = [
-      "data"  => [
-        'ID AS "{{ id }}"',
-        'title AS "{{ title }}"'
-        'content AS "{{ content }}"" ',
-        'DATE_FORMAT(published, \'%d/%m/%Y\') AS "{{ published }}"'
-      ],
-      "from"  => "posts"
-  ];
-  $data = $this->model->select($req);
-  $html = $this->view->makeLoopHtml($data["data"], "article");
-
-  return $html;
 }
