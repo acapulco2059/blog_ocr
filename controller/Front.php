@@ -10,15 +10,13 @@ class Front
     return $this->$todo();
   }
 
+
   private function home(){                                  // affiche la page d'accueil
     require_once "controller/Post.php";
     $post = new Post();
 
-    //affiche arcticle à la une
-    $content  = $post->showFeaturedPost();
-
     //affcihe une lise des articles
-    $content .= $post->listPost();
+    $content = $post->posts();
 
     return [
       "{{ pageTitle }}"=>"bienvenue",
@@ -26,12 +24,14 @@ class Front
     ];
   }
 
-  private function chapitre(){                              // affiche la page d'un chapitre
+  private function chapitre($url){                              // affiche la page d'un chapitre
     require_once "controller/Post.php";
+    require_once "controller/Comment.php";
     $post = new Post();
+    $chapterId = $url[1];
 
     //affiche l'article selectionner
-    $content = $post->post();
+    $content = $post->post($chapterId);
 
     return [
       "{{ pageTitle }}"=> "{{ title }}",
@@ -48,6 +48,6 @@ class Front
     return [
       "{{ pageTitle }}"=> "Ensemble des chapitres",
       "{{ content }}"  =>$content
-    ]
+    ];
   }
 }
