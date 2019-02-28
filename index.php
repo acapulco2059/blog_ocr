@@ -6,14 +6,14 @@ require_once "view/View.php";
 // show error when debug
 if (!$GLOBALS["envProd"]) {
   ini_set("display_startup_errors", 1);
-  ini_set('display_errors', 1); 
-  error_reporting(E_ALL); 
+  ini_set('display_errors', 1);
+  error_reporting(E_ALL);
 }
 
 // get a securized instance of the url
 $url = explode ( "/", filter_var($_SERVER['REQUEST_URI'], FILTER_SANITIZE_URL, FILTER_FLAG_STRIP_HIGH | FILTER_FLAG_STRIP_LOW));
-// remove first empty entry 
-$url = array_slice($url, 1);
+// remove first empty entry
+$url = array_slice($url, 3);
 
 // select if it's front side or admin side
 switch ($url[0]) {
