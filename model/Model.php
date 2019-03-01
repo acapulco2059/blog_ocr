@@ -29,6 +29,34 @@ class Model {
     return $this->request($req);
   }
 
+  public function create($args){
+
+    $req  = 'INSERT INTO ' .$args["into"]."(";
+    $req .= implode( " , ", $args["data"]).")";
+    $req .= " VALUES (" .implode(" , ", $args["value"]).")";
+
+    return $this->request($req);
+  }
+
+  public function update($args){
+    $req  = 'UPDATE ' .$args['from'];
+    $req .= ' SET ' .implode( " , ", $args["data"]."=".$args["value"]);
+
+    $req .= ' WHERE ' .$args["where"];
+
+    return $this->request($req);
+  }
+
+  public function delete($args){
+
+    $req  = 'DELETE FROM ' .$args["from"];
+    $req .= ' WHERE ' .$args["where"];
+
+    return $this->request($req);
+    }
+
+
+
   private function request($sql, $data=NULL) {
     try {
       if ($data == NULL) {                     // query
