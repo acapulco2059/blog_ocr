@@ -29,7 +29,7 @@ class Comment
         "from"  => "comments"
       ];
     $data = $this->model->select($req);
-    $html = $this->view->makeLoopHtml($data["data"], "");
+    $html = $this->view->makeLoopHtml($data["data"], "comment");
 
     return $html;
   }
