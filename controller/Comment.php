@@ -1,18 +1,10 @@
 <?php
 
-require_once "model/Model.php";
 require_once "view/View.php";
+require_once "model/Model.php";
 
 class Comment
 {
-  private $model;
-  private $view;
-
-  public function __construct()
-  {
-    $this->model = new Model();
-    $this->view = new View();
-  }
 
   public function showReportComment(){
     //affiche arcticle à la une
@@ -20,17 +12,93 @@ class Comment
         "data"  => [
           'ID',
           'idPost',
-          'author AS "{{ author }}"',
-          'comment AS "{{ comment }}"',
-          'DATE_FORMAT(date, \'%d/%m/%Y\') AS "{{ date }}"',
-          'report AS "{{ report }}"'
+          'author AS "{{ author }}" ',
+          'comment AS "{{ comment }}" ',
+          'DATE_FORMAT(date, \'%d/%m/%Y\') AS "{{ date }}" ',
+          'report AS "{{ report }}" '
         ],
         "where" => [ "report >= 1" ],
         "from"  => "comments"
       ];
-    $data = $this->model->select($req);
-    $html = $this->view->makeLoopHtml($data["data"], "comment");
+    $data = Model::select($req);
+    $html = View::makeLoopHtml($data["data"], "comment");
 
     return $html;
+  }
+
+  public function postComments($postId){
+    $req = [
+      "data" => [
+        'ID',
+            'idPost',
+        'author AS "{{ author }}"',
+        'comment AS "{{ comment }}"',
+        'DATE_FORMAT(date, \'%d/%m/%Y\') AS "{{ date }}"',
+        'report AS "{{ report }}"'
+      ],
+      "where" => [ "idPost =" .$postId ],
+      "from" => "comments"
+    ];
+    $data = Model::select($req);
+    $html = View::makeLoopHtml($data["data"], "comment");
+
+    return $html;
+  }
+
+  public function singleComment($commentId){
+    $req = [
+      "data" => [
+        'ID',
+        'idPost',
+        'author AS "{{ author }}"',
+        'comment AS "{{ comment }}"',
+        'DATE_FORMAT(date, \'%d/%m/%Y\') AS "{{ date }}"',
+        'report AS "{{ report }}"'
+      ],
+      "where" => [ "ID =" .$commentId ],
+      "from" => "comments"
+    ];
+    $data = Model::select($req);
+    $html = View::makeHtml($data["data"], "comment");
+
+    return $html;
+  }
+
+  public function addComment($postId){
+    $req = [
+      "into" => "comments",
+      "data" => [
+        'author',
+        'comment',
+        'date',
+        'idPost',
+        'report'
+      ],
+      "value" => [
+      ]
+    ];
+    $data = Model::create($req);
+  }
+
+  public function updateComment($commentId){
+    $req = [
+      "from" => "comments",
+      "data" => [
+        'author',
+        'comment',
+        'date',
+        'report'
+      ]
+
+    ];
+    $data = Model::update($req);
+  }
+
+  public function deleteComment($commentId){
+    $req = [
+      "from" => "comments",
+      "where" => ["ID =" .$commentId]
+    ];
+        $data = Model::delete($req);
   }
 }

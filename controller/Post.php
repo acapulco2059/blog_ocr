@@ -5,15 +5,6 @@ require_once "view/View.php";
 
 class Post
 {
-  private $model;
-  private $view;
-
-  public function __construct()
-  {
-    $this->model = new Model();
-    $this->view = new View();
-  }
-
   public function listPost(){
     //affiche la liste des articles
     $req = [
@@ -23,29 +14,31 @@ class Post
         ],
         "from"  => "posts"
     ];
-    $data = $this->model->select($req);
-    $html = $this->view->makeLoopHtml($data["data"], "titreArticle");
+    $data = Model::select($req);
+    $html = View::makeLoopHtml($data["data"], "titreArticle");
 
     return $html;
   }
 
-  public function post($postId){
+  public function singlePost($postId){
     //affiche un article
     $req = [
       "data" => [
         'ID AS "{{ id }}" ',
         'title AS "{{ title }}" ',
-        'content AS "{{ content }}"" ',
-        'DATE_FORMAT(published, \'%d/%m/%Y\') AS "{{ published }}"'
+        'content AS "{{ content }}" ',
+        'DATE_FORMAT(published, \'%d/%m/%Y\') AS "{{ published }}" '
       ],
-      "from" => "post",
-      "where" => [ "ID=" .$postId ]
+      "from" => "posts",
+      "where" => ["ID=" .$postId]
     ];
-    $data = $this->model->request($req, $postId);
-    $html = $this->view->makeHtml($data["data"], "article");
+    $data = Model::select($req);
+    $html = View::makeHtml($data["data"], "article");
+
+    return $html;
   }
 
-  public function posts(){
+  public function allPosts(){
     //affiche la liste des articles
     $req = [
         "data"  => [
@@ -56,9 +49,44 @@ class Post
         ],
         "from"  => "posts"
     ];
-    $data = $this->model->select($req);
-    $html = $this->view->makeLoopHtml($data["data"], "article");
+    $data = Model::select($req);
+    $html = View::makeLoopHtml($data["data"], "article");
 
     return $html;
-}
+  }
+
+  public function addPost(){
+    $req = [
+      "into" => "posts",
+      "data" => [
+        'published',
+        'title',
+        'content',
+      ],
+      "value" => [
+      ]
+    ];
+    $data = Model::create($req);
+  }
+
+  public function updatePost($postId){
+    $req = [
+      "from" => "posts",
+      "data" => [
+        'published',
+        'title',
+        'content',
+      ]
+
+    ];
+    $data = Model::update($req);
+  }
+
+  public function deletePost($postId){
+    $req = [
+      "from" => "posts",
+      "where" => ["ID =" .$postId]
+    ];
+        $data = Model::delete($req);
+  }
 }
