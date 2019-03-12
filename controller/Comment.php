@@ -5,7 +5,6 @@ require_once "model/Model.php";
 
 class Comment
 {
-
   public function showReportComment(){
     //affiche arcticle à la une
     $req = [
@@ -18,15 +17,16 @@ class Comment
           'report AS "{{ report }}" '
         ],
         "where" => [ "report >= 1" ],
-        "from"  => "comments"
+        "from"  => "comments",
+        "order" => "report DESC"
       ];
     $data = Model::select($req);
-    $html = View::makeLoopHtml($data["data"], "comment");
+    $html = View::makeLoopHtml($data["data"], "reportComment");
 
     return $html;
   }
 
-  public function postComments($postId){
+  public function allPostComments($postId){
     $req = [
       "data" => [
         'ID',
@@ -99,6 +99,6 @@ class Comment
       "from" => "comments",
       "where" => ["ID =" .$commentId]
     ];
-        $data = Model::delete($req);
+    $data = Model::delete($req);
   }
 }
