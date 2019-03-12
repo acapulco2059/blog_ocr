@@ -1,17 +1,12 @@
 <?php
 
 /**
- * 
+ *
  */
 class View
 {
-	
-	// function __construct(argument)
-	// {
-	// 	# code...
-	// }
 
-	public function makeHtml($data, $template){
+	public static function makeHtml($data, $template){
 		return str_replace(
       array_keys($data),
       $data,
@@ -19,11 +14,12 @@ class View
     );
 	}
 
-	public function makeLoopHtml($data, $template){
+	public static function makeLoopHtml($data, $template){
 		$html = "";
 		foreach ($data as $value) {
-			$html .= $this->makeHtml($value, $template);
+			$html .= self::makeHtml($value, $template);
 		}
 		return $html;
 	}
+
 }
