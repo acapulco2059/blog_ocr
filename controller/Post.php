@@ -5,7 +5,21 @@ require_once "view/View.php";
 
 class Post
 {
-  public function listPost(){
+  public function postTitle($idPost){
+    $req = [
+        "data"  => [
+          'title AS "{{ title }}"'
+        ],
+        "from"  => "posts",
+        "where" => [ "ID= ".$idPost ]
+    ];
+    $data = Model::select($req);
+    $html = View::makeHtml($data["data"], "pageTitle");
+
+    return $html;
+  }
+
+  public function listPosts(){
     //affiche la liste des articles
     $req = [
         "data"  => [
@@ -20,7 +34,7 @@ class Post
     return $html;
   }
 
-  public function singlePost($postId){
+  public function showSinglePost($postId){
     //affiche un article
     $req = [
       "data" => [
@@ -30,7 +44,7 @@ class Post
         'DATE_FORMAT(published, \'%d/%m/%Y\') AS "{{ published }}" '
       ],
       "from" => "posts",
-      "where" => ["ID=" .$postId]
+      "where" => ["ID= " .$postId]
     ];
     $data = Model::select($req);
     $html = View::makeHtml($data["data"], "article");
@@ -44,11 +58,14 @@ class Post
         "data"  => [
           'ID AS "{{ id }}"',
           'title AS "{{ title }}"',
-          'content AS "{{ content }}" ',
+          'content AS "{{ content }}"',
+          'SUBSTR(content, 150) AS "{{ shortContent }}"',
           'DATE_FORMAT(published, \'%d/%m/%Y\') AS "{{ published }}"'
         ],
         "from"  => "posts"
     ];
+
+
     $data = Model::select($req);
     $html = View::makeLoopHtml($data["data"], "article");
 
@@ -64,6 +81,9 @@ class Post
         'content',
       ],
       "value" => [
+        ':published = NOW()',
+        ':title',
+        ':content'
       ]
     ];
     $data = Model::create($req);
@@ -73,11 +93,15 @@ class Post
     $req = [
       "from" => "posts",
       "data" => [
-        'published',
+        'modified',
         'title',
         'content',
-      ]
+      ],
+      "value" => [
+        'NOW()',
 
+      ],
+      "where" => ["ID = " .$postId]
     ];
     $data = Model::update($req);
   }
@@ -87,6 +111,6 @@ class Post
       "from" => "posts",
       "where" => ["ID =" .$postId]
     ];
-        $data = Model::delete($req);
+    $data = Model::delete($req);
   }
 }

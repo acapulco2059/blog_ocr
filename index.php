@@ -2,6 +2,8 @@
 
 require_once "conf.php";
 require_once "view/View.php";
+require_once "model/Model.php";
+Model::init();
 
 // show error when debug
 if (!$GLOBALS["envProd"]) {

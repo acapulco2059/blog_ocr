@@ -64,7 +64,7 @@ class Comment
     return $html;
   }
 
-  public function addComment($postId){
+  public function addComment($value){
     $req = [
       "into" => "comments",
       "data" => [
@@ -75,9 +75,14 @@ class Comment
         'report'
       ],
       "value" => [
+        ':author',
+        ':comment',
+        ':date',
+        ':idPost',
+        ':report'
       ]
     ];
-    $data = Model::create($req);
+    $data = Model::create($req, $value);
   }
 
   public function updateComment($commentId){
