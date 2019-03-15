@@ -43,9 +43,8 @@ class Model {
 
   public static function update($args){
     $req  = 'UPDATE ' .$args['from'];
-    $req .= ' SET ' .implode( " , ", $args["data"]."=".$args["value"]);
-
-    $req .= ' WHERE ' .$args["where"];
+    $req .= ' SET ' .implode( " , ", $args["data"]);
+    $req .= ' WHERE ' .implode(" AND ", $args["where"]);
 
     return self::request($req);
   }
