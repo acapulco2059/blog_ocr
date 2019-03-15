@@ -47,7 +47,7 @@ class Post
       "where" => ["ID= " .$postId]
     ];
     $data = Model::select($req);
-    $html = View::makeHtml($data["data"], "article");
+    $html = View::makeHtml($data["data"], "singleArticle");
 
     return $html;
   }
@@ -59,7 +59,7 @@ class Post
           'ID AS "{{ id }}"',
           'title AS "{{ title }}"',
           'content AS "{{ content }}"',
-          'SUBSTR(content, 150) AS "{{ shortContent }}"',
+          'SUBSTR(content,1 , 1000) AS "{{ shortContent }}"',
           'DATE_FORMAT(published, \'%d/%m/%Y\') AS "{{ published }}"'
         ],
         "from"  => "posts"

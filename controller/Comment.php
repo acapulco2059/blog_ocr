@@ -29,8 +29,8 @@ class Comment
   public function allPostComments($postId){
     $req = [
       "data" => [
-        'ID',
-            'idPost',
+        'ID AS "{{ idComment }}"',
+        'idPost AS "{{ idPost }}"',
         'author AS "{{ author }}"',
         'comment AS "{{ comment }}"',
         'DATE_FORMAT(date, \'%d/%m/%Y\') AS "{{ date }}"',
@@ -71,30 +71,39 @@ class Comment
         'author',
         'comment',
         'date',
-        'idPost',
-        'report'
+        'idPost'
       ],
       "value" => [
         ':author',
         ':comment',
-        ':date',
-        ':idPost',
-        ':report'
+        ':date = NOW()',
+        ':idPost'
       ]
     ];
     $data = Model::create($req, $value);
   }
 
-  public function updateComment($commentId){
+  public function updateComment($data){
     $req = [
       "from" => "comments",
       "data" => [
-        'author',
-        'comment',
-        'date',
-        'report'
-      ]
+        'author = ' .$data["author"],
+        'comment = ' .$data["comment"],
+        'date = ' .$data["date"],
+        'report = ' .$data["report"]
+      ],
+      "where" => ["ID = " .$data["id"]]
+    ];
+    $data = Model::update($req);
+  }
 
+  public function incrementReport($data){
+    $req = [
+      "from" => "comments",
+      "data" => [
+        "report = " .$data["report"]
+      ],
+      "where" => ["ID = ".$data["id"]]
     ];
     $data = Model::update($req);
   }

@@ -27,22 +27,26 @@ class Front
 
 
   private function home(){                                  // affiche la page d'accueil
-    //affcihe une lise des articles
-    $content = $this->post->allPosts();
+    //affcihe le dernier article publié
+    $postId = "(SELECT MAX(id) FROM posts)";
+    $content = $this->post->showSinglePost($postId);
     return [
-      "{{ pageTitle }}"=> "Bienvenue",
-      "{{ content }}"  => $content
+      "{{ pageTitle }}"=> "Billet simple pour l'Alaska",
+      "{{ content }}"  => $content,
+      "{{ comment }}" => ""
     ];
   }
 
-  private function chapitre(){                              // affiche la page d'un chapitre
+  private function chapitre(){
+    // affiche la page d'un chapitre
+    $content = $this->post->showSinglePost($this->url[1]);
+    $comment = $this->comment->allPostComments($this->url[1]);
 
     return [
       "{{ pageTitle }}" => $this->post->postTitle($this->url[1]),
-      "{{ content }}"  => $this->post->showSinglePost($this->url[1]),
-      "{{ comments }}" => $this->comment->allPostComments($this->url[1])
+      "{{ content }}"  => $content,
+      "{{ comment }}" => $comment
     ];
-
   }
 
   private function chapitres(){                             // affiche une page listant les chapitres
@@ -51,7 +55,28 @@ class Front
 
     return [
       "{{ pageTitle }}"=> "Ensemble des chapitres",
-      "{{ content }}"  => $content
+      "{{ content }}"  => $content,
+      "{{ comment }}" => ""
     ];
+  }
+
+  private function addReport(){
+
+    $data = [
+      "report" => "report + 1",
+      "id" => $this->url[2]
+    ];
+
+    $this->comment->incrementReport($data);
+
+    header("Location: http://localhost:8888/Projet/blog_poo/chapitre/" .$this->url[1]);
+  }
+
+  private function post(){
+
+    $data = [
+      
+    ];
+
   }
 }
