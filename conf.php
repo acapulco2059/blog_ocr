@@ -10,3 +10,5 @@ $GLOBALS["db"] = [
   "password" => 'root',
   "dataBase" => 'blog_1'
 ];
+
+$GLOBALS["prefixe"] = "/Projet/blog_poo/";

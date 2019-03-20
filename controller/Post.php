@@ -56,7 +56,7 @@ class Post
     //affiche la liste des articles
     $req = [
         "data"  => [
-          'ID AS "{{ id }}"',
+          'ID',
           'title AS "{{ title }}"',
           'content AS "{{ content }}"',
           'SUBSTR(content,1 , 1000) AS "{{ shortContent }}"',
@@ -67,6 +67,9 @@ class Post
 
 
     $data = Model::select($req);
+    for($i=0; $i < count($data["data"]); $i++) {
+      $data["data"][$i]["{{ url }}"] = $GLOBALS["prefixe"]."chapitre/".$data["data"][$i]["ID"];
+    }
     $html = View::makeLoopHtml($data["data"], "article");
 
     return $html;

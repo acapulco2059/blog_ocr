@@ -40,6 +40,9 @@ class Comment
       "from" => "comments"
     ];
     $data = Model::select($req);
+    for($i=0; $i < count($data["data"]); $i++) {
+      $data["data"][$i]["{{ prefixe }}"] = $GLOBALS["prefixe"];
+    }
     $html = View::makeLoopHtml($data["data"], "comment");
 
     return $html;
@@ -70,14 +73,14 @@ class Comment
       "data" => [
         'author',
         'comment',
-        'date',
-        'idPost'
+        'idPost',
+        'date'
       ],
       "value" => [
-        ':author',
-        ':comment',
-        ':date = NOW()',
-        ':idPost'
+        '?',
+        '?',
+        '?',
+        'NOW()'
       ]
     ];
     $data = Model::create($req, $value);

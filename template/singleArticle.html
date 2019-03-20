@@ -3,4 +3,18 @@
 <p>{{ content }}</p
 <em>Publié le : {{ published }}</em>
 </p>
+<h3>Ajouter un commentaire</h3>
+<form method="post" action="{{ prefixe }}post/{{ id }}">
+
+<p>
+  <label>Votre nom : </label>
+  <input type="text" name="commentator">
+</p>
+<p>
+  <label>Votre commentaire : </label>
+  <textarea name="comment" rows="8" cols="80"></textarea>
+  <input type="submit" name="send" value="Soumettre">
+</p>
+
+</form>
 <h2>Commentaires</h2>

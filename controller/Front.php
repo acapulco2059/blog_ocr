@@ -33,7 +33,8 @@ class Front
     return [
       "{{ pageTitle }}"=> "Billet simple pour l'Alaska",
       "{{ content }}"  => $content,
-      "{{ comment }}" => ""
+      "{{ comment }}" => "",
+      "{{ prefixe }}" =>$GLOBALS["prefixe"]
     ];
   }
 
@@ -45,7 +46,8 @@ class Front
     return [
       "{{ pageTitle }}" => $this->post->postTitle($this->url[1]),
       "{{ content }}"  => $content,
-      "{{ comment }}" => $comment
+      "{{ comment }}" => $comment,
+      "{{ prefixe }}" =>$GLOBALS["prefixe"]
     ];
   }
 
@@ -56,7 +58,8 @@ class Front
     return [
       "{{ pageTitle }}"=> "Ensemble des chapitres",
       "{{ content }}"  => $content,
-      "{{ comment }}" => ""
+      "{{ comment }}" => "",
+      "{{ prefixe }}" =>$GLOBALS["prefixe"]
     ];
   }
 
@@ -69,14 +72,38 @@ class Front
 
     $this->comment->incrementReport($data);
 
-    header("Location: http://localhost:8888/Projet/blog_poo/chapitre/" .$this->url[1]);
+    header("Location: ".$GLOBALS["prefixe"]."chapitre/" .$this->url[1]);
+
   }
 
   private function post(){
 
+    $commentator = filter_input(INPUT_POST, 'commentator', FILTER_SANITIZE_STRING);
+    $comment = filter_input(INPUT_POST, 'comment', FILTER_SANITIZE_STRING);
+    $url = $this->url[1];
+
     $data = [
-      
+      $commentator,
+      $comment,
+      $url
     ];
 
+    if (isset($this->url[1]) && $this->url[1] > 0)
+    {
+      if (!empty($commentator) && !empty($comment))
+      {
+        $this->comment->addComment($data);
+      }
+      else
+      {
+        throw new Exception('Tous les champs ne sont pas remplis !');
+        }
+    }
+    else
+    {
+      throw new Exception('Aucun identifiant de billet envoyé');
+    }
+
+    header("Location: ".$GLOBALS["prefixe"]."chapitre/" .$this->url[1]);
   }
 }
