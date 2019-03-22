@@ -9,7 +9,7 @@ class Comment
     //affiche arcticle à la une
     $req = [
         "data"  => [
-          'ID',
+          'ID AS "{{ id }}"',
           'idPost',
           'author AS "{{ author }}" ',
           'comment AS "{{ comment }}" ',
@@ -21,7 +21,7 @@ class Comment
         "order" => "report DESC"
       ];
     $data = Model::select($req);
-    $html = View::makeLoopHtml($data["data"], "reportComment");
+    $html = View::makeLoopHtml($data["data"], "reportCommentTable");
 
     return $html;
   }
@@ -41,7 +41,7 @@ class Comment
     ];
     $data = Model::select($req);
     for($i=0; $i < count($data["data"]); $i++) {
-      $data["data"][$i]["{{ prefixe }}"] = $GLOBALS["prefixe"];
+      $data["data"][$i]["{{ prefixe }}"] = $GLOBALS["prefixeFront"];
     }
     $html = View::makeLoopHtml($data["data"], "comment");
 
@@ -114,7 +114,15 @@ class Comment
   public function deleteComment($commentId){
     $req = [
       "from" => "comments",
-      "where" => ["ID =" .$commentId]
+      "where" => "ID =" .$commentId
+    ];
+    $data = Model::delete($req);
+  }
+
+  public function deleteComments($postId){
+    $req = [
+      "from" => "comments",
+      "where" => "idPost =" .$postId
     ];
     $data = Model::delete($req);
   }

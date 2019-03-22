@@ -4,15 +4,15 @@
 <em>Publié le : {{ published }}</em>
 </p>
 <h3>Ajouter un commentaire</h3>
-<form method="post" action="{{ prefixe }}post/{{ id }}">
+<form method="post" action="{{ prefixe }}postCo/{{ id }}">
 
 <p>
   <label>Votre nom : </label>
-  <input type="text" name="commentator">
+  <input type="text" name="commentator" required>
 </p>
 <p>
   <label>Votre commentaire : </label>
-  <textarea name="comment" rows="8" cols="80"></textarea>
+  <textarea name="comment" rows="8" cols="80" required></textarea>
   <input type="submit" name="send" value="Soumettre">
 </p>
 

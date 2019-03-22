@@ -11,4 +11,5 @@ $GLOBALS["db"] = [
   "dataBase" => 'blog_1'
 ];
 
-$GLOBALS["prefixe"] = "/Projet/blog_poo/";
+$GLOBALS["prefixeFront"] = "/Projet/blog_poo/";
+$GLOBALS["prefixeBack"] = "/Projet/blog_poo/admin/";

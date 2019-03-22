@@ -18,6 +18,7 @@ class Front
 
   public function getPage($url){
     $this->url = $url;
+    var_dump($this->url);
     $todo = $url[0];                                        //la fonction à appeler par défaut est le premier segment
     if ($todo == "") $todo = "home";                        //si il n'est pas défini on affiche la page d'accueil
     if ( !method_exists ( $this, $todo ) ) $todo = "home";  //si la fonction n'existe pas on affiche la page d'accueil
@@ -34,7 +35,7 @@ class Front
       "{{ pageTitle }}"=> "Billet simple pour l'Alaska",
       "{{ content }}"  => $content,
       "{{ comment }}" => "",
-      "{{ prefixe }}" =>$GLOBALS["prefixe"]
+      "{{ prefixe }}" =>$GLOBALS["prefixeFront"]
     ];
   }
 
@@ -47,19 +48,21 @@ class Front
       "{{ pageTitle }}" => $this->post->postTitle($this->url[1]),
       "{{ content }}"  => $content,
       "{{ comment }}" => $comment,
-      "{{ prefixe }}" =>$GLOBALS["prefixe"]
+      "{{ prefixe }}" =>$GLOBALS["prefixeFront"]
     ];
   }
 
   private function chapitres(){                             // affiche une page listant les chapitres
 
-    $content = $this->post->allPosts();
+    $template = "article";
+
+    $content = $this->post->allPosts($template);
 
     return [
       "{{ pageTitle }}"=> "Ensemble des chapitres",
       "{{ content }}"  => $content,
       "{{ comment }}" => "",
-      "{{ prefixe }}" =>$GLOBALS["prefixe"]
+      "{{ prefixe }}" =>$GLOBALS["prefixeFront"]
     ];
   }
 
@@ -72,11 +75,11 @@ class Front
 
     $this->comment->incrementReport($data);
 
-    header("Location: ".$GLOBALS["prefixe"]."chapitre/" .$this->url[1]);
+    header("Location: ".$GLOBALS["prefixeFront"]."chapitre/" .$this->url[1]);
 
   }
 
-  private function post(){
+  private function postCo(){
 
     $commentator = filter_input(INPUT_POST, 'commentator', FILTER_SANITIZE_STRING);
     $comment = filter_input(INPUT_POST, 'comment', FILTER_SANITIZE_STRING);
@@ -104,6 +107,6 @@ class Front
       throw new Exception('Aucun identifiant de billet envoyé');
     }
 
-    header("Location: ".$GLOBALS["prefixe"]."chapitre/" .$this->url[1]);
+    header("Location: ".$GLOBALS["prefixeFront"]."chapitre/" .$this->url[1]);
   }
 }

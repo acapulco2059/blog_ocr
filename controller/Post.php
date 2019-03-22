@@ -52,11 +52,11 @@ class Post
     return $html;
   }
 
-  public function allPosts(){
+  public function allPosts($template){
     //affiche la liste des articles
     $req = [
         "data"  => [
-          'ID',
+          'ID AS "{{ id }}"',
           'title AS "{{ title }}"',
           'content AS "{{ content }}"',
           'SUBSTR(content,1 , 1000) AS "{{ shortContent }}"',
@@ -68,28 +68,28 @@ class Post
 
     $data = Model::select($req);
     for($i=0; $i < count($data["data"]); $i++) {
-      $data["data"][$i]["{{ url }}"] = $GLOBALS["prefixe"]."chapitre/".$data["data"][$i]["ID"];
+      $data["data"][$i]["{{ url }}"] = $GLOBALS["prefixeFront"]."chapitre/".$data["data"][$i]["{{ id }}"];
     }
-    $html = View::makeLoopHtml($data["data"], "article");
+    $html = View::makeLoopHtml($data["data"], $template);
 
     return $html;
   }
 
-  public function addPost(){
+  public function addPost($value){
     $req = [
       "into" => "posts",
       "data" => [
-        'published',
         'title',
         'content',
+        'published'
       ],
       "value" => [
-        ':published = NOW()',
-        ':title',
-        ':content'
+        '?',
+        '?',
+        'NOW()'
       ]
     ];
-    $data = Model::create($req);
+    $data = Model::create($req, $value);
   }
 
   public function updatePost($postId){
@@ -112,7 +112,7 @@ class Post
   public function deletePost($postId){
     $req = [
       "from" => "posts",
-      "where" => ["ID =" .$postId]
+      "where" => "ID =" .$postId
     ];
     $data = Model::delete($req);
   }
