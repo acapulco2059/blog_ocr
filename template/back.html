@@ -1,62 +1,111 @@
-<!DOCTYPE html>
+<!DOCTYPE HTML>
+<!--
+	Verti by HTML5 UP
+	html5up.net | @ajlkn
+	Free for personal and commercial use under the CCA 3.0 license (html5up.net/license)
+-->
 <html>
-<head>
-	<meta charset="utf-8" />
-	<link rel="stylesheet" href="public/css/frontStyle.css" />
-	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
-	<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
-<!-- \ script TinyMCE -->
-	<script src="https://cloud.tinymce.com/5/tinymce.min.js?apiKey=3zgm6er2yqe2rtx39p33y6ckowqi8cnl4zjrp25mmwpurh8c"></script>
-  <script>tinymce.init({ selector:'textarea' });</script>
-	<title>{{ pageTitle }}</title>
-</head>
-<body>
-	<section class="">
+	<head>
+		<title>{{ pageTitle }}</title>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+		<link rel="stylesheet" href="http://localhost:8888/Projet/blog_poo/assets/css/main.css" />
+		<!-- \ script TinyMCE -->
+		<script src="https://cloud.tinymce.com/5/tinymce.min.js?apiKey=3zgm6er2yqe2rtx39p33y6ckowqi8cnl4zjrp25mmwpurh8c"></script>
+	 	<script>
+			tinymce.init({
+				selector:'textarea',
+				height: 800,
+			});
+		</script>
+	</head>
+	<body class="is-preload homepage">
+		<div id="page-wrapper">
 
-		<div id="reportComment">
-			<table>
-			  <thead>
-			    <tr>
-			      <th>Auteurs</th>
-			      <th>Commentaires</th>
-			      <th>Date d'ajout</th>
-			      <th>Nombre de signalement</th>
-			      <th>Supprimer</th>
-			    </tr>
-			  </thead>
-			    <tbody>
-						{{ reports }}
-			    </tbody>
-			  </table>
-		</div>
+			<!-- Header -->
+				<div id="header-wrapper">
+					<header id="header" class="container">
 
-		<div id="articleList">
-				<table>
-					<thead>
-						<tr>
-							<th>Publié le</th>
-							<th>Titre de l'article</th>
-							<th>Modifier</th>
-							<th>Supprimer</th>
-						</tr>
-					</thead>
-						<tbody>
-							{{ articles }}
-						</tbody>
-					</table>
-		</div>
+						<!-- Logo -->
+							<div id="logo">
+								<h1>Tableau de Bord</h1>
+								<span>Billet simple pour l'Alaska</span>
+							</div>
 
-		<div id="formBlog">
-			<form method="post" action="/Projet/blog_poo/admin/addPo">
-				<label>Titre de l'article</label><br />
-				<input type="text" name="title" value="{{  }}"/>
-				<textarea name="content">{{  }}</textarea>
-				<input type="submit" value="Poster" />
-			</form>
+						<!-- Nav -->
+							<nav id="nav">
+								<ul>
+									<li class="current"><a href="{{ urlAdmin }}">Accueil</a></li>
+									<li><a href="">Ajouter un article</a></li>
+								</ul>
+							</nav>
 
-		</div>
+					</header>
+				</div>
 
-	</section>
+				<br/>
 
-</body>
+				<section class="content">
+
+					<div id="reportComment">
+						<h3>Commentaires signalés</h3>
+						<table>
+						  <thead>
+						    <tr>
+						      <th>Auteurs</th>
+						      <th>Commentaires</th>
+						      <th>Date d'ajout</th>
+						      <th>Nombre de signalement</th>
+						      <th>Supprimer</th>
+						    </tr>
+						  </thead>
+						    <tbody>
+									{{ reports }}
+						    </tbody>
+						  </table>
+					</div>
+
+					<br/>
+
+					<div id="articleList">
+						<h3>Gestion des Articles</h3>
+							<table>
+								<thead>
+									<tr>
+										<th>Publié le</th>
+										<th>Dernière Modification</th>
+										<th>Titre de l'article</th>
+										<th>Modifier</th>
+										<th>Supprimer</th>
+									</tr>
+								</thead>
+									<tbody>
+										{{ articles }}
+									</tbody>
+								</table>
+					</div>
+				</section>
+
+				<br/>
+
+				<div id="formBlog">
+					<h3>Ajout / Modification d'articles</h3>
+					<form method="post" action="{{ urlAdmin }}{{ postFunc }}">
+						<label><strong>Titre de l'article</strong></label>
+						<input type="text" name="title" value="{{ articleTitle }}"/>
+						<textarea name="content">{{ articleContent }}</textarea>
+						<input type="submit" value="Poster" />
+					</form>
+				</div>
+
+		<!-- Scripts -->
+
+			<script src="assets/js/jquery.min.js"></script>
+			<script src="assets/js/jquery.dropotron.min.js"></script>
+			<script src="assets/js/browser.min.js"></script>
+			<script src="assets/js/breakpoints.min.js"></script>
+			<script src="assets/js/util.js"></script>
+			<script src="assets/js/main.js"></script>
+
+	</body>
 </html>

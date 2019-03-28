@@ -22,7 +22,6 @@ class Comment
       ];
     $data = Model::select($req);
     $html = View::makeLoopHtml($data["data"], "reportCommentTable");
-
     return $html;
   }
 
@@ -40,8 +39,16 @@ class Comment
       "from" => "comments"
     ];
     $data = Model::select($req);
-    for($i=0; $i < count($data["data"]); $i++) {
+    if (!isset($data['data'][0])) {
+      $tmp = $data["data"];
+      $data["data"] = [];
+      array_push($data["data"], $tmp);
+    }
+
+    $count = count($data["data"]);
+    for($i=0; $i < $count; $i++) {
       $data["data"][$i]["{{ prefixe }}"] = $GLOBALS["prefixeFront"];
+
     }
     $html = View::makeLoopHtml($data["data"], "comment");
 
@@ -71,29 +78,23 @@ class Comment
     $req = [
       "into" => "comments",
       "data" => [
-        'author',
-        'comment',
-        'idPost',
-        'date'
+        "author" => $value["commentator"],
+        'comment'=> $value["comment"],
+        'idPost'=> $value["idPost"],
+        'date' => $value["date"]
       ],
-      "value" => [
-        '?',
-        '?',
-        '?',
-        'NOW()'
-      ]
     ];
-    $data = Model::create($req, $value);
+    $data = Model::create($req);
   }
 
   public function updateComment($data){
     $req = [
       "from" => "comments",
       "data" => [
-        'author = ' .$data["author"],
-        'comment = ' .$data["comment"],
-        'date = ' .$data["date"],
-        'report = ' .$data["report"]
+        'author' => $data["author"],
+        'comment' =>$data["comment"],
+        'date' => $data["date"],
+        'report' => $data["report"]
       ],
       "where" => ["ID = " .$data["id"]]
     ];
@@ -104,9 +105,9 @@ class Comment
     $req = [
       "from" => "comments",
       "data" => [
-        "report = " .$data["report"]
+        'report' => $data["report"]
       ],
-      "where" => ["ID = ".$data["id"]]
+      "where" => "ID = ".$data["id"]
     ];
     $data = Model::update($req);
   }

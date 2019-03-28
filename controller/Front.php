@@ -29,7 +29,7 @@ class Front
   private function home(){                                  // affiche la page d'accueil
     //affcihe le dernier article publié
     $postId = "(SELECT MAX(id) FROM posts)";
-    $content = $this->post->showSinglePost($postId);
+    $content = $this->post->showSinglePost($postId, "singleArticle");
     return [
       "{{ pageTitle }}"=> "Billet simple pour l'Alaska",
       "{{ content }}"  => $content,
@@ -40,11 +40,12 @@ class Front
 
   private function chapitre(){
     // affiche la page d'un chapitre
-    $content = $this->post->showSinglePost($this->url[1]);
+    $content = $this->post->showSinglePost($this->url[1], "singleArticle");
     $comment = $this->comment->allPostComments($this->url[1]);
+    $title = $this->post->showSinglePost($this->url[1], "title");
 
     return [
-      "{{ pageTitle }}" => $this->post->postTitle($this->url[1]),
+      "{{ pageTitle }}" => $title,
       "{{ content }}"  => $content,
       "{{ comment }}" => $comment,
       "{{ prefixe }}" =>$GLOBALS["prefixeFront"]
@@ -53,9 +54,7 @@ class Front
 
   private function chapitres(){                             // affiche une page listant les chapitres
 
-    $template = "article";
-
-    $content = $this->post->allPosts($template);
+    $content = $this->post->allPosts("article");
 
     return [
       "{{ pageTitle }}"=> "Ensemble des chapitres",
@@ -83,11 +82,13 @@ class Front
     $commentator = filter_input(INPUT_POST, 'commentator', FILTER_SANITIZE_STRING);
     $comment = filter_input(INPUT_POST, 'comment', FILTER_SANITIZE_STRING);
     $url = $this->url[1];
+    $date = date("Y-m-d");
 
     $data = [
-      $commentator,
-      $comment,
-      $url
+      "commentator" => $commentator,
+      "comment" => $comment,
+      "idPost" => $url,
+      "date" => $date
     ];
 
     if (isset($this->url[1]) && $this->url[1] > 0)
@@ -108,4 +109,5 @@ class Front
 
     header("Location: ".$GLOBALS["prefixeFront"]."chapitre/" .$this->url[1]);
   }
+
 }

@@ -5,19 +5,6 @@ require_once "view/View.php";
 
 class Post
 {
-  public function postTitle($idPost){
-    $req = [
-        "data"  => [
-          'title AS "{{ title }}"'
-        ],
-        "from"  => "posts",
-        "where" => [ "ID= ".$idPost ]
-    ];
-    $data = Model::select($req);
-    $html = View::makeHtml($data["data"], "pageTitle");
-
-    return $html;
-  }
 
   public function listPosts(){
     //affiche la liste des articles
@@ -29,12 +16,12 @@ class Post
         "from"  => "posts"
     ];
     $data = Model::select($req);
-    $html = View::makeLoopHtml($data["data"], "titreArticle");
+    $html = View::makeLoopHtml($data["data"], "articleTitle");
 
     return $html;
   }
 
-  public function showSinglePost($postId){
+  public function showSinglePost($postId, $template){
     //affiche un article
     $req = [
       "data" => [
@@ -47,7 +34,7 @@ class Post
       "where" => ["ID= " .$postId]
     ];
     $data = Model::select($req);
-    $html = View::makeHtml($data["data"], "singleArticle");
+    $html = View::makeHtml($data["data"], $template);
 
     return $html;
   }
@@ -60,14 +47,16 @@ class Post
           'title AS "{{ title }}"',
           'content AS "{{ content }}"',
           'SUBSTR(content,1 , 1000) AS "{{ shortContent }}"',
-          'DATE_FORMAT(published, \'%d/%m/%Y\') AS "{{ published }}"'
+          'DATE_FORMAT(published, \'%d/%m/%Y\') AS "{{ published }}"',
+          'DATE_FORMAT(modified, \'%d/%m/%Y\') AS "{{ modified }}"'
         ],
         "from"  => "posts"
     ];
 
 
     $data = Model::select($req);
-    for($i=0; $i < count($data["data"]); $i++) {
+    $count = count($data["data"]);
+    for($i=0; $i < $count; $i++) {
       $data["data"][$i]["{{ url }}"] = $GLOBALS["prefixeFront"]."chapitre/".$data["data"][$i]["{{ id }}"];
     }
     $html = View::makeLoopHtml($data["data"], $template);
@@ -79,32 +68,23 @@ class Post
     $req = [
       "into" => "posts",
       "data" => [
-        'title',
-        'content',
-        'published'
+        'title' => $value["title"],
+        'content' => $value["content"],
+        'published' => $value["published"]
       ],
-      "value" => [
-        '?',
-        '?',
-        'NOW()'
-      ]
     ];
     $data = Model::create($req, $value);
   }
 
-  public function updatePost($postId){
+  public function updatePost($data){
     $req = [
       "from" => "posts",
       "data" => [
-        'modified',
-        'title',
-        'content',
+        'title' => $data["title"],
+        'content' => $data["content"],
+        'modified' => $data["modified"]
       ],
-      "value" => [
-        'NOW()',
-
-      ],
-      "where" => ["ID = " .$postId]
+      "where" => "ID = " .$data["id"]
     ];
     $data = Model::update($req);
   }

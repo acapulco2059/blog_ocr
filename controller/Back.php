@@ -26,17 +26,40 @@ class back
 
   private function home(){
 
-    $template = "posttitleTable";
-
-    $report = $this->comment->showReportComment();
-    $articles = $this->post->allPosts($template);
+    $reports = $this->comment->showReportComment();
+    $articles = $this->post->allPosts("posttitleTable");
 
     return [
-      "{{ reports }}" => $report,
-      "{{ articles }}" => $articles
+      "{{ urlAdmin }}" => $GLOBALS["prefixeBack"],
+      "{{ pageTitle }}" => 'Admin',
+      "{{ reports }}" => $reports,
+      "{{ articles }}" => $articles,
+      "{{ articleTitle }}" => "Titre de l'article",
+      "{{ articleContent }}" => "Insérer ici votre contenu",
+      "{{ postFunc }}" => "addPo"
     ];
 
   }
+
+  private function postUpdate(){
+
+    $reports = $this->comment->showReportComment();
+    $articles = $this->post->allPosts("postTitleTable");
+    $articleTitle = $this->post->showSinglePost($this->url[2], "title");
+    $articleContent = $this->post->showSinglePost($this->url[2], "content");
+    $postFunc = "updatePo/" .$this->url[2];
+
+    return [
+    "{{ urlAdmin }}" => $GLOBALS["prefixeBack"],
+    "{{ pageTitle }}" => 'Modification de l\'article',
+    "{{ reports }}" => $reports,
+    "{{ articles }}" => $articles,
+    "{{ articleTitle }}" => $articleTitle,
+    "{{ articleContent }}" => $articleContent,
+    "{{ postFunc }}" => $postFunc
+  ];
+  }
+
 
   private function deleteCo(){
 
@@ -44,6 +67,7 @@ class back
 
     header("Location: ".$GLOBALS["prefixeBack"]);
   }
+
 
   private function deletePo(){
 
@@ -53,26 +77,62 @@ class back
     header("Location: ".$GLOBALS["prefixeBack"]);
   }
 
+
   private function addPo(){
-  $title = filter_input(INPUT_POST, 'title', FILTER_SANITIZE_STRING);
-  $content = filter_input(INPUT_POST, 'content', FILTER_SANITIZE_STRING);
+    $title = filter_input(INPUT_POST, 'title', FILTER_SANITIZE_STRING);
+    $content = filter_input(INPUT_POST, 'content', FILTER_SANITIZE_STRING);
 
-  $data = [
-    $title,
-    $content,
-  ];
+    $data = [
+      "title" => $title,
+      "content" =>$content,
+      "published" =>date("Y-m-d")
+    ];
 
-  if (!empty($title) && !empty($content))
-  {
-    $this->post->addPost($data);
+    if (!empty($title) && !empty($content))
+    {
+      $this->post->addPost($data);
+    }
+    else
+    {
+      throw new Exception('Tous les champs ne sont pas remplis !');
+    }
+
+
+    header("Location: ".$GLOBALS["prefixeBack"]);
   }
-  else
-  {
-    throw new Exception('Tous les champs ne sont pas remplis !');
+
+  private function updatePo(){
+
+    $id = $this->url[2];
+    $title = filter_input(INPUT_POST, 'title', FILTER_SANITIZE_STRING);
+    $content = filter_input(INPUT_POST, 'content', FILTER_SANITIZE_STRING);
+
+
+    $data = [
+      "id" => $id,
+      "title" => $title,
+      "content" => $content,
+      "modified" => date("Y-m-d")
+    ];
+
+    if (isset($id) && $id > 0)
+    {
+      if (!empty($title) && !empty($content))
+      {
+        $this->post->updatePost($data);
+      }
+      else
+      {
+        throw new Exception('Tous les champs ne sont pas remplis !');
+        }
+    }
+    else
+    {
+      throw new Exception('Aucun identifiant de billet envoyé');
+    }
+
+    header("Location: ".$GLOBALS["prefixeBack"]);
+
   }
-
-
-  header("Location: ".$GLOBALS["prefixeBack"]);
-}
 
 }
