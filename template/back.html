@@ -1,15 +1,11 @@
 <!DOCTYPE HTML>
-<!--
-	Verti by HTML5 UP
-	html5up.net | @ajlkn
-	Free for personal and commercial use under the CCA 3.0 license (html5up.net/license)
--->
 <html>
 	<head>
 		<title>{{ pageTitle }}</title>
 		<meta charset="utf-8" />
-		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
-		<link rel="stylesheet" href="http://localhost:8888/Projet/blog_poo/assets/css/main.css" />
+		<link rel="stylesheet" href="public/css/defaut.css" />
+		<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+		<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
 		<!-- \ script TinyMCE -->
 		<script src="https://cloud.tinymce.com/5/tinymce.min.js?apiKey=3zgm6er2yqe2rtx39p33y6ckowqi8cnl4zjrp25mmwpurh8c"></script>
 	 	<script>
@@ -19,64 +15,58 @@
 			});
 		</script>
 	</head>
-	<body class="is-preload homepage">
-		<div id="page-wrapper">
-
+	<body>
 			<!-- Header -->
-				<div id="header-wrapper">
-					<header id="header" class="container">
-
-						<!-- Logo -->
-							<div id="logo">
-								<h1>Tableau de Bord</h1>
-								<span>Billet simple pour l'Alaska</span>
-							</div>
-
+			<header id="header" class="container">
 						<!-- Nav -->
-							<nav id="nav">
-								<ul>
-									<li class="current"><a href="{{ urlAdmin }}">Accueil</a></li>
-									<li><a href="">Ajouter un article</a></li>
+						<nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark">
+							<span class="navbar-text"><h1>Page d'administration</h1></span>
+							<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
+								<span class="navbar-toggler-icon"></span>
+							</button>
+							<div class="collapse navbar-collapse" id="navbarCollapse">
+								<ul class="navbar-nav mr-auto">
+									<li class="nav-item active">
+										<a class="nav-link" href="{{ urlAdmin }}">Accueil<span class="sr-only">(current)</span></a>
+									</li>
 								</ul>
-							</nav>
-
-					</header>
-				</div>
-
-				<br/>
+							</div>
+						</nav>
+			</header>
+			<br/>
 
 				<section class="content">
-
-					<div id="reportComment">
 						<h3>Commentaires signalés</h3>
-						<table>
-						  <thead>
-						    <tr>
-						      <th>Auteurs</th>
-						      <th>Commentaires</th>
-						      <th>Date d'ajout</th>
-						      <th>Nombre de signalement</th>
-						      <th>Supprimer</th>
-						    </tr>
-						  </thead>
-						    <tbody>
+						<div id="reportComment" class="table-responsive-md">
+							<table class="table table-striped col-lg-10 col-sm-12">
+							  <thead class="thead-dark">
+							    <tr>
+							      <th scope="col-md-1 col-xs-12">Nombre de signalement</th>
+							      <th scope="col-md-1 col-xs-12">Date d'ajout</th>
+							      <th scope="col-md-8 col-xs-12">Auteur</th>
+							      <th scope="col-md-1 col-xs-12">Commentaire</th>
+							      <th scope="col-md-1 col-xs-12">Supprimer</th>
+							    </tr>
+							  </thead>
+
+								<tbody>
 									{{ reports }}
-						    </tbody>
-						  </table>
+							  </tbody>
+							</table>
 					</div>
 
 					<br/>
 
 					<div id="articleList">
 						<h3>Gestion des Articles</h3>
-							<table>
-								<thead>
+							<table class="table table-striped col-lg-10 col-sm-12">
+								<thead class="thead-dark">
 									<tr>
-										<th>Publié le</th>
-										<th>Dernière Modification</th>
-										<th>Titre de l'article</th>
-										<th>Modifier</th>
-										<th>Supprimer</th>
+										<th scope="col">Publié le</th>
+										<th scope="col">Dernière Modification</th>
+										<th scope="col">Titre de l'article</th>
+										<th scope="col">Modifier</th>
+										<th scope="col">Supprimer</th>
 									</tr>
 								</thead>
 									<tbody>
@@ -91,21 +81,20 @@
 				<div id="formBlog">
 					<h3>Ajout / Modification d'articles</h3>
 					<form method="post" action="{{ urlAdmin }}{{ postFunc }}">
-						<label><strong>Titre de l'article</strong></label>
-						<input type="text" name="title" value="{{ articleTitle }}"/>
+						<div form-group>
+							<label><strong>Titre de l'article</strong></label>
+							<input type="text" name="title" class="form-control" value="{{ articleTitle }}"/>
+						</div>
 						<textarea name="content">{{ articleContent }}</textarea>
-						<input type="submit" value="Poster" />
+						<button type="submit" class="btn btn-primary">Publier</button>
 					</form>
 				</div>
 
 		<!-- Scripts -->
 
-			<script src="assets/js/jquery.min.js"></script>
-			<script src="assets/js/jquery.dropotron.min.js"></script>
-			<script src="assets/js/browser.min.js"></script>
-			<script src="assets/js/breakpoints.min.js"></script>
-			<script src="assets/js/util.js"></script>
-			<script src="assets/js/main.js"></script>
+		<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+		<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
 
 	</body>
 </html>

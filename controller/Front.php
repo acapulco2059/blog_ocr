@@ -99,12 +99,12 @@ class Front
       }
       else
       {
-        throw new Exception('Tous les champs ne sont pas remplis !');
-        }
+        $_SESSION["flash"]["Tous les champs ne sont pas remplis !"];
+      }
     }
     else
     {
-      throw new Exception('Aucun identifiant de billet envoyé');
+      $_SESSION["flash"]["Aucun identifiant de billet envoyé"];
     }
 
     header("Location: ".$GLOBALS["prefixeFront"]."chapitre/" .$this->url[1]);

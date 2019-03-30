@@ -84,7 +84,7 @@ class Comment
         'date' => $value["date"]
       ],
     ];
-    $data = Model::create($req);
+    $data = Model::insert($req);
   }
 
   public function updateComment($data){

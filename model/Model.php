@@ -32,7 +32,7 @@ class Model {
     return self::request($req);
   }
 
-  public static function create($args){
+  public static function insert($args){
 
     $value_columns    = array_keys($args["data"]);
     $value_parameters = array_map(function($col) {return (':' . $col);}, $value_columns);

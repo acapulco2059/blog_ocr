@@ -5,6 +5,12 @@ require_once "view/View.php";
 require_once "model/Model.php";
 Model::init();
 
+spl_autoload_register(function ($class_name) {
+    include 'public/class/' . $class_name . '.php';
+});
+
+$session = new Session();
+
 // show error when debug
 if (!$GLOBALS["envProd"]) {
   ini_set("display_startup_errors", 1);
@@ -20,9 +26,14 @@ $url = array_slice($url, 3);
 // select if it's front side or admin side
 switch ($url[0]) {
   case 'admin':
-    require_once "controller/Back.php";
+  require_once "controller/Back.php";
     $ctrl = new Back();
     $template = "back";
+    break;
+  case 'login':
+  require_once "controller/Login.php";
+    $ctrl = new Login();
+    $template = "login";
     break;
   default:
     require_once "controller/Front.php";

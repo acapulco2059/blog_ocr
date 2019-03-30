@@ -73,7 +73,7 @@ class Post
         'published' => $value["published"]
       ],
     ];
-    $data = Model::create($req, $value);
+    $data = Model::insert($req, $value);
   }
 
   public function updatePost($data){

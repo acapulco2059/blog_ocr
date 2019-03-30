@@ -9,10 +9,17 @@ class back
     protected $comment;
     private $url;
 
-    public function __construct()
+    public function __construct($user = NULL)
     {
-      $this->comment = new Comment();
-      $this->post = new Post();
+      if(isset($user)){
+        $this->comment = new Comment();
+        $this->post = new Post();
+      } else {
+        // $_SESSION["flash"]["danger"][""];
+        
+        header("location: ".$GLOBALS["prefixeFront"]);
+      }
+
     }
 
 

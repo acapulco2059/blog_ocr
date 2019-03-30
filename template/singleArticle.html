@@ -1,20 +1,21 @@
 <p>
 <h2>{{ title }}</h2>
-<p>{{ content }}</p
-<em>Publié le : {{ published }}</em>
+<p class="col-md-12">{{ content }}</p>
+<p class="font-italic text-right">Publié le : {{ published }}</p>
 </p>
 <h3>Ajouter un commentaire</h3>
-<form method="post" action="{{ prefixe }}postCo/{{ id }}">
 
-<p>
-  <label>Votre nom : </label>
-  <input type="text" name="commentator" required>
-</p>
-<p>
-  <label>Votre commentaire : </label>
-  <textarea name="comment" rows="8" cols="80" required></textarea>
-  <input type="submit" name="send" value="Soumettre">
-</p>
+<form method="post" action="{{ prefixe }}postCo/{{ id }}">
+  <div class="form-group col-md-6">
+    <label>Votre nom : </label>
+    <input type="text" class="form-control" name="commentator" required>
+  </div>
+
+  <div class="form-group">
+    <label>Votre commentaire : </label>
+    <textarea name="comment" class="form-control" rows="8" cols="80" required></textarea>
+  </div>
+  <button type="submit" class="btn btn-primary">Poster</button>
 
 </form>
 <h2>Commentaires</h2>
