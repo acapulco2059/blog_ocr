@@ -30,14 +30,14 @@ switch ($url[0]) {
     $ctrl = new Back();
     $template = "back";
     break;
-  case 'login':
-  require_once "controller/Login.php";
-    $ctrl = new Login();
-    $template = "login";
+  case 'auth':
+  require_once "controller/Auth.php";
+    $ctrl = new Auth($session);
+    $template = "auth";
     break;
   default:
     require_once "controller/Front.php";
-    $ctrl = new Front();
+    $ctrl = new Front($session);
     $template = "front";
     break;
 }

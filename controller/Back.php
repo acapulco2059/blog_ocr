@@ -1,9 +1,9 @@
 <?
 
-require_once "controller/Post.php";
-require_once "controller/Comment.php";
+require_once "model/Post.php";
+require_once "model/Comment.php";
 
-class back
+class Back
 {
     protected $post;
     protected $comment;
@@ -11,14 +11,14 @@ class back
 
     public function __construct($user = NULL)
     {
-      if(isset($user)){
+      // if(isset($user)){
         $this->comment = new Comment();
         $this->post = new Post();
-      } else {
-        // $_SESSION["flash"]["danger"][""];
-        
-        header("location: ".$GLOBALS["prefixeFront"]);
-      }
+      // } else {
+      //   // $_SESSION["flash"]["danger"][""];
+      //
+      //   header("location: ".$GLOBALS["prefixeFront"]);
+      // }
 
     }
 

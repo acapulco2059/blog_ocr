@@ -1,19 +1,21 @@
 <?php
 
-require_once "controller/Post.php";
-require_once "controller/Comment.php";
+require_once "model/Post.php";
+require_once "model/Comment.php";
 
 class Front
 {
 
   protected $post;
   protected $comment;
+  protected $session;
   private $url;
 
-  public function __construct()
+  public function __construct($session)
   {
     $this->comment = new Comment();
     $this->post = new Post();
+    $this->session = new Session();
   }
 
   public function getPage($url){
@@ -67,7 +69,7 @@ class Front
   private function addReport(){
 
     $data = [
-      "report" => "report + 1",
+      "report" => " report + 1",
       "id" => $this->url[2]
     ];
 
