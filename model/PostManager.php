@@ -3,8 +3,7 @@
 require_once "model/Model.php";
 require_once "view/View.php";
 
-class Post
-{
+class PostManager {
 
   public function listPosts(){
     //affiche la liste des articles

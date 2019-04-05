@@ -3,8 +3,7 @@
 require_once "view/View.php";
 require_once "model/Model.php";
 
-class Comment
-{
+class CommentManager {
   public function showModerateComment($template){
     //affiche arcticle à la une
     $req = [
@@ -22,6 +21,13 @@ class Comment
         "order" => "Date DESC"
       ];
     $data = Model::select($req);
+
+    if (!isset($data['data'][0])) {
+      $tmp = $data["data"];
+      $data["data"] = [];
+      array_push($data["data"], $tmp);
+    }
+
     $html = View::makeLoopHtml($data["data"], $template);
     return $html;
   }
@@ -46,6 +52,13 @@ class Comment
         "order" => "reportDate DESC"
       ];
     $data = Model::select($req);
+
+    if (!isset($data['data'][0])) {
+      $tmp = $data["data"];
+      $data["data"] = [];
+      array_push($data["data"], $tmp);
+    }
+
     $html = View::makeLoopHtml($data["data"], $template);
     return $html;
   }
@@ -53,7 +66,7 @@ class Comment
   public function countCommentPost($postId) {
     $req = [
       "data" => [
-        "COUNT(*)"
+        "count" => "(*)"
       ],
       "from" => "comments",
       "where" => [
@@ -62,7 +75,38 @@ class Comment
         ]
     ];
 
-    $data = Model::select($req);
+    $data = Model::selectCount($req);
+    return $data;
+  }
+
+  public function countModerateComment() {
+    $req = [
+      "data" => [
+        "count" => "(*)"
+      ],
+      "from" => "comments",
+      "where" => [
+        "reportStatut = 0",
+      ]
+    ];
+
+    $data = Model::selectCount($req);
+    return $data;
+  }
+
+  public function countReportComment() {
+    $req = [
+      "data" => [
+        "count" => "(*)"
+      ],
+      "from" => "comments",
+      "where" => [
+        "report >= 1",
+        "reportStatut != 2"
+      ]
+    ];
+
+    $data = Model::selectCount($req);
     return $data;
   }
 

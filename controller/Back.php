@@ -1,11 +1,12 @@
 <?php
 
-require_once "model/Post.php";
-require_once "model/Comment.php";
+require_once "model/PostManager.php";
+require_once "model/CommentManager.php";
 
 class Back {
 
-    protected $post;
+    protected $postManager;
+    protected $commentManager;
     protected $comment;
     protected $session;
     protected $reporting;
@@ -13,8 +14,9 @@ class Back {
 
 
     public function __construct($session) {
+      $this->commentManager = new CommentManager();
       $this->comment = new Comment();
-      $this->post = new Post();
+      $this->postManager = new PostManager();
       $this->reporting = new Reporting();
       $this->session = $session;
 
@@ -36,10 +38,10 @@ class Back {
 
   private function home(){
 
-    $reports = $this->comment->showReportComment("reportCommentTable");
-    $moderate = $this->comment->showModerateComment("moderateCommentTable");
+    $reports = $this->comment->getReportComments("reportCommentTable");
+    $moderate = $this->comment->getModerateComments("moderateCommentTable");
 
-    $articles = $this->post->allPosts("posttitleTable");
+    $articles = $this->postManager->allPosts("posttitleTable");
 
     return [
       "{{ urlAdmin }}" => $GLOBALS["prefixeBack"],
@@ -57,11 +59,11 @@ class Back {
 
   private function postUpdate(){
 
-    $reports = $this->comment->showReportComment("reportCommentTable");
-    $moderate = $this->comment->showModerateComment("moderateCommentTable");
-    $articles = $this->post->allPosts("postTitleTable");
-    $articleTitle = $this->post->showSinglePost($this->url[2], "title");
-    $articleContent = $this->post->showSinglePost($this->url[2], "content");
+    $reports = $this->comment->getReportComments("reportCommentTable");
+    $moderate = $this->comment->getModerateComments("moderateCommentTable");
+    $articles = $this->postManager->allPosts("postTitleTable");
+    $articleTitle = $this->postManager->showSinglePost($this->url[2], "title");
+    $articleContent = $this->postManager->showSinglePost($this->url[2], "content");
     $postFunc = "updatePo/" .$this->url[2];
 
     return [
@@ -80,7 +82,7 @@ class Back {
 
   private function deleteCo(){
 
-    $this->comment->deleteComment($this->url[2]);
+    $this->commentManager->deleteComment($this->url[2]);
 
     header("Location: ".$GLOBALS["prefixeBack"]);
   }
@@ -88,8 +90,8 @@ class Back {
 
   private function deletePo(){
 
-    $this->post->deletePost($this->url[2]);
-    $this->comment->deleteComments($this->url[2]);
+    $this->postManager->deletePost($this->url[2]);
+    $this->commentManager->deleteComments($this->url[2]);
 
     header("Location: ".$GLOBALS["prefixeBack"]);
   }
@@ -107,11 +109,11 @@ class Back {
 
     if (!empty($title) && !empty($content))
     {
-      $this->post->addPost($data);
+      $this->postManager->addPost($data);
     }
     else
     {
-      throw new Exception('Tous les champs ne sont pas remplis !');
+      $this->session->setFlash("danger", "Tous les champs ne sont pas remplis !");
     }
 
 
@@ -136,13 +138,13 @@ class Back {
     {
       if (!empty($title) && !empty($content))
       {
-        $this->post->updatePost($data);
+        $this->postManager->updatePost($data);
       }
       else {
-        throw new Exception('Tous les champs ne sont pas remplis !');
+        $this->session->setFlash("danger", "Tous les champs ne sont pas remplis !");
       }
     } else {
-        throw new Exception('Aucun identifiant de billet envoyé');
+        $this->session->setFlash("danger", "Aucun identifiant de billet envoyé");
     }
 
     header("Location: ".$GLOBALS["prefixeBack"]);

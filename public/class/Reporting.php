@@ -2,18 +2,18 @@
 
 class Reporting {
 
-    private $comment;
+    private $commentManager;
 
     const TO_VALIDATE = 0;
     const VALIDATE = 1;
     const COMFIRMED = 2;
 
     public function __construct() {
-      $this->comment = new Comment();
+      $this->commentManager = new CommentManager();
     }
 
     public function increment($url){
-      $statut = $this->comment->commentStatut($url[2]);
+      $statut = $this->commentManager->commentStatut($url[2]);
       $data = [
         "report" => (int)$statut["data"]["report"] +1,
         "reportDate" => date('Y-m-d'),
@@ -21,7 +21,7 @@ class Reporting {
       ];
 
 
-      $this->comment->incrementReport($data);
+      $this->commentManager->incrementReport($data);
 
       header("Location: ".$GLOBALS["prefixeFront"]."chapitre/" .$url[1]);
     }
@@ -32,7 +32,7 @@ class Reporting {
         "id" => $url[2]
       ];
 
-      $this->comment->reportStatut($data);
+      $this->commentManager->reportStatut($data);
     }
 
     public function validate($url){
@@ -41,7 +41,7 @@ class Reporting {
         "id" => $url[2]
       ];
 
-      $this->comment->reportStatut($data);
+      $this->commentManager->reportStatut($data);
     }
 
     public function confirmed($url){
@@ -50,7 +50,7 @@ class Reporting {
         "id" => $url[2]
       ];
 
-      $this->comment->reportStatut($data);
+      $this->commentManager->reportStatut($data);
     }
 
 }

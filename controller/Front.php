@@ -1,22 +1,22 @@
 <?php
 
-require_once "model/Post.php";
-require_once "model/Comment.php";
+require_once "model/PostManager.php";
+require_once "model/CommentManager.php";
 
 class Front {
 
-  protected $post;
+  protected $postManager;
+  protected $commentManager;
   protected $comment;
-  protected $com;
   protected $reporting;
   protected $url;
 
   public function __construct()
   {
-    $this->comment = new Comment();
-    $this->post = new Post();
+    $this->commentManager = new CommentManager();
+    $this->postManager = new PostManager();
     $this->reporting = new Reporting();
-    $this->com = new Com();
+    $this->comment = new Comment();
   }
 
   public function getPage($url){
@@ -32,35 +32,35 @@ class Front {
   private function home(){                                  // affiche la page d'accueil
     //affcihe le dernier article publié
     $postId = "(SELECT MAX(id) FROM posts)";
-    $content = $this->post->showSinglePost($postId, "singleArticle");
-    $comment = $this->com->getComments($postId);
+    $content = $this->postManager->showSinglePost($postId, "singleArticle");
+    $comments = $this->comment->getComments($postId);
 
     return [
       "{{ pageTitle }}"=> "Billet simple pour l'Alaska",
       "{{ content }}"  => $content,
-      "{{ comment }}" => $comment,
+      "{{ comment }}" => $comments,
       "{{ prefixe }}" =>$GLOBALS["prefixeFront"]
     ];
   }
 
   private function chapitre(){
     // affiche la page d'un chapitre
-    $content = $this->post->showSinglePost($this->url[1], "singleArticle");
-    $comment = $this->com->getComments($this->url[1]);
-    $title = $this->post->showSinglePost($this->url[1], "title");
+    $content = $this->postManager->showSinglePost($this->url[1], "singleArticle");
+    $comments = $this->comment->getComments($this->url[1]);
+    $title = $this->postManager->showSinglePost($this->url[1], "title");
 
 
     return [
       "{{ pageTitle }}" => $title,
       "{{ content }}"  => $content,
-      "{{ comment }}" => $comment,
+      "{{ comment }}" => $comments,
       "{{ prefixe }}" =>$GLOBALS["prefixeFront"]
     ];
   }
 
   private function chapitres(){                             // affiche une page listant les chapitres
 
-    $content = $this->post->allPosts("article");
+    $content = $this->postManager->allPosts("article");
 
     return [
       "{{ pageTitle }}"=> "Ensemble des chapitres",
@@ -78,7 +78,8 @@ class Front {
 
   private function postCo(){
 
-    $this->com->setComment($this->url[1]);
-    
+    $this->comment->setComment($this->url[1]);
+    header("Location: ".$GLOBALS["prefixeFront"]."chapitre/" .$this->url[1]);
+
   }
 }

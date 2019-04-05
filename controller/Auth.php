@@ -1,6 +1,6 @@
   <?php
 
-  require_once "model/User.php";
+  require_once "model/UserManager.php";
 
   class Auth {
 
@@ -9,7 +9,7 @@
 
       public function __construct($session = NULL){
           $this->session = $session;
-          $this->user = new User();
+          $this->user = new UserManager();
       }
 
 

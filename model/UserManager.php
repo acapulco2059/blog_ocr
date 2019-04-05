@@ -2,7 +2,7 @@
 
 require_once "model/Model.php";
 
-class User {
+class UserManager {
 
   public function verify($value){
     $req = [
