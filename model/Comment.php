@@ -5,7 +5,7 @@ require_once "model/Model.php";
 
 class Comment
 {
-  public function showReportComment(){
+  public function showModerateComment($template){
     //affiche arcticle à la une
     $req = [
         "data"  => [
@@ -14,15 +14,56 @@ class Comment
           'author AS "{{ author }}" ',
           'comment AS "{{ comment }}" ',
           'DATE_FORMAT(date, \'%d/%m/%Y\') AS "{{ date }}" ',
+          'DATE_FORMAT(reportDate, \'%d/%m/%Y\') AS "{{ reportDate }}" ',
           'report AS "{{ report }}" '
         ],
-        "where" => [ "report >= 1" ],
+        "where" => [ "reportStatut = 0" ],
         "from"  => "comments",
-        "order" => "report DESC"
+        "order" => "Date DESC"
       ];
     $data = Model::select($req);
-    $html = View::makeLoopHtml($data["data"], "reportCommentTable");
+    $html = View::makeLoopHtml($data["data"], $template);
     return $html;
+  }
+
+  public function showReportComment($template){
+    //affiche arcticle à la une
+    $req = [
+        "data"  => [
+          'ID AS "{{ id }}"',
+          'idPost',
+          'author AS "{{ author }}"',
+          'comment AS "{{ comment }}"',
+          'DATE_FORMAT(date, \'%d/%m/%Y\') AS "{{ date }}" ',
+          'DATE_FORMAT(reportDate, \'%d/%m/%Y\') AS "{{ reportDate }}" ',
+          'report AS "{{ report }}" '
+        ],
+        "where" => [
+          "report >= 1",
+          "reportStatut != 2"
+        ],
+        "from"  => "comments",
+        "order" => "reportDate DESC"
+      ];
+    $data = Model::select($req);
+    $html = View::makeLoopHtml($data["data"], $template);
+    return $html;
+  }
+
+  public function countCommentPost($postId) {
+    $req = [
+      "data" => [
+        "COUNT(*)"
+      ],
+      "from" => "comments",
+      "where" => [
+        "reportStatut > 0",
+        "idPost =" .$postId
+        ]
+    ];
+
+    $data = Model::select($req);
+    return $data;
   }
 
   public function allPostComments($postId){
@@ -35,10 +76,15 @@ class Comment
         'DATE_FORMAT(date, \'%d/%m/%Y\') AS "{{ date }}"',
         'report AS "{{ report }}"'
       ],
-      "where" => [ "idPost =" .$postId ],
-      "from" => "comments"
+      "where" => [
+        "idPost =" .$postId,
+        "reportStatut >= 1"
+     ],
+      "from" => "comments",
+      "order" => "report ASC"
     ];
     $data = Model::select($req);
+
     if (!isset($data['data'][0])) {
       $tmp = $data["data"];
       $data["data"] = [];
@@ -74,6 +120,18 @@ class Comment
     return $html;
   }
 
+  public function commentStatut($commentId){
+    $req = [
+      "data" => [
+        'report'
+      ],
+      "where" => [ "ID =" .$commentId ],
+      "from" => "comments"
+    ];
+    $data = Model::select($req);
+    return $data;
+  }
+
   public function addComment($value){
     $req = [
       "into" => "comments",
@@ -81,7 +139,8 @@ class Comment
         "author" => $value["commentator"],
         'comment'=> $value["comment"],
         'idPost'=> $value["idPost"],
-        'date' => $value["date"]
+        'date' => $value["date"],
+        'reportStatut' => $value["reportStatut"]
       ],
     ];
     $data = Model::insert($req);
@@ -105,9 +164,21 @@ class Comment
     $req = [
       "from" => "comments",
       "data" => [
-        'report' => $data["report"]
+        'report' => $data["report"],
+        'reportDate' => $data["reportDate"]
       ],
       "where" => "ID = ".$data["id"]
+    ];
+    $data = Model::update($req);
+  }
+
+  public function reportStatut($data){
+    $req = [
+      "from" => "comments",
+      "data" => [
+        'reportStatut' => $data['reportStatut']
+      ],
+      'where' => "ID = ".$data["id"]
     ];
     $data = Model::update($req);
   }
@@ -127,4 +198,5 @@ class Comment
     ];
     $data = Model::delete($req);
   }
+
 }

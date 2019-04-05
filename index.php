@@ -1,5 +1,6 @@
 <?php
 
+error_reporting(E_ALL | E_STRICT);ini_set('display_errors',1);
 require_once "conf.php";
 require_once "view/View.php";
 require_once "model/Model.php";
@@ -27,7 +28,7 @@ $url = array_slice($url, 3);
 switch ($url[0]) {
   case 'admin':
   require_once "controller/Back.php";
-    $ctrl = new Back();
+    $ctrl = new Back($session);
     $template = "back";
     break;
   case 'auth':
@@ -37,7 +38,7 @@ switch ($url[0]) {
     break;
   default:
     require_once "controller/Front.php";
-    $ctrl = new Front($session);
+    $ctrl = new Front();
     $template = "front";
     break;
 }

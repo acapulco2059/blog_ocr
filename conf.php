@@ -13,4 +13,4 @@ $GLOBALS["db"] = [
 
 $GLOBALS["prefixeFront"] = "/Projet/blog_poo/";
 $GLOBALS["prefixeBack"] = "/Projet/blog_poo/admin/";
-$GLOBALS['prefixeAuth'] = "Projet/blog_poo/auth/";
+$GLOBALS['prefixeAuth'] = "/Projet/blog_poo/auth/";

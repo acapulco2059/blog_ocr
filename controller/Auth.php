@@ -2,12 +2,12 @@
 
   require_once "model/User.php";
 
-  class Auth{
+  class Auth {
 
       private $session;
       private $user;
 
-      public function __construct($session){
+      public function __construct($session = NULL){
           $this->session = $session;
           $this->user = new User();
       }
@@ -39,7 +39,7 @@
       }
 
       public function login(){
-
+        unset($_SESSION['auth']);
         $username = filter_input(INPUT_POST, 'username', FILTER_SANITIZE_SPECIAL_CHARS);
         $password = filter_input(INPUT_POST, 'password', FILTER_SANITIZE_SPECIAL_CHARS);
         $value = [
@@ -58,6 +58,12 @@
           }
 
         }
+      }
+
+      public function logout(){
+        $this->session->delete('auth');
+        header('location: ' .$GLOBALS['prefixeAuth']);
+        return;
       }
 
       public function restrict(){

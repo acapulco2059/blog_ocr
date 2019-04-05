@@ -3,19 +3,20 @@
 require_once "model/Post.php";
 require_once "model/Comment.php";
 
-class Front
-{
+class Front {
 
   protected $post;
   protected $comment;
-  protected $session;
-  private $url;
+  protected $com;
+  protected $reporting;
+  protected $url;
 
-  public function __construct($session)
+  public function __construct()
   {
     $this->comment = new Comment();
     $this->post = new Post();
-    $this->session = new Session();
+    $this->reporting = new Reporting();
+    $this->com = new Com();
   }
 
   public function getPage($url){
@@ -32,10 +33,12 @@ class Front
     //affcihe le dernier article publié
     $postId = "(SELECT MAX(id) FROM posts)";
     $content = $this->post->showSinglePost($postId, "singleArticle");
+    $comment = $this->com->getComments($postId);
+
     return [
       "{{ pageTitle }}"=> "Billet simple pour l'Alaska",
       "{{ content }}"  => $content,
-      "{{ comment }}" => "",
+      "{{ comment }}" => $comment,
       "{{ prefixe }}" =>$GLOBALS["prefixeFront"]
     ];
   }
@@ -43,8 +46,9 @@ class Front
   private function chapitre(){
     // affiche la page d'un chapitre
     $content = $this->post->showSinglePost($this->url[1], "singleArticle");
-    $comment = $this->comment->allPostComments($this->url[1]);
+    $comment = $this->com->getComments($this->url[1]);
     $title = $this->post->showSinglePost($this->url[1], "title");
+
 
     return [
       "{{ pageTitle }}" => $title,
@@ -68,48 +72,13 @@ class Front
 
   private function addReport(){
 
-    $data = [
-      "report" => " report + 1",
-      "id" => $this->url[2]
-    ];
-
-    $this->comment->incrementReport($data);
-
-    header("Location: ".$GLOBALS["prefixeFront"]."chapitre/" .$this->url[1]);
+    $this->reporting->increment($this->url);
 
   }
 
   private function postCo(){
 
-    $commentator = filter_input(INPUT_POST, 'commentator', FILTER_SANITIZE_STRING);
-    $comment = filter_input(INPUT_POST, 'comment', FILTER_SANITIZE_STRING);
-    $url = $this->url[1];
-    $date = date("Y-m-d");
-
-    $data = [
-      "commentator" => $commentator,
-      "comment" => $comment,
-      "idPost" => $url,
-      "date" => $date
-    ];
-
-    if (isset($this->url[1]) && $this->url[1] > 0)
-    {
-      if (!empty($commentator) && !empty($comment))
-      {
-        $this->comment->addComment($data);
-      }
-      else
-      {
-        $_SESSION["flash"]["Tous les champs ne sont pas remplis !"];
-      }
-    }
-    else
-    {
-      $_SESSION["flash"]["Aucun identifiant de billet envoyé"];
-    }
-
-    header("Location: ".$GLOBALS["prefixeFront"]."chapitre/" .$this->url[1]);
+    $this->com->setComment($this->url[1]);
+    
   }
-
 }

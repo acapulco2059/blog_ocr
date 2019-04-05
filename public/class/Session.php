@@ -24,8 +24,10 @@ class Session{
 
     public function getFlashes(){
         $flash = $_SESSION['flash'];
-        unset($_SESSION['flash']);
-        return $flash;
+        if(!empty($flash)){
+          unset($_SESSION['flash']);
+          return $flash;
+        }
     }
 
     public function write($key, $value){

@@ -3,7 +3,7 @@
 	<head>
 		<title>{{ pageTitle }}</title>
 		<meta charset="utf-8" />
-		<link rel="stylesheet" href="public/css/styleDefaut.css" />
+		<link rel="stylesheet" href="/Projet/blog_poo/public/css/styleDefaut.css" />
 		<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
 		<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
 		<!-- \ script TinyMCE -->
@@ -19,7 +19,7 @@
 			<!-- Header -->
 			<header id="header" class="container">
 						<!-- Nav -->
-						<nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark">
+						<!-- <nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark">
 							<span class="navbar-text"><h1>Page d'administration</h1></span>
 							<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
 								<span class="navbar-toggler-icon"></span>
@@ -29,33 +29,57 @@
 									<li class="nav-item active">
 										<a class="nav-link" href="{{ urlAdmin }}">Accueil<span class="sr-only">(current)</span></a>
 									</li>
+									<li class="nav-item">
+										<a class="nav-link" href="{{ urlAuth }}login">Se déconnecter</a>
+									</li>
+
 								</ul>
 							</div>
-						</nav>
+						</nav> -->
 			</header>
 			<br/>
 
 				<section class="content">
-						<h3>Commentaires signalés</h3>
+						<h3>Articles à valider avant publication</h3>
 						<div id="reportComment" class="table-responsive-md">
 							<table class="table table-striped col-lg-10 col-sm-12">
 							  <thead class="thead-dark">
 							    <tr>
-							      <th scope="col">Nombre de signalement</th>
 							      <th scope="col">Date d'ajout</th>
 							      <th scope="col">Auteur</th>
 							      <th scope="col">Commentaire</th>
 							      <th scope="col">Supprimer</th>
+										<th scope="col">Valider</th>
 							    </tr>
 							  </thead>
 
 								<tbody>
-									{{ reports }}
+									{{ moderate }}
 							  </tbody>
 							</table>
 					</div>
 
 					<br/>
+
+					<h3>Liste de signalement de commentaire</h3>
+					<div id="reportComment" class="table-responsive-md">
+						<table class="table table-striped col-lg-10 col-sm-12">
+							<thead class="thead-dark">
+								<tr>
+									<th scope="col">Date du dernier signalement</th>
+									<th scope="col">Nombre de signalement</th>
+									<th scope="col">Commentaire</th>
+									<th scope="col">Supprimer</th>
+									<th scope="col">Valider</th>
+								</tr>
+							</thead>
+
+							<tbody>
+								{{ reports }}
+							</tbody>
+						</table>
+				</div>
+
 
 					<div id="articleList">
 						<h3>Gestion des Articles</h3>

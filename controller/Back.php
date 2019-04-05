@@ -1,25 +1,28 @@
-<?
+<?php
 
 require_once "model/Post.php";
 require_once "model/Comment.php";
 
-class Back
-{
+class Back {
+
     protected $post;
     protected $comment;
+    protected $session;
+    protected $reporting;
     private $url;
 
-    public function __construct($user = NULL)
-    {
-      // if(isset($user)){
-        $this->comment = new Comment();
-        $this->post = new Post();
-      // } else {
-      //   // $_SESSION["flash"]["danger"][""];
-      //
-      //   header("location: ".$GLOBALS["prefixeFront"]);
-      // }
 
+    public function __construct($session) {
+      $this->comment = new Comment();
+      $this->post = new Post();
+      $this->reporting = new Reporting();
+      $this->session = $session;
+
+      if(!isset($_SESSION['auth'])) {
+        $this->session->setFlash("danger", "Vous n'avez pas l'autorisation d'accèder à cette page, identifiez vous");
+        header("location: ".$GLOBALS["prefixeAuth"]);
+        exit();
+      }
     }
 
 
@@ -33,12 +36,16 @@ class Back
 
   private function home(){
 
-    $reports = $this->comment->showReportComment();
+    $reports = $this->comment->showReportComment("reportCommentTable");
+    $moderate = $this->comment->showModerateComment("moderateCommentTable");
+
     $articles = $this->post->allPosts("posttitleTable");
 
     return [
       "{{ urlAdmin }}" => $GLOBALS["prefixeBack"],
+      "{{ urlAuth }}" => $GLOBALS['prefixeAuth'],
       "{{ pageTitle }}" => 'Admin',
+      "{{ moderate }}" => $moderate,
       "{{ reports }}" => $reports,
       "{{ articles }}" => $articles,
       "{{ articleTitle }}" => "Titre de l'article",
@@ -50,7 +57,8 @@ class Back
 
   private function postUpdate(){
 
-    $reports = $this->comment->showReportComment();
+    $reports = $this->comment->showReportComment("reportCommentTable");
+    $moderate = $this->comment->showModerateComment("moderateCommentTable");
     $articles = $this->post->allPosts("postTitleTable");
     $articleTitle = $this->post->showSinglePost($this->url[2], "title");
     $articleContent = $this->post->showSinglePost($this->url[2], "content");
@@ -58,7 +66,9 @@ class Back
 
     return [
     "{{ urlAdmin }}" => $GLOBALS["prefixeBack"],
+    "{{ urlAuth }}" => $GLOBALS['prefixeAuth'],
     "{{ pageTitle }}" => 'Modification de l\'article',
+    "{{ moderate }}" => $reports,
     "{{ reports }}" => $reports,
     "{{ articles }}" => $articles,
     "{{ articleTitle }}" => $articleTitle,
@@ -128,18 +138,24 @@ class Back
       {
         $this->post->updatePost($data);
       }
-      else
-      {
+      else {
         throw new Exception('Tous les champs ne sont pas remplis !');
-        }
-    }
-    else
-    {
-      throw new Exception('Aucun identifiant de billet envoyé');
+      }
+    } else {
+        throw new Exception('Aucun identifiant de billet envoyé');
     }
 
     header("Location: ".$GLOBALS["prefixeBack"]);
+  }
 
+  private function comValidate(){
+    $this->reporting->validate($this->url);
+    header("Location: ".$GLOBALS["prefixeBack"]);
+  }
+
+  private function comConfirmed(){
+    $this->reporting->confirmed($this->url);
+    header("Location: ".$GLOBALS["prefixeBack"]);
   }
 
 }
