@@ -42,7 +42,6 @@ class Comment {
 
 
   public function getComments($url){
-    var_dump($url);
     $countCom = $this->commentManager->countCommentPost($url);
     $count = $countCom["data"]["COUNT(*)"];
 
@@ -63,7 +62,7 @@ class Comment {
       $comment = $this->commentManager->showModerateComment($template);
       return $comment;
     } else {
-      $comment = "Pas de commentaire pour cet article";
+      $comment = "Aucun commentaire à valider";
       return $comment;
     }
 
@@ -77,7 +76,7 @@ class Comment {
       $comment = $this->commentManager->showReportComment($template);
       return $comment;
     } else {
-      $comment = "Pas de commentaire pour cet article";
+      $comment = "Aucun commentaire signalé ";
       return $comment;
     }
 

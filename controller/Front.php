@@ -54,7 +54,7 @@ class Front {
       "{{ pageTitle }}" => $title,
       "{{ content }}"  => $content,
       "{{ comment }}" => $comments,
-      "{{ prefixe }}" =>$GLOBALS["prefixeFront"]
+      "{{ prefixe }}" => $GLOBALS["prefixeFront"]
     ];
   }
 
