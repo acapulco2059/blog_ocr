@@ -47,19 +47,19 @@
           $user = $this->user->verify($value);
           if(password_verify($password, $user["data"]["password"])){
               $this->connect($user);
-              header('location: '.$GLOBALS["prefixeBack"]);
+              header("Location: ".$GLOBALS["prefixeBack"]);
               exit();
           }
           // $this->session->setFlash("danger", "Mot de passe ou identifiant incorrecte ");
-          header('location: '.$GLOBALS["prefixeAuth"]);
+          header("location: ".$GLOBALS["prefixeAuth"]);
         }
-        header('location: '.$GLOBALS["prefixeAuth"]);
+        header("location: ".$GLOBALS["prefixeAuth"]);
 
       }
 
       public function logout(){
         $this->session->delete('auth');
-        header('location: ' .$GLOBALS['prefixeAuth']);
+        header("location: " .$GLOBALS["prefixeAuth"]);
         return;
       }
 

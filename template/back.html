@@ -1,5 +1,5 @@
 <!DOCTYPE HTML>
-<html>
+<html lang="fr">
 	<head>
 		<title>{{ pageTitle }}</title>
 		<meta charset="utf-8" lang="fr"/>
@@ -32,7 +32,6 @@
 									<li class="nav-item">
 										<a class="nav-link" href="{{ urlAuth }}login">Se déconnecter</a>
 									</li>
-
 								</ul>
 							</div>
 						</nav>
@@ -106,7 +105,7 @@
 				<div id="formBlog">
 					<h3>Ajout / Modification d'articles</h3>
 					<form method="post" action="{{ urlAdmin }}{{ postFunc }}">
-						<div form-group>
+						<div class="form-group">
 							<label><strong>Titre de l'article</strong></label>
 							<input type="text" name="title" class="form-control" value="{{ articleTitle }}"/>
 						</div>

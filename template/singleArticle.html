@@ -1,8 +1,9 @@
-<p>
 <h2>{{ title }}</h2>
-<p class="col-md-12">{{ content }}</p>
+<div class="col-md-12">
+  {{ content }}  
+</div>
+
 <p class="font-italic text-right">Publié le : {{ published }}</p>
-</p>
 <h3>Ajouter un commentaire</h3>
 
 <form method="post" action="{{ prefixe }}postCo/{{ id }}">
