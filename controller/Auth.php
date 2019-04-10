@@ -49,12 +49,12 @@
               $this->connect($user);
               header('location: '.$GLOBALS["prefixeBack"]);
               exit();
-          }else{
-              $this->session->setFlash("danger", "Mot de passe ou identifiant incorrecte ");
-              header('location: '.$GLOBALS["prefixeAuth"]);
           }
-
+          // $this->session->setFlash("danger", "Mot de passe ou identifiant incorrecte ");
+          header('location: '.$GLOBALS["prefixeAuth"]);
         }
+        header('location: '.$GLOBALS["prefixeAuth"]);
+
       }
 
       public function logout(){
