@@ -45,4 +45,4 @@ switch ($url[0]) {
 
 $page = $ctrl->getPage($url);
 $view = new View();
-echo $view->makeHtml($page, $template);
+echo htmlspecialchars_decode($view->makeHtml($page, $template));

@@ -8,6 +8,7 @@ class Back {
     protected $postManager;
     protected $commentManager;
     protected $comment;
+    protected $post;
     protected $session;
     protected $reporting;
     private $url;
@@ -16,6 +17,7 @@ class Back {
     public function __construct($session) {
       $this->commentManager = new CommentManager();
       $this->comment = new Comment();
+      $this->post= new Post();
       $this->postManager = new PostManager();
       $this->reporting = new Reporting();
       $this->session = $session;
@@ -40,8 +42,8 @@ class Back {
 
     $reports = $this->comment->getReportComments("reportCommentTable");
     $moderate = $this->comment->getModerateComments("moderateCommentTable");
-
-    $articles = $this->postManager->allPosts("posttitleTable");
+    $articles = $this->post->selectAll();
+    $articles = $this->postManager->allPosts("postTitleTable");
 
     return [
       "{{ urlAdmin }}" => $GLOBALS["prefixeBack"],
@@ -61,7 +63,7 @@ class Back {
 
     $reports = $this->comment->getReportComments("reportCommentTable");
     $moderate = $this->comment->getModerateComments("moderateCommentTable");
-    $articles = $this->postManager->allPosts("postTitleTable");
+    $articles = $this->post->selectAll();
     $articleTitle = $this->postManager->showSinglePost($this->url[2], "title");
     $articleContent = $this->postManager->showSinglePost($this->url[2], "content");
     $postFunc = "updatePo/" .$this->url[2];
@@ -81,72 +83,24 @@ class Back {
 
 
   private function deleteCo(){
-
     $this->commentManager->deleteComment($this->url[2]);
-
     header("Location: ".$GLOBALS["prefixeBack"]);
   }
 
-
   private function deletePo(){
-
     $this->postManager->deletePost($this->url[2]);
     $this->commentManager->deleteComments($this->url[2]);
 
     header("Location: ".$GLOBALS["prefixeBack"]);
   }
 
-
   private function addPo(){
-    $title = filter_input(INPUT_POST, 'title', FILTER_SANITIZE_STRING);
-    $content = filter_input(INPUT_POST, 'content', FILTER_SANITIZE_STRING);
-
-    $data = [
-      "title" => $title,
-      "content" =>$content,
-      "published" =>date("Y-m-d")
-    ];
-
-    if (!empty($title) && !empty($content))
-    {
-      $this->postManager->addPost($data);
-    }
-    else
-    {
-      $this->session->setFlash("danger", "Tous les champs ne sont pas remplis !");
-    }
-
-
+    $this->post->insert();
     header("Location: ".$GLOBALS["prefixeBack"]);
   }
 
-  private function updatePo(){
-
-    $id = $this->url[2];
-    $title = filter_input(INPUT_POST, 'title', FILTER_SANITIZE_STRING);
-    $content = filter_input(INPUT_POST, 'content', FILTER_SANITIZE_STRING);
-
-
-    $data = [
-      "id" => $id,
-      "title" => $title,
-      "content" => $content,
-      "modified" => date("Y-m-d")
-    ];
-
-    if (isset($id) && $id > 0)
-    {
-      if (!empty($title) && !empty($content))
-      {
-        $this->postManager->updatePost($data);
-      }
-      else {
-        $this->session->setFlash("danger", "Tous les champs ne sont pas remplis !");
-      }
-    } else {
-        $this->session->setFlash("danger", "Aucun identifiant de billet envoyé");
-    }
-
+  private function updatePo() {
+    $this->post->update($this->url[2]);
     header("Location: ".$GLOBALS["prefixeBack"]);
   }
 

@@ -1,3 +1,57 @@
+@import url('https://fonts.googleapis.com/css?family=Titillium+Web:900');
+
+*,
+*::before,
+*::after {
+ box-sizing: border-box;
+}
+
+nav {
+ font-family: 'Titillium Web', sans-serif;
+ -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    background-color: #007bff;
+    opacity: 0.8;
+    color: white;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    min-height: 5vh;
+}
+
+.navbar-text {
+ display: inline-block;
+ color: #FFF;
+ text-decoration: none;
+ font-weight: normal;
+ text-transform: uppercase;
+ font-size: 3rem;
+}
+
+#navbarCollapse {
+ display: inline-block;
+}
+
+ul li {
+ list-style-type: none;
+ display: inline-block;
+}
+
+nav a {
+ color: #000;
+ transition: color 500ms;
+ text-decoration: none;
+ font-weight: normal;
+ text-transform: uppercase;
+ font-size: 2rem;
+ padding: 0.5rem;
+
+ &:hover {
+   color: #fff;
+ }
+
+}
+
 section {
   margin-top: 120px;
 }

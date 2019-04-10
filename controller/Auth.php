@@ -23,11 +23,8 @@
 
 
       private function home(){
-        $errorMess = $this->session->getFlashes();
-        var_dump($errorMess);
-
+        // $errorMess = $this->session->getFlashes();
         return [
-          "{{ errorMess }}" => $errorMess,
           "{{ urlFront }}" => $GLOBALS["prefixeFront"],
           "{{ pageTitle }}" => 'Connexion'
         ];

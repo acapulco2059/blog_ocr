@@ -63,6 +63,19 @@ class PostManager {
     return $html;
   }
 
+  public function countPost() {
+    $req = [
+      "data" => [
+        "count" => "(*)"
+      ],
+      "from" => "posts",
+    ];
+
+    $data = Model::selectCount($req);
+    return $data;
+  }
+
+
   public function addPost($value){
     $req = [
       "into" => "posts",
