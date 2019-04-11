@@ -1,11 +1,15 @@
 <?php
 
+require_once "view/View.php";
+
 class Comment {
 
-  private $commentManager;
+  protected $commentManager;
+  protected $view;
 
   public function __construct() {
     $this->commentManager = new CommentManager();
+    $this->view = new View();
   }
 
 
@@ -53,6 +57,34 @@ class Comment {
       return $comment;
     }
   }
+
+
+  public function getModerateCommentsTable(){
+    $data = [
+      "{{ col1 }}" => "Date",
+      "{{ col2 }}" => "Autheur",
+      "{{ col3 }}" => "Commentaire",
+      "{{ col4 }}" => "Supprimer",
+      "{{ col5 }}" => "Valider"
+    ];
+
+    $html = $this->view->makehtml($data, "table");
+    return $html;
+  }
+
+  public function getReportCommentsTable(){
+    $data = [
+      "{{ col1 }}" => "Date",
+      "{{ col2 }}" => "Nombre de signalement",
+      "{{ col3 }}" => "Commentaire",
+      "{{ col4 }}" => "Supprimer",
+      "{{ col5 }}" => "Valider"
+    ];
+
+    $html = $this->view->makehtml($data, "table");
+    return $html;
+  }
+
 
   public function getModerateComments($template){
     $countCom = $this->commentManager->countModerateComment();

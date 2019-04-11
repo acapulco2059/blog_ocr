@@ -17,6 +17,6 @@ class UserManager {
 
     $data = Model::select($req);
     return $data;
-    }
+  }
 
 }

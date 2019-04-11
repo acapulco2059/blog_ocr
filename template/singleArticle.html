@@ -1,9 +1,10 @@
-<h2>{{ title }}</h2>
-<div class="col-md-12">
-  {{ content }}  
+
+<div id="article" class="col-md-12">
+  <h2>{{ title }}</h2>
+  {{ content }}
+  <p class="font-italic text-right">Publié le : {{ published }}</p>
 </div>
 
-<p class="font-italic text-right">Publié le : {{ published }}</p>
 <h3>Ajouter un commentaire</h3>
 
 <form method="post" action="{{ prefixe }}postCo/{{ id }}">

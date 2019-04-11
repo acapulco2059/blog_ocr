@@ -1,57 +1,92 @@
-@import url('https://fonts.googleapis.com/css?family=Titillium+Web:900');
-
-*,
-*::before,
-*::after {
- box-sizing: border-box;
+#frontFooter {
+border-top: 3px solid black;
+background-color: #707880;
 }
 
-nav {
- font-family: 'Titillium Web', sans-serif;
- -webkit-font-smoothing: antialiased;
-    -moz-osx-font-smoothing: grayscale;
-    background-color: #007bff;
-    opacity: 0.8;
-    color: white;
-    display: flex;
-    justify-content: space-around;
-    align-items: center;
-    min-height: 5vh;
+#frontFooter a, #auth a {
+  color: white;
 }
 
-.navbar-text {
- display: inline-block;
- color: #FFF;
- text-decoration: none;
- font-weight: normal;
- text-transform: uppercase;
- font-size: 3rem;
+#article {
+  background-color: #DEEEFF;
+  border: 2px solid #668CB3;
+  border-radius: 3%;
+  margin-bottom: 1em;
+  padding: 1em;
+}
+/* Code CSS pour la page d'administration */
+#backSection {
+
+
 }
 
-#navbarCollapse {
- display: inline-block;
+#backTitle {
+  background-color: #707880;
+  color: #FFF;
+  text-align: center;
+  border: 2px solid #000;
+  padding: 0.8rem;
+  margin-bottom: 2rem;
+
 }
 
-ul li {
- list-style-type: none;
- display: inline-block;
+#backContent {
+
+
+
 }
 
-nav a {
- color: #000;
- transition: color 500ms;
- text-decoration: none;
- font-weight: normal;
- text-transform: uppercase;
- font-size: 2rem;
- padding: 0.5rem;
+#commentTable {
+  margin-bottom: 2rem;
+}
 
- &:hover {
-   color: #fff;
- }
+#tableHead {
+  
+}
 
+
+/* Code CSS pour la page d'Authentification */
+
+#auth {
+  background-image: url(../img/AuthBackground.jpg);
+  background-position:center;
+  background-repeat: no-repeat;
+}
+
+#authSection {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-content: center;
+  background-color: #707880;
+  opacity: 0.8;
+  color: #fff;
+  margin-top: 10rem;
+  padding: 2em;
+}
+
+#authTitle {
+  color: black;
+  text-align: center;
+  font-size: 3rem;
+}
+
+#authSubTitle {
+  text-align: center;
+}
+
+#authForm {
+  margin-top: 1rem;
+}
+
+#authButton {
+  text-align: center;
+}
+
+#auth a {
+  text-align: right;
 }
 
 section {
-  margin-top: 120px;
+  margin-top: 10px;
 }

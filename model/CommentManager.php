@@ -7,19 +7,19 @@ class CommentManager {
   public function showModerateComment($template){
     //affiche arcticle à la une
     $req = [
-        "data"  => [
-          'ID AS "{{ id }}"',
-          'idPost',
-          'author AS "{{ author }}" ',
-          'comment AS "{{ comment }}" ',
-          'DATE_FORMAT(date, \'%d/%m/%Y\') AS "{{ date }}" ',
-          'DATE_FORMAT(reportDate, \'%d/%m/%Y\') AS "{{ reportDate }}" ',
-          'report AS "{{ report }}" '
-        ],
-        "where" => [ "reportStatut = 0" ],
-        "from"  => "comments",
-        "order" => "Date DESC"
-      ];
+      "data"  => [
+        'ID AS "{{ id }}"',
+        'idPost',
+        'author AS "{{ author }}" ',
+        'comment AS "{{ comment }}" ',
+        'DATE_FORMAT(date, \'%d/%m/%Y\') AS "{{ date }}" ',
+        'DATE_FORMAT(reportDate, \'%d/%m/%Y\') AS "{{ reportDate }}" ',
+        'report AS "{{ report }}" '
+      ],
+      "where" => [ "reportStatut = 0" ],
+      "from"  => "comments",
+      "order" => "Date DESC"
+    ];
     $data = Model::select($req);
 
     if (!isset($data['data'][0])) {
@@ -35,22 +35,22 @@ class CommentManager {
   public function showReportComment($template){
     //affiche arcticle à la une
     $req = [
-        "data"  => [
-          'ID AS "{{ id }}"',
-          'idPost',
-          'author AS "{{ author }}"',
-          'comment AS "{{ comment }}"',
-          'DATE_FORMAT(date, \'%d/%m/%Y\') AS "{{ date }}" ',
-          'DATE_FORMAT(reportDate, \'%d/%m/%Y\') AS "{{ reportDate }}" ',
-          'report AS "{{ report }}" '
-        ],
-        "where" => [
-          "report >= 1",
-          "reportStatut != 2"
-        ],
-        "from"  => "comments",
-        "order" => "reportDate DESC"
-      ];
+      "data"  => [
+        'ID AS "{{ id }}"',
+        'idPost',
+        'author AS "{{ author }}"',
+        'comment AS "{{ comment }}"',
+        'DATE_FORMAT(date, \'%d/%m/%Y\') AS "{{ date }}" ',
+        'DATE_FORMAT(reportDate, \'%d/%m/%Y\') AS "{{ reportDate }}" ',
+        'report AS "{{ report }}" '
+      ],
+      "where" => [
+        "report >= 1",
+        "reportStatut != 2"
+      ],
+      "from"  => "comments",
+      "order" => "reportDate DESC"
+    ];
     $data = Model::select($req);
 
     if (!isset($data['data'][0])) {
@@ -72,7 +72,7 @@ class CommentManager {
       "where" => [
         "reportStatut > 0",
         "idPost =" .$postId
-        ]
+      ]
     ];
 
     $data = Model::selectCount($req);
@@ -123,7 +123,7 @@ class CommentManager {
       "where" => [
         "idPost =" .$postId,
         "reportStatut >= 1"
-     ],
+      ],
       "from" => "comments",
       "order" => "report ASC"
     ];

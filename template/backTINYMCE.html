@@ -1,0 +1,10 @@
+<div id="formBlog">
+  <form method="post" action="{{ urlAdmin }}{{ postFunc }}">
+    <div class="form-group">
+      <label><strong>Titre de l'article</strong></label>
+      <input type="text" name="title" class="form-control" value="{{ articleTitle }}"/>
+    </div>
+    <textarea name="content">{{ articleContent }}</textarea>
+    <button type="submit" class="btn btn-primary">Publier</button>
+  </form>
+</div>

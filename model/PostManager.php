@@ -8,14 +8,30 @@ class PostManager {
   public function listPosts(){
     //affiche la liste des articles
     $req = [
-        "data"  => [
-          'ID AS "{{ id }}"',
-          'title AS "{{ title }}"'
-        ],
-        "from"  => "posts"
+      "data"  => [
+        'ID AS "{{ id }}"',
+        'title AS "{{ title }}"'
+      ],
+      "from"  => "posts"
     ];
     $data = Model::select($req);
     $html = View::makeLoopHtml($data["data"], "articleTitle");
+
+    return $html;
+  }
+
+  public function lastPost($template){
+    $req = [
+      "data"  => [
+        'MAX(ID) AS {{ id }}',
+        'title AS "{{ title }}"',
+        'content AS "{{ content }}" ',
+        'DATE_FORMAT(published, \'%d/%m/%Y\') AS "{{ published }}" '
+      ],
+      "from"  => "posts"
+    ];
+    $data = Model::select($req);
+    $html = View::makeHtml($data["data"], $template);
 
     return $html;
   }
@@ -41,15 +57,15 @@ class PostManager {
   public function allPosts($template){
     //affiche la liste des articles
     $req = [
-        "data"  => [
-          'ID AS "{{ id }}"',
-          'title AS "{{ title }}"',
-          'content AS "{{ content }}"',
-          'SUBSTR(content,1 , 1000) AS "{{ shortContent }}"',
-          'DATE_FORMAT(published, \'%d/%m/%Y\') AS "{{ published }}"',
-          'DATE_FORMAT(modified, \'%d/%m/%Y\') AS "{{ modified }}"'
-        ],
-        "from"  => "posts"
+      "data"  => [
+        'ID AS "{{ id }}"',
+        'title AS "{{ title }}"',
+        'content AS "{{ content }}"',
+        'SUBSTR(content,1 , 1000) AS "{{ shortContent }}"',
+        'DATE_FORMAT(published, \'%d/%m/%Y\') AS "{{ published }}"',
+        'DATE_FORMAT(modified, \'%d/%m/%Y\') AS "{{ modified }}"'
+      ],
+      "from"  => "posts"
     ];
 
 

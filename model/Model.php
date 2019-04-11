@@ -75,7 +75,7 @@ class Model {
     $req .= ' WHERE ' .$args["where"];
 
     return self::request($req);
-    }
+  }
 
 
 
