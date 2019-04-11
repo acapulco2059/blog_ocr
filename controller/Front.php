@@ -29,7 +29,7 @@ class Front {
 
 
 
-  private function home(){                                  // affiche la page d'accueil
+  public function home(){                                  // affiche la page d'accueil
     //affcihe le dernier article publié
     $postId = "(SELECT MAX(id) FROM posts)";
     $content = $this->postManager->showSinglePost($postId, "singleArticle");
@@ -43,7 +43,7 @@ class Front {
     ];
   }
 
-  private function chapitre(){
+  public function chapitre(){
     // affiche la page d'un chapitre
     $content = $this->postManager->showSinglePost($this->url[1], "singleArticle");
     $comments = $this->comment->getComments($this->url[1]);
@@ -58,7 +58,7 @@ class Front {
     ];
   }
 
-  private function chapitres(){                             // affiche une page listant les chapitres
+  public function chapitres(){                             // affiche une page listant les chapitres
 
     $content = $this->postManager->allPosts("article");
 
@@ -70,13 +70,13 @@ class Front {
     ];
   }
 
-  private function addReport(){
+  public function addReport(){
 
     $this->reporting->increment($this->url);
 
   }
 
-  private function postCo(){
+  public function postCo(){
 
     $this->comment->setComment($this->url[1]);
     header("Location: ".$GLOBALS["prefixeFront"]."chapitre/" .$this->url[1]);

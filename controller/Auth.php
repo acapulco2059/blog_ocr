@@ -63,12 +63,5 @@ class Auth {
     header("location: " .$GLOBALS["prefixeAuth"]);
     return;
   }
-
-  public function restrict(){
-    if(!$this->session->read('auth')){
-      $this->session->setFlash('danger', "Vous n'avez pas le droit d'accéder à cette page");
-      header('Location: login.php');
-      exit();
-    }
-  }
+  
 }

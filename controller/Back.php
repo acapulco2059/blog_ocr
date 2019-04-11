@@ -25,7 +25,6 @@ class Back {
     if(!isset($_SESSION['auth'])) {
       $this->session->setFlash("danger", "Vous n'avez pas l'autorisation d'accèder à cette page, identifiez vous");
       header("location: ".$GLOBALS["prefixeAuth"]);
-      exit();
     }
   }
 
@@ -38,7 +37,7 @@ class Back {
     return $this->$todo();
   }
 
-  private function home(){
+  public function home(){
     $title = "Accueil";
     $content = "";
     $validate = "";
@@ -54,7 +53,7 @@ class Back {
 
   }
 
-  private function commentValidate(){
+  public function commentValidate(){
     $title = "Commentaire(s) à valider";
     $content = $this->comment->getModerateCommentsTable();
     $table = $this->comment->getModerateComments("moderateCommentTable");
@@ -69,7 +68,7 @@ class Back {
     ];
   }
 
-  private function commentReport(){
+  public function commentReport(){
     $title = "Commentaire(s) signalé(s)";
     $content = $this->comment->getReportCommentsTable();
     $table = $this->comment->getReportComments("reportCommentTable");
@@ -84,7 +83,7 @@ class Back {
   }
 
 
-  private function chapterAdd(){
+  public function chapterAdd(){
     $title = "Ajout d'un nouveau Chapitre";
     $content = $this->post->tinyMCEinit();
     return [
@@ -96,7 +95,7 @@ class Back {
     ];
   }
 
-  private function chapterModify(){
+  public function chapterModify(){
     if(!empty($this->url[2])){
       $title = "Modification de chapitre";
       $table = $this->postManager->allPosts("postTitleTable");
@@ -118,34 +117,34 @@ class Back {
     ];
   }
 
-  private function deleteCo(){
+  public function deleteCo(){
     $this->commentManager->deleteComment($this->url[2]);
     header("Location: ".$GLOBALS["prefixeBack"]);
   }
 
-  private function deletePo(){
+  public function deletePo(){
     $this->postManager->deletePost($this->url[2]);
     $this->commentManager->deleteComments($this->url[2]);
 
     header("Location: ".$GLOBALS["prefixeBack"]);
   }
 
-  private function addPo(){
+  public function addPo(){
     $this->post->insert();
     header("Location: ".$GLOBALS["prefixeBack"]);
   }
 
-  private function updatePo() {
+  public function updatePo() {
     $this->post->update($this->url[2]);
     header("Location: ".$GLOBALS["prefixeBack"]. "chapterModify/");
   }
 
-  private function comValidate(){
+  public function comValidate(){
     $this->reporting->validate($this->url);
     header("Location: ".$GLOBALS["prefixeBack"]);
   }
 
-  private function comConfirmed(){
+  public function comConfirmed(){
     $this->reporting->confirmed($this->url);
     header("Location: ".$GLOBALS["prefixeBack"]);
   }

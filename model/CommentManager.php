@@ -187,7 +187,7 @@ class CommentManager {
         'reportStatut' => $value["reportStatut"]
       ],
     ];
-    $data = Model::insert($req);
+    Model::insert($req);
   }
 
   public function updateComment($data){
@@ -201,7 +201,7 @@ class CommentManager {
       ],
       "where" => ["ID = " .$data["id"]]
     ];
-    $data = Model::update($req);
+    Model::update($req);
   }
 
   public function incrementReport($data){
@@ -213,7 +213,7 @@ class CommentManager {
       ],
       "where" => "ID = ".$data["id"]
     ];
-    $data = Model::update($req);
+    Model::update($req);
   }
 
   public function reportStatut($data){
@@ -224,7 +224,7 @@ class CommentManager {
       ],
       'where' => "ID = ".$data["id"]
     ];
-    $data = Model::update($req);
+    Model::update($req);
   }
 
   public function deleteComment($commentId){
@@ -232,7 +232,7 @@ class CommentManager {
       "from" => "comments",
       "where" => "ID =" .$commentId
     ];
-    $data = Model::delete($req);
+    Model::delete($req);
   }
 
   public function deleteComments($postId){
@@ -240,7 +240,7 @@ class CommentManager {
       "from" => "comments",
       "where" => "idPost =" .$postId
     ];
-    $data = Model::delete($req);
+    Model::delete($req);
   }
 
 }

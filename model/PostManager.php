@@ -101,7 +101,7 @@ class PostManager {
         'published' => $value["published"]
       ],
     ];
-    $data = Model::insert($req, $value);
+    Model::insert($req, $value);
   }
 
   public function updatePost($data){
@@ -114,7 +114,7 @@ class PostManager {
       ],
       "where" => "ID = " .$data["id"]
     ];
-    $data = Model::update($req);
+    Model::update($req);
   }
 
   public function deletePost($postId){
@@ -122,6 +122,6 @@ class PostManager {
       "from" => "posts",
       "where" => "ID =" .$postId
     ];
-    $data = Model::delete($req);
+    Model::delete($req);
   }
 }
