@@ -39,7 +39,7 @@ class Front {
       "{{ pageTitle }}"=> "Billet simple pour l'Alaska",
       "{{ content }}"  => $content,
       "{{ comment }}" => $comments,
-      "{{ prefixe }}" =>$GLOBALS["prefixeFront"]
+      "{{ prefixe }}" => shortURL::getPrefixeFront()
     ];
   }
 
@@ -54,7 +54,7 @@ class Front {
       "{{ pageTitle }}" => $title,
       "{{ content }}"  => $content,
       "{{ comment }}" => $comments,
-      "{{ prefixe }}" => $GLOBALS["prefixeFront"]
+      "{{ prefixe }}" => shortURL::getPrefixeFront()
     ];
   }
 
@@ -66,7 +66,7 @@ class Front {
       "{{ pageTitle }}"=> "Ensemble des chapitres",
       "{{ content }}"  => $content,
       "{{ comment }}" => "",
-      "{{ prefixe }}" =>$GLOBALS["prefixeFront"]
+      "{{ prefixe }}" => shortURL::getPrefixeFront()
     ];
   }
 
@@ -79,7 +79,7 @@ class Front {
   public function postCo(){
 
     $this->comment->setComment($this->url[1]);
-    header("Location: ".$GLOBALS["prefixeFront"]."chapitre/" .$this->url[1]);
+    header("Location: ".shortURL::getPrefixeFront()."chapitre/" .$this->url[1]);
 
   }
 }

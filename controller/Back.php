@@ -44,9 +44,9 @@ class Back {
     $report = "";
 
     return [
-      "{{ urlAdmin }}" => $GLOBALS["prefixeBack"],
-      "{{ urlAuth }}" => $GLOBALS['prefixeAuth'],
-      "{{ urlFront }}" => $GLOBALS['prefixeFront'],
+      "{{ urlAdmin }}" => shortURL::getPrefixeBack(),
+      "{{ urlAuth }}" => shortURL::getPrefixeAuth(),
+      "{{ urlFront }}" => shortURL::getPrefixeFront(),
       "{{ title }}" => $title,
       "{{ content }}" => $content
     ];
@@ -59,9 +59,9 @@ class Back {
     $table = $this->comment->getModerateComments("moderateCommentTable");
 
     return [
-      "{{ urlAdmin }}" => $GLOBALS["prefixeBack"],
-      "{{ urlAuth }}" => $GLOBALS['prefixeAuth'],
-      "{{ urlFront }}" => $GLOBALS['prefixeFront'],
+      "{{ urlAdmin }}" => shortURL::getPrefixeBack(),
+      "{{ urlAuth }}" => shortURL::getPrefixeAuth(),
+      "{{ urlFront }}" => shortURL::getPrefixeFront(),
       "{{ title }}" => $title,
       "{{ content }}" => $content,
       "{{ tableBody }}" => $table
@@ -73,9 +73,9 @@ class Back {
     $content = $this->comment->getReportCommentsTable();
     $table = $this->comment->getReportComments("reportCommentTable");
     return [
-      "{{ urlAdmin }}" => $GLOBALS["prefixeBack"],
-      "{{ urlAuth }}" => $GLOBALS['prefixeAuth'],
-      "{{ urlFront }}" => $GLOBALS['prefixeFront'],
+      "{{ urlAdmin }}" => shortURL::getPrefixeBack(),
+      "{{ urlAuth }}" => shortURL::getPrefixeAuth(),
+      "{{ urlFront }}" => shortURL::getPrefixeFront(),
       "{{ title }}" => $title,
       "{{ content }}" => $content,
       "{{ tableBody }}" => $table
@@ -87,9 +87,9 @@ class Back {
     $title = "Ajout d'un nouveau Chapitre";
     $content = $this->post->tinyMCEinit();
     return [
-      "{{ urlAdmin }}" => $GLOBALS["prefixeBack"],
-      "{{ urlAuth }}" => $GLOBALS['prefixeAuth'],
-      "{{ urlFront }}" => $GLOBALS['prefixeFront'],
+      "{{ urlAdmin }}" => shortURL::getPrefixeBack(),
+      "{{ urlAuth }}" => shortURL::getPrefixeAuth(),
+      "{{ urlFront }}" => shortURL::getPrefixeFront(),
       "{{ title }}" => $title,
       "{{ content }}" => $content
     ];
@@ -108,9 +108,9 @@ class Back {
       $content .= $this->post->tinyMCEinit();
     }
     return [
-      "{{ urlAdmin }}" => $GLOBALS["prefixeBack"],
-      "{{ urlAuth }}" => $GLOBALS['prefixeAuth'],
-      "{{ urlFront }}" => $GLOBALS['prefixeFront'],
+      "{{ urlAdmin }}" => shortURL::getPrefixeBack(),
+      "{{ urlAuth }}" => shortURL::getPrefixeAuth(),
+      "{{ urlFront }}" => shortURL::getPrefixeFront(),
       "{{ title }}" => $title,
       "{{ content }}" => $content,
       "{{ tableBody }}" => $table
@@ -119,34 +119,34 @@ class Back {
 
   public function deleteCo(){
     $this->commentManager->deleteComment($this->url[2]);
-    header("Location: ".$GLOBALS["prefixeBack"]);
+    header("Location: ".shortURL::getPrefixeBack());
   }
 
   public function deletePo(){
     $this->postManager->deletePost($this->url[2]);
     $this->commentManager->deleteComments($this->url[2]);
 
-    header("Location: ".$GLOBALS["prefixeBack"]);
+    header("Location: ".shortURL::getPrefixeBack(). "chapterModify/");
   }
 
   public function addPo(){
     $this->post->insert();
-    header("Location: ".$GLOBALS["prefixeBack"]);
+    header("Location: ".shortURL::getPrefixeBack(). "chapterModify/");
   }
 
   public function updatePo() {
     $this->post->update($this->url[2]);
-    header("Location: ".$GLOBALS["prefixeBack"]. "chapterModify/");
+    header("Location: ".shortURL::getPrefixeBack(). "chapterModify/");
   }
 
   public function comValidate(){
     $this->reporting->validate($this->url);
-    header("Location: ".$GLOBALS["prefixeBack"]);
+    header("Location: ".shortURL::getPrefixeBack(). "commentValidate/");
   }
 
   public function comConfirmed(){
     $this->reporting->confirmed($this->url);
-    header("Location: ".$GLOBALS["prefixeBack"]);
+    header("Location: ".shortURL::getPrefixeBack(). "commentReport/");
   }
 
 }
