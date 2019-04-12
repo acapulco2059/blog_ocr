@@ -35,12 +35,12 @@ class Comment {
       }
       else
       {
-        $_SESSION["flash"]["Tous les champs ne sont pas remplis !"];
+        $this->session->setFlash("danger", "Tous les champs ne sont pas remplis !");
       }
     }
     else
     {
-      $_SESSION["flash"]["Aucun identifiant de billet envoyé"];
+      $this->session->setFlash("danger", "Aucun identifiant de billet envoyé");
     }
   }
 

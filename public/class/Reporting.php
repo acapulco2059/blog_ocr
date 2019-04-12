@@ -23,7 +23,7 @@ class Reporting {
 
     $this->commentManager->incrementReport($data);
 
-    header("Location: ".$GLOBALS["prefixeFront"]."chapitre/" .$url[1]);
+    header("Location: ".shortURL::getPrefixeFront()."chapitre/" .$url[1]);
   }
 
   public function toValidate($url){

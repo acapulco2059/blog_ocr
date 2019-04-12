@@ -137,7 +137,7 @@ class CommentManager {
 
     $count = count($data["data"]);
     for($i=0; $i < $count; $i++) {
-      $data["data"][$i]["{{ prefixe }}"] = $GLOBALS["prefixeFront"];
+      $data["data"][$i]["{{ prefixe }}"] = shortURL::getPrefixeFront();
 
     }
     $html = View::makeLoopHtml($data["data"], "comment");
