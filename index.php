@@ -2,8 +2,6 @@
 
 error_reporting(E_ALL | E_STRICT);ini_set('display_errors',1);
 require_once "conf.php";
-require_once "view/View.php";
-require_once "model/Model.php";
 Model::init();
 
 spl_autoload_register(function ($class_name) {
@@ -44,5 +42,4 @@ switch ($url[0]) {
 }
 
 $page = $ctrl->getPage($url);
-$view = new View();
-print_r(htmlspecialchars_decode($view->makeHtml($page, $template)));
+print_r(htmlspecialchars_decode(View::makeHtml($page, $template)));
