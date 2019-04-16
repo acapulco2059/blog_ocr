@@ -83,7 +83,7 @@ class Post {
       "{{ col5 }}" => "Supprimer"
     ];
 
-    $html = $this->view->makehtml($data, "table");
+    $html = View::makehtml($data, "table");
     return $html;
   }
 
@@ -110,7 +110,7 @@ class Post {
       "{{ articleTitle }}" => $articleTitle,
       "{{ articleContent }}" => $articleContent
     ];
-    $html = $this->view->makehtml($data, "backTINYMCE");
+    $html = View::makehtml($data, "backTINYMCE");
     return $html;
   }
 

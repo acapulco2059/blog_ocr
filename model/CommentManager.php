@@ -1,8 +1,5 @@
 <?php
 
-require_once "view/View.php";
-require_once "model/Model.php";
-
 class CommentManager {
   public function showModerateComment($template){
     //affiche arcticle à la une
@@ -180,7 +177,7 @@ class CommentManager {
     $req = [
       "into" => "comments",
       "data" => [
-        'author' => $value["commentator"],
+        "author" => $value["commentator"],
         'comment'=> $value["comment"],
         'idPost'=> $value["idPost"],
         'date' => $value["date"],

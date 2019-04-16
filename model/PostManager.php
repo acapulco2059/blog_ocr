@@ -1,8 +1,5 @@
 <?php
 
-require_once "model/Model.php";
-require_once "view/View.php";
-
 class PostManager {
 
   public function listPosts(){

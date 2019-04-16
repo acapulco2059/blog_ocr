@@ -1,17 +1,12 @@
 <?php
 
-require_once "view/View.php";
-
 class Comment {
 
   protected $commentManager;
-  protected $view;
 
   public function __construct() {
     $this->commentManager = new CommentManager();
-    $this->view = new View();
   }
-
 
   public function setComment($url) {
     $commentator = filter_input(INPUT_POST, 'commentator', FILTER_SANITIZE_STRING);
@@ -68,7 +63,7 @@ class Comment {
       "{{ col5 }}" => "Valider"
     ];
 
-    $html = $this->view->makehtml($data, "table");
+    $html = View::makehtml($data, "table");
     return $html;
   }
 
@@ -81,7 +76,7 @@ class Comment {
       "{{ col5 }}" => "Valider"
     ];
 
-    $html = $this->view->makehtml($data, "table");
+    $html = View::makehtml($data, "table");
     return $html;
   }
 

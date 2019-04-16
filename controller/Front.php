@@ -30,6 +30,7 @@ class Front {
 
 
   public function home(){                                  // affiche la page d'accueil
+    global $prefixeFront;
     //affcihe le dernier article publié
     $postId = "(SELECT MAX(id) FROM posts)";
     $content = $this->postManager->showSinglePost($postId, "singleArticle");
@@ -39,11 +40,12 @@ class Front {
       "{{ pageTitle }}"=> "Billet simple pour l'Alaska",
       "{{ content }}"  => $content,
       "{{ comment }}" => $comments,
-      "{{ prefixe }}" => ShortURL::getPrefixeFront()
+      "{{ prefixe }}" => $prefixeFront
     ];
   }
 
   public function chapitre(){
+    global $prefixeFront;
     // affiche la page d'un chapitre
     $content = $this->postManager->showSinglePost($this->url[1], "singleArticle");
     $comments = $this->comment->getComments($this->url[1]);
@@ -54,11 +56,12 @@ class Front {
       "{{ pageTitle }}" => $title,
       "{{ content }}"  => $content,
       "{{ comment }}" => $comments,
-      "{{ prefixe }}" => ShortURL::getPrefixeFront()
+      "{{ prefixe }}" => $prefixeFront
     ];
   }
 
   public function chapitres(){                             // affiche une page listant les chapitres
+    global $prefixeFront;
 
     $content = $this->postManager->allPosts("article");
 
@@ -66,7 +69,7 @@ class Front {
       "{{ pageTitle }}"=> "Ensemble des chapitres",
       "{{ content }}"  => $content,
       "{{ comment }}" => "",
-      "{{ prefixe }}" => ShortURL::getPrefixeFront()
+      "{{ prefixe }}" => $prefixeFront
     ];
   }
 
@@ -77,9 +80,11 @@ class Front {
   }
 
   public function postCo(){
+    global $prefixeFront;
+
 
     $this->comment->setComment($this->url[1]);
-    header("Location: ".ShortURL::getPrefixeFront()."chapitre/" .$this->url[1]);
+    header("Location: ".$prefixeFront."chapitre/" .$this->url[1]);
 
   }
 }

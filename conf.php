@@ -1,16 +1,17 @@
 <?php
 
 //environnement production
-$GLOBALS["envProd"] = false;
+// $GLOBALS["envProd"] = false;
 
 //database connexion
-$GLOBALS["db"] = [
+$db = [
   "host"     => 'localhost',
   "user"     => 'root',
   "password" => 'root',
   "dataBase" => 'blog_1'
 ];
 
-$GLOBALS["prefixeFront"] = "/Projet/blog_poo/";
-$GLOBALS["prefixeBack"] = "/Projet/blog_poo/admin/";
-$GLOBALS['prefixeAuth'] = "/Projet/blog_poo/auth/";
+
+$prefixeFront = "/Projet/blog_poo/";
+$prefixeBack = "/Projet/blog_poo/admin/";
+$prefixeAuth = "/Projet/blog_poo/auth/";

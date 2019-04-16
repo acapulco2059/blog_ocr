@@ -13,11 +13,11 @@ spl_autoload_register(function ($class_name) {
 $session = new Session();
 
 // show error when debug
-if (!$GLOBALS["envProd"]) {
-  ini_set("display_startup_errors", 1);
-  ini_set('display_errors', 1);
-  error_reporting(E_ALL);
-}
+// if (!$GLOBALS["envProd"]) {
+//   ini_set("display_startup_errors", 1);
+//   ini_set('display_errors', 1);
+//   error_reporting(E_ALL);
+// }
 
 // get a securized instance of the url
 $url = explode ( "/", filter_var($_SERVER['REQUEST_URI'], FILTER_SANITIZE_URL, FILTER_FLAG_STRIP_HIGH | FILTER_FLAG_STRIP_LOW));
@@ -45,4 +45,4 @@ switch ($url[0]) {
 
 $page = $ctrl->getPage($url);
 $view = new View();
-echo htmlspecialchars_decode($view->makeHtml($page, $template));
+print_r(htmlspecialchars_decode($view->makeHtml($page, $template)));

@@ -14,6 +14,8 @@ class Back {
   protected $url;
 
   public function __construct($session) {
+    global $prefixeAuth;
+
     $this->commentManager = new CommentManager();
     $this->comment = new Comment();
     $this->postManager = new PostManager();
@@ -23,7 +25,7 @@ class Back {
 
     if(!isset($_SESSION['auth'])) {
       $this->session->setFlash("danger", "Vous n'avez pas l'autorisation d'accèder à cette page, identifiez vous");
-      header("location: ".ShortURL::getPrefixeAuth());
+      header("location: ".$prefixeAuth);
     }
   }
 
@@ -37,22 +39,28 @@ class Back {
   }
 
   public function home(){
+    global $prefixeFront;
+    global $prefixeBack;
+    global $prefixeAuth;
+
     $title = "Accueil";
     $content = "";
-    $validate = "";
-    $report = "";
 
     return [
       "{{ title }}" => $title,
       "{{ content }}" => $content,
-      "{{ urlAdmin }}" => ShortURL::getPrefixeBack(),
-      "{{ urlAuth }}" => ShortURL::getPrefixeAuth(),
-      "{{ urlFront }}" => ShortURL::getPrefixeFront()
+      "{{ urlAdmin }}" => $prefixeBack,
+      "{{ urlAuth }}" => $prefixeAuth,
+      "{{ urlFront }}" => $prefixeFront
     ];
 
   }
 
   public function commentValidate(){
+    global $prefixeFront;
+    global $prefixeBack;
+    global $prefixeAuth;
+
     $title = "Commentaire(s) à valider";
     $content = $this->comment->getModerateCommentsTable();
     $table = $this->comment->getModerateComments("moderateCommentTable");
@@ -61,13 +69,17 @@ class Back {
       "{{ title }}" => $title,
       "{{ content }}" => $content,
       "{{ tableBody }}" => $table,
-      "{{ urlAdmin }}" => ShortURL::getPrefixeBack(),
-      "{{ urlAuth }}" => ShortURL::getPrefixeAuth(),
-      "{{ urlFront }}" => ShortURL::getPrefixeFront()
+      "{{ urlAdmin }}" => $prefixeBack,
+      "{{ urlAuth }}" => $prefixeAuth,
+      "{{ urlFront }}" => $prefixeFront
     ];
   }
 
   public function commentReport(){
+    global $prefixeFront;
+    global $prefixeBack;
+    global $prefixeAuth;
+
     $title = "Commentaire(s) signalé(s)";
     $content = $this->comment->getReportCommentsTable();
     $table = $this->comment->getReportComments("reportCommentTable");
@@ -75,27 +87,34 @@ class Back {
       "{{ title }}" => $title,
       "{{ content }}" => $content,
       "{{ tableBody }}" => $table,
-      "{{ urlAdmin }}" => ShortURL::getPrefixeBack(),
-      "{{ urlAuth }}" => ShortURL::getPrefixeAuth(),
-      "{{ urlFront }}" => ShortURL::getPrefixeFront()
+      "{{ urlAdmin }}" => $prefixeBack,
+      "{{ urlAuth }}" => $prefixeAuth,
+      "{{ urlFront }}" => $prefixeFront
     ];
   }
 
 
   public function chapterAdd(){
+    global $prefixeFront;
+    global $prefixeBack;
+    global $prefixeAuth;
+
     $title = "Ajout d'un nouveau Chapitre";
     $content = $this->post->tinyMCEinit();
     return [
       "{{ title }}" => $title,
       "{{ content }}" => $content,
-      "{{ urlAdmin }}" => ShortURL::getPrefixeBack(),
-      "{{ urlAuth }}" => ShortURL::getPrefixeAuth(),
-      "{{ urlFront }}" => ShortURL::getPrefixeFront()
+      "{{ urlAdmin }}" => $prefixeBack,
+      "{{ urlAuth }}" => $prefixeAuth,
+      "{{ urlFront }}" => $prefixeFront
     ];
   }
 
   public function chapterModify(){
-    var_dump($this->url);
+    global $prefixeFront;
+    global $prefixeBack;
+    global $prefixeAuth;
+
     if(!empty($this->url[2])){
       $title = "Modification de chapitre";
       $table = $this->postManager->allPosts("postTitleTable");
@@ -111,43 +130,55 @@ class Back {
       "{{ title }}" => $title,
       "{{ content }}" => $content,
       "{{ tableBody }}" => $table,
-      "{{ urlAdmin }}" => ShortURL::getPrefixeBack(),
-      "{{ urlAuth }}" => ShortURL::getPrefixeAuth(),
-      "{{ urlFront }}" => ShortURL::getPrefixeFront()
+      "{{ urlAdmin }}" => $prefixeBack,
+      "{{ urlAuth }}" => $prefixeAuth,
+      "{{ urlFront }}" => $prefixeFront
 
     ];
   }
 
   public function deleteCo(){
+    global $prefixeBack;
+
     $this->commentManager->deleteComment($this->url[2]);
-    header("Location: ".ShortURL::getPrefixeBack());
+    header("Location: ".$prefixeBack);
   }
 
   public function deletePo(){
+    global $prefixeBack;
+
     $this->postManager->deletePost($this->url[2]);
     $this->commentManager->deleteComments($this->url[2]);
 
-    header("Location: ".ShortURL::getPrefixeBack(). "chapterModify/");
+    header("Location: ".$prefixeBack. "chapterModify/");
   }
 
   public function addPo(){
+    global $prefixeBack;
+
     $this->post->insert();
-    header("Location: ".ShortURL::getPrefixeBack(). "chapterModify/");
+    header("Location: ".$prefixeBack. "chapterModify/");
   }
 
   public function updatePo() {
+    global $prefixeBack;
+
     $this->post->update($this->url[2]);
-    header("Location: ".ShortURL::getPrefixeBack(). "chapterModify/");
+    header("Location: ".$prefixeBack. "chapterModify/");
   }
 
   public function comValidate(){
+    global $prefixeBack;
+
     $this->reporting->validate($this->url);
-    header("Location: ".ShortURL::getPrefixeBack(). "commentValidate/");
+    header("Location: ".$prefixeBack(). "commentValidate/");
   }
 
   public function comConfirmed(){
+    global $prefixeBack;
+
     $this->reporting->confirmed($this->url);
-    header("Location: ".ShortURL::getPrefixeBack(). "commentReport/");
+    header("Location: ".$prefixeBack(). "commentReport/");
   }
 
 }
