@@ -1,7 +1,5 @@
 <?php
 
-require_once "model/Model.php";
-
 class UserManager {
 
   public function verify($value){

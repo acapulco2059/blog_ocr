@@ -89,8 +89,10 @@ class Post {
 
 
   public function tinyMCEinit(){
+    global $prefixeBack;
+
     $data = [
-      "{{ urlAdmin }}" => $GLOBALS['prefixeBack'],
+      "{{ urlAdmin }}" => $prefixeBack,
       "{{ postFunc }}" => "addPo",
       "{{ articleTitle }}" => "Titre du chapitre",
       "{{ articleContent }}" => "Contenu du chapitre"
@@ -100,12 +102,14 @@ class Post {
   }
 
   public function tinyMCEmodify($url){
+    global $prefixeBack;
+
     $articleTitle = $this->postManager->showSinglePost($url, "title");
     $articleContent = $this->postManager->showSinglePost($url, "content");
     $postFunc = "updatePo/".$url;
 
     $data = [
-      "{{ urlAdmin }}" => $GLOBALS['prefixeBack'],
+      "{{ urlAdmin }}" => $prefixeBack,
       "{{ postFunc }}" => $postFunc,
       "{{ articleTitle }}" => $articleTitle,
       "{{ articleContent }}" => $articleContent
