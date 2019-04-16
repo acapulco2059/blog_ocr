@@ -25,7 +25,7 @@ class Auth {
   private function home(){
     // $errorMess = $this->session->getFlashes();
     return [
-      "{{ urlFront }}" => shortURL::getPrefixeFront(),
+      "{{ urlFront }}" => ShortURL::getPrefixeFront(),
       "{{ pageTitle }}" => 'Connexion'
     ];
   }
@@ -36,7 +36,6 @@ class Auth {
   }
 
   public function login(){
-    unset($_SESSION['auth']);
     $username = filter_input(INPUT_POST, 'username', FILTER_SANITIZE_SPECIAL_CHARS);
     $password = filter_input(INPUT_POST, 'password', FILTER_SANITIZE_SPECIAL_CHARS);
     $value = [
@@ -45,21 +44,20 @@ class Auth {
 
     if(!empty($username) && !empty($password)) {
       $user = $this->user->verify($value);
-      print_r($user);
       if(password_verify($password, $user["data"]["password"])){
-        $this->connect($user);
-        header("Location: ".shortURL::getPrefixeBack());
+        $this->connect($user);        
+        exit(header("Location: ".ShortURL::getPrefixeBack()));
       }
-      // $this->session->setFlash("danger", "Mot de passe ou identifiant incorrecte ");
-      header("location: ".shortURL::getPrefixeAuth());
+      $this->session->setFlash("danger", "Mot de passe ou identifiant incorrect");
+      header("location: ".ShortURL::getPrefixeAuth());
     }
-    header("location: ".shortURL::getPrefixeAuth());
+    header("location: ".ShortURL::getPrefixeAuth());
 
   }
 
   public function logout(){
     $this->session->delete('auth');
-    header("location: " .shortURL::getPrefixeAuth());
+    header("location: " .ShortURL::getPrefixeAuth());
     return;
   }
 

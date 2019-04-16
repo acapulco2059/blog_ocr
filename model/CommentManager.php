@@ -137,7 +137,7 @@ class CommentManager {
 
     $count = count($data["data"]);
     for($i=0; $i < $count; $i++) {
-      $data["data"][$i]["{{ prefixe }}"] = shortURL::getPrefixeFront();
+      $data["data"][$i]["{{ prefixe }}"] = ShortURL::getPrefixeFront();
 
     }
     $html = View::makeLoopHtml($data["data"], "comment");
@@ -180,7 +180,7 @@ class CommentManager {
     $req = [
       "into" => "comments",
       "data" => [
-        "author" => $value["commentator"],
+        'author' => $value["commentator"],
         'comment'=> $value["comment"],
         'idPost'=> $value["idPost"],
         'date' => $value["date"],

@@ -1,5 +1,6 @@
 <?php
-class Session{
+
+class Session {
 
   static $instance;
 
