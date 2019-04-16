@@ -69,7 +69,8 @@ class PostManager {
     $data = Model::select($req);
     $count = count($data["data"]);
     for($i=0; $i < $count; $i++) {
-      $data["data"][$i]["{{ url }}"] = ShortURL::getPrefixeFront()."chapitre/".$data["data"][$i]["{{ id }}"];
+      global $prefixeFront;
+      $data["data"][$i]["{{ url }}"] = $prefixeFront."chapitre/".$data["data"][$i]["{{ id }}"];
     }
     $html = View::makeLoopHtml($data["data"], $template);
 

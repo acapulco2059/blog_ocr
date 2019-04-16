@@ -2,6 +2,8 @@
 
 error_reporting(E_ALL | E_STRICT);ini_set('display_errors',1);
 require_once "conf.php";
+require_once "model/Model.php";
+require_once "view/View.php";
 Model::init();
 
 spl_autoload_register(function ($class_name) {

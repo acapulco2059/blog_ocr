@@ -1,7 +1,7 @@
 <?php
 
 //environnement production
-// $GLOBALS["envProd"] = false;
+$GLOBALS["envProd"] = false;
 
 //database connexion
 $db = [
