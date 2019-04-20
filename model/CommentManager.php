@@ -1,6 +1,7 @@
 <?php
 
 class CommentManager {
+  
   public function showModerateComment($template){
     //affiche arcticle à la une
     $req = [

@@ -1,10 +1,11 @@
 <div id="backHome">
   <h3>Information sur votre blog</h3>
+  <h4>Commentaires</h4>
   <div id="commentValidate">
-    <p>Il y a {{ validate }} commentaire(s) en attente de validation</p>
+    <a href="{{ urlAdmin }}commentValidate">Il y a <span class="spanComment">{{ validate }}</span> commentaire(s) en attente de validation </a>
   </div>
 
   <div id="commentReport">
-    <p>Il y a {{ report }} signalement(s) de commentaires</p>
+    <a href="{{ urlAdmin }}commentReport">Il y a <span class="spanComment">{{ report }}</span> commentaire(s) signalé(s)</a>
   </div>
 </div>

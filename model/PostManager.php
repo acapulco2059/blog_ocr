@@ -58,7 +58,7 @@ class PostManager {
         'ID AS "{{ id }}"',
         'title AS "{{ title }}"',
         'content AS "{{ content }}"',
-        'SUBSTR(content,1 , 1000) AS "{{ shortContent }}"',
+        'SUBSTR(content,1 , 1000) AS "{{ content }}"',
         'DATE_FORMAT(published, \'%d/%m/%Y\') AS "{{ published }}"',
         'DATE_FORMAT(modified, \'%d/%m/%Y\') AS "{{ modified }}"'
       ],

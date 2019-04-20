@@ -6,9 +6,10 @@ class Model {
 
   static function init(){
     global $db;
+    global $envProd;
 
     self::$db = new PDO('mysql:host='.$db["host"].';dbname='.$db["dataBase"].';charset=utf8', $db["user"], $db["password"]);
-    if (!$GLOBALS["envProd"]) self::$db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+    if (!$envProd) self::$db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
     self::$db->setAttribute(PDO::ATTR_DEFAULT_FETCH_MODE, PDO::FETCH_ASSOC);
     unset($db);
   }

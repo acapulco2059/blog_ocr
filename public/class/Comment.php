@@ -80,6 +80,19 @@ class Comment {
     return $html;
   }
 
+  public function getBackHome(){
+    $countReport = $this->commentManager->countReportComment();
+    $countModerate = $this->commentManager->countModerateComment();
+
+    $data = [
+      "{{ validate }}" => $countReport["data"]["COUNT(*)"],
+      "{{ report }}" => $countModerate["data"]["COUNT(*)"]
+    ];
+
+    $html = View::makeHtml($data, "backHome");
+    return $html;
+  }
+
 
   public function getModerateComments($template){
     $countCom = $this->commentManager->countModerateComment();

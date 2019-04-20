@@ -37,6 +37,8 @@ class Auth {
   }
 
   public function login(){
+    global $prefixeBack;
+    global $prefixeAuth;
     $username = filter_input(INPUT_POST, 'username', FILTER_SANITIZE_SPECIAL_CHARS);
     $password = filter_input(INPUT_POST, 'password', FILTER_SANITIZE_SPECIAL_CHARS);
     $value = [
@@ -44,8 +46,6 @@ class Auth {
     ];
 
     if(!empty($username) && !empty($password)) {
-      global $prefixeBack;
-      global $prefixeAuth;
 
       $user = $this->user->verify($value);
       if(password_verify($password, $user["data"]["password"])){

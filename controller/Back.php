@@ -44,14 +44,14 @@ class Back {
     global $prefixeAuth;
 
     $title = "Accueil";
-    $content = "";
+    $content = $this->comment->getBackHome();
 
     return [
       "{{ title }}" => $title,
       "{{ content }}" => $content,
       "{{ urlAdmin }}" => $prefixeBack,
       "{{ urlAuth }}" => $prefixeAuth,
-      "{{ urlFront }}" => $prefixeFront
+      "{{ urlFront }}" => $prefixeFront,
     ];
 
   }
@@ -171,14 +171,14 @@ class Back {
     global $prefixeBack;
 
     $this->reporting->validate($this->url);
-    header("Location: ".$prefixeBack(). "commentValidate/");
+    header("Location: ".$prefixeBack. "commentValidate/");
   }
 
   public function comConfirmed(){
     global $prefixeBack;
 
     $this->reporting->confirmed($this->url);
-    header("Location: ".$prefixeBack(). "commentReport/");
+    header("Location: ".$prefixeBack. "commentReport/");
   }
 
 }
