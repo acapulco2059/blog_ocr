@@ -1,5 +1,7 @@
 <?php
 
+namespace blog\apps;
+
 class Reporting {
 
   private $commentManager;
@@ -9,7 +11,7 @@ class Reporting {
   const COMFIRMED = 2;
 
   public function __construct() {
-    $this->commentManager = new CommentManager();
+    $this->commentManager = new \blog\model\CommentManager();
   }
 
   public function increment($url){

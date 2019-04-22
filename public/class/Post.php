@@ -1,6 +1,6 @@
 <?php
 
-require_once "view/View.php";
+namespace blog\apps;
 
 class Post {
 
@@ -8,8 +8,8 @@ class Post {
   protected $view;
 
   public function __construct() {
-    $this->postManager = new PostManager();
-    $this->view = new View();
+    $this->postManager = new \blog\Model\PostManager();
+    $this->view = new \blog\view\View();
   }
 
   public function selectAll() {
@@ -83,7 +83,7 @@ class Post {
       "{{ col5 }}" => "Supprimer"
     ];
 
-    $html = View::makehtml($data, "table");
+    $html = \blog\view\View::makehtml($data, "table");
     return $html;
   }
 
@@ -114,7 +114,7 @@ class Post {
       "{{ articleTitle }}" => $articleTitle,
       "{{ articleContent }}" => $articleContent
     ];
-    $html = View::makehtml($data, "backTINYMCE");
+    $html = \blog\view\View::makehtml($data, "backTINYMCE");
     return $html;
   }
 

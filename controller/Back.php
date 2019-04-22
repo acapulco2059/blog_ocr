@@ -1,7 +1,6 @@
 <?php
 
-require_once "model/PostManager.php";
-require_once "model/CommentManager.php";
+namespace blog\controller;
 
 class Back {
 
@@ -16,11 +15,11 @@ class Back {
   public function __construct($session) {
     global $prefixeAuth;
 
-    $this->commentManager = new CommentManager();
-    $this->comment = new Comment();
-    $this->postManager = new PostManager();
-    $this->post= new Post();
-    $this->reporting = new Reporting();
+    $this->commentManager = new \blog\model\CommentManager();
+    $this->comment = new \blog\apps\Comment();
+    $this->postManager = new \blog\model\PostManager();
+    $this->post= new \blog\apps\Post();
+    $this->reporting = new \blog\apps\Reporting();
     $this->session = $session;
 
     if(!isset($_SESSION['auth'])) {

@@ -1,6 +1,6 @@
 <?php
 
-require_once "model/UserManager.php";
+namespace blog\controller;
 
 class Auth {
 
@@ -9,7 +9,7 @@ class Auth {
 
   public function __construct($session = NULL){
     $this->session = $session;
-    $this->user = new UserManager();
+    $this->user = new blog\model\UserManager();
   }
 
 

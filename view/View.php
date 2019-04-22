@@ -1,5 +1,7 @@
 <?php
 
+namespace blog\view;
+
 class View
 {
 
@@ -16,7 +18,7 @@ class View
 		foreach ($data as $value) {
 			$html .= self::makeHtml($value, $template);
 		}
-		
+
 		return $html;
 	}
 

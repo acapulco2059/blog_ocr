@@ -1,16 +1,18 @@
 <?php
 
+namespace blog\model;
+
 class Model {
 
   private static $db;
 
   static function init(){
-    global $db;
+    global $dbLog;
     global $envProd;
 
-    self::$db = new PDO('mysql:host='.$db["host"].';dbname='.$db["dataBase"].';charset=utf8', $db["user"], $db["password"]);
-    if (!$envProd) self::$db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-    self::$db->setAttribute(PDO::ATTR_DEFAULT_FETCH_MODE, PDO::FETCH_ASSOC);
+    self::$db = new \PDO('mysql:host='.$dbLog["host"].';dbname='.$dbLog["dataBase"].';charset=utf8', $dbLog["user"], $dbLog["password"]);
+    if (!$envProd) self::$db->setAttribute(\PDO::ATTR_ERRMODE, \PDO::ERRMODE_EXCEPTION);
+    self::$db->setAttribute(\PDO::ATTR_DEFAULT_FETCH_MODE, \PDO::FETCH_ASSOC);
     unset($db);
   }
 
@@ -76,7 +78,6 @@ class Model {
 
     $req  = 'DELETE FROM ' .$args["from"];
     $req .= ' WHERE ' .$args["where"];
-
     return self::request($req);
   }
 

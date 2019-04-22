@@ -1,11 +1,13 @@
 <?php
 
+namespace blog\apps;
+
 class Comment {
 
   protected $commentManager;
 
   public function __construct() {
-    $this->commentManager = new CommentManager();
+    $this->commentManager = new \blog\model\CommentManager();
   }
 
   public function setComment($url) {
@@ -63,7 +65,7 @@ class Comment {
       "{{ col5 }}" => "Valider"
     ];
 
-    $html = View::makehtml($data, "table");
+    $html = \blog\view\View::makehtml($data, "table");
     return $html;
   }
 
@@ -76,7 +78,7 @@ class Comment {
       "{{ col5 }}" => "Valider"
     ];
 
-    $html = View::makehtml($data, "table");
+    $html = \blog\view\View::makehtml($data, "table");
     return $html;
   }
 
@@ -89,7 +91,7 @@ class Comment {
       "{{ report }}" => $countModerate["data"]["COUNT(*)"]
     ];
 
-    $html = View::makeHtml($data, "backHome");
+    $html = \blog\view\View::makeHtml($data, "backHome");
     return $html;
   }
 

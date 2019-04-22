@@ -1,7 +1,9 @@
 <?php
 
+namespace blog\model;
+
 class CommentManager {
-  
+
   public function showModerateComment($template){
     //affiche arcticle à la une
     $req = [
@@ -26,7 +28,7 @@ class CommentManager {
       array_push($data["data"], $tmp);
     }
 
-    $html = View::makeLoopHtml($data["data"], $template);
+    $html = \blog\view\View::makeLoopHtml($data["data"], $template);
     return $html;
   }
 
@@ -57,7 +59,7 @@ class CommentManager {
       array_push($data["data"], $tmp);
     }
 
-    $html = View::makeLoopHtml($data["data"], $template);
+    $html = \blog\view\View::makeLoopHtml($data["data"], $template);
     return $html;
   }
 
@@ -139,7 +141,7 @@ class CommentManager {
       $data["data"][$i]["{{ prefixe }}"] = $prefixeFront;
 
     }
-    $html = View::makeLoopHtml($data["data"], "comment");
+    $html = \blog\view\View::makeLoopHtml($data["data"], "comment");
 
     return $html;
   }
@@ -158,7 +160,7 @@ class CommentManager {
       "from" => "comments"
     ];
     $data = Model::select($req);
-    $html = View::makeHtml($data["data"], "comment");
+    $html = \blog\view\View::makeHtml($data["data"], "comment");
 
     return $html;
   }
