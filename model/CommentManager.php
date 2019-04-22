@@ -156,7 +156,7 @@ class CommentManager {
         'DATE_FORMAT(date, \'%d/%m/%Y\') AS "{{ date }}"',
         'report AS "{{ report }}"'
       ],
-      "where" => [ "ID =" .$commentId ],
+      "where" => [ "ID = " .$commentId ],
       "from" => "comments"
     ];
     $data = Model::select($req);
@@ -170,7 +170,7 @@ class CommentManager {
       "data" => [
         'report'
       ],
-      "where" => [ "ID =" .$commentId ],
+      "where" => [ "ID = " .$commentId ],
       "from" => "comments"
     ];
     $data = Model::select($req);
@@ -231,7 +231,7 @@ class CommentManager {
   public function deleteComment($commentId){
     $req = [
       "from" => "comments",
-      "where" => "ID =" .$commentId
+      "where" => "ID = " .$commentId
     ];
     Model::delete($req);
   }
@@ -239,7 +239,7 @@ class CommentManager {
   public function deleteComments($postId){
     $req = [
       "from" => "comments",
-      "where" => "idPost =" .$postId
+      "where" => "idPost = " .$postId
     ];
     Model::delete($req);
   }

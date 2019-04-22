@@ -20,7 +20,7 @@ $url = explode ( "/", filter_var($_SERVER['REQUEST_URI'], FILTER_SANITIZE_URL, F
 // remove first empty entry
 $url = array_slice($url, 3);
 
-// select if it's front side or admin side
+// select if it's front side, admin side or auth side
 switch ($url[0]) {
   case 'admin':
     $ctrl = new blog\controller\Back($session);

@@ -18,7 +18,6 @@ class Model {
 
 
   public static function select($args){              // build an sql request from args array
-
     // main things :
     $req  = 'SELECT '.implode(", ", $args["data"]);
     $req .= " FROM ".$args["from"];
@@ -45,7 +44,6 @@ class Model {
     // WHERE
     if (isset($args["where"])) $req .= ' WHERE '.implode(" AND ", $args["where"]);
 
-
     return self::request($req);
   }
 
@@ -70,6 +68,7 @@ class Model {
     }
 
     $valueSet = implode(' , ', $valueSet);
+
     return self::request("UPDATE ".$args['from']." SET $valueSet WHERE ".$args["where"], $args["data"]);
 
   }
@@ -84,6 +83,7 @@ class Model {
 
 
   public static function request($sql, $data=NULL) {
+
     try {
       if ($data == NULL) {                     // query
         $resultat = self::$db->query($sql);

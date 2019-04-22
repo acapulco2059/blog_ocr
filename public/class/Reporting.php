@@ -16,12 +16,12 @@ class Reporting {
 
   public function increment($url){
     $statut = $this->commentManager->commentStatut($url[2]);
+
     $data = [
       "report" => (int)$statut["data"]["report"] +1,
       "reportDate" => date('Y-m-d'),
       "id" => $url[2]
     ];
-
 
     $this->commentManager->incrementReport($data);
     global $prefixeFront;

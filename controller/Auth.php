@@ -9,7 +9,7 @@ class Auth {
 
   public function __construct($session = NULL){
     $this->session = $session;
-    $this->user = new blog\model\UserManager();
+    $this->user = new \blog\model\UserManager();
   }
 
 
