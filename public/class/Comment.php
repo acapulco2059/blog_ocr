@@ -87,8 +87,8 @@ class Comment {
     $countModerate = $this->commentManager->countModerateComment();
 
     $data = [
-      "{{ validate }}" => $countReport["data"]["COUNT(*)"],
-      "{{ report }}" => $countModerate["data"]["COUNT(*)"]
+      "{{ validate }}" => $countModerate["data"]["COUNT(*)"],
+      "{{ report }}" => $countReport["data"]["COUNT(*)"]
     ];
 
     $html = \blog\view\View::makeHtml($data, "backHome");
