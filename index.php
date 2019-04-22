@@ -23,17 +23,14 @@ $url = array_slice($url, 3);
 // select if it's front side or admin side
 switch ($url[0]) {
   case 'admin':
-  require_once "controller/Back.php";
     $ctrl = new blog\controller\Back($session);
     $template = "back";
     break;
   case 'auth':
-  require_once "controller/Auth.php";
     $ctrl = new blog\controller\Auth($session);
     $template = "auth";
     break;
   default:
-    require_once "controller/Front.php";
     $ctrl = new blog\controller\Front();
     $template = "front";
     break;
