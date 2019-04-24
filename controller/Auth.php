@@ -50,12 +50,12 @@ class Auth {
       $user = $this->user->verify($value);
       if(password_verify($password, $user["data"]["password"])){
         $this->connect($user);
-        exit(header("Location: ".$prefixeBack));
+        sendExit(sendHeader("Location: ".$prefixeBack));
       }
       $this->session->setFlash("danger", "Mot de passe ou identifiant incorrect");
-      header("location: ".$prefixeAuth);
+      sendHeader("location: ".$prefixeAuth);
     }
-    header("location: ".$prefixeAuth);
+    sendHeader("location: ".$prefixeAuth);
 
   }
 
@@ -63,7 +63,7 @@ class Auth {
     global $prefixeAuth;
 
     $this->session->delete('auth');
-    header("location: " .$prefixeAuth);
+    sendHeader("location: " .$prefixeAuth);
     return;
   }
 

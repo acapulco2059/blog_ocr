@@ -82,7 +82,7 @@ class Front {
 
 
     $this->comment->setComment($this->url[1]);
-    header("Location: ".$prefixeFront."chapitre/" .$this->url[1]);
+    sendHeader("Location: ".$prefixeFront."chapitre/" .$this->url[1]);
 
   }
 }

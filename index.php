@@ -36,5 +36,15 @@ switch ($url[0]) {
     break;
 }
 
+
+function sendHeader($value) {
+  header($value);
+}
+
+function sendExit($value) {
+  exit($value);
+}
+
+
 $page = $ctrl->getPage($url);
 print_r(htmlspecialchars_decode(\blog\view\View::makeHtml($page, $template)));

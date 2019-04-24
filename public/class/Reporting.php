@@ -26,7 +26,7 @@ class Reporting {
     $this->commentManager->incrementReport($data);
     global $prefixeFront;
 
-    header("Location: ".$prefixeFront."chapitre/" .$url[1]);
+    sendHeader("Location: ".$prefixeFront."chapitre/" .$url[1]);
   }
 
   public function toValidate($url){

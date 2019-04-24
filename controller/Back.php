@@ -24,7 +24,7 @@ class Back {
 
     if(!isset($_SESSION['auth'])) {
       $this->session->setFlash("danger", "Vous n'avez pas l'autorisation d'accèder à cette page, identifiez vous");
-      header("location: ".$prefixeAuth);
+      sendHeader("location: ".$prefixeAuth);
     }
   }
 
@@ -140,7 +140,7 @@ class Back {
     global $prefixeBack;
 
     $this->commentManager->deleteComment($this->url[2]);
-    header("Location: ".$prefixeBack);
+    sendHeader("Location: ".$prefixeBack);
   }
 
   public function deletePo(){
@@ -149,35 +149,35 @@ class Back {
     $this->postManager->deletePost($this->url[2]);
     $this->commentManager->deleteComments($this->url[2]);
 
-    header("Location: ".$prefixeBack. "chapterModify/");
+    sendHeader("Location: ".$prefixeBack. "chapterModify/");
   }
 
   public function addPo(){
     global $prefixeBack;
 
     $this->post->insert();
-    header("Location: ".$prefixeBack. "chapterModify/");
+    sendHeader("Location: ".$prefixeBack. "chapterModify/");
   }
 
   public function updatePo() {
     global $prefixeBack;
 
     $this->post->update($this->url[2]);
-    header("Location: ".$prefixeBack. "chapterModify/");
+    sendHeader("Location: ".$prefixeBack. "chapterModify/");
   }
 
   public function comValidate(){
     global $prefixeBack;
 
     $this->reporting->validate($this->url);
-    header("Location: ".$prefixeBack. "commentValidate/");
+    sendHeader("Location: ".$prefixeBack. "commentValidate/");
   }
 
   public function comConfirmed(){
     global $prefixeBack;
 
     $this->reporting->confirmed($this->url);
-    header("Location: ".$prefixeBack. "commentReport/");
+    sendHeader("Location: ".$prefixeBack. "commentReport/");
   }
 
 }
