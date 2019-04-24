@@ -1,47 +1,50 @@
 <?php
 
 error_reporting(E_ALL | E_STRICT);ini_set('display_errors',1);
+require "vendor/autoload.php";
 require_once "conf.php";
-require_once "model/Model.php";
-require_once "view/View.php";
-Model::init();
 
-spl_autoload_register(function ($class_name) {
-    include 'public/class/' . $class_name . '.php';
-});
+blog\model\Model::init();
 
-$session = new Session();
+$session = new blog\apps\Session();
 
 // show error when debug
-// if (!$GLOBALS["envProd"]) {
-//   ini_set("display_startup_errors", 1);
-//   ini_set('display_errors', 1);
-//   error_reporting(E_ALL);
-// }
+if (!$GLOBALS["envProd"]) {
+  ini_set("display_startup_errors", 1);
+  ini_set('display_errors', 1);
+  error_reporting(E_ALL);
+}
 
 // get a securized instance of the url
 $url = explode ( "/", filter_var($_SERVER['REQUEST_URI'], FILTER_SANITIZE_URL, FILTER_FLAG_STRIP_HIGH | FILTER_FLAG_STRIP_LOW));
 // remove first empty entry
 $url = array_slice($url, 3);
 
-// select if it's front side or admin side
+// select if it's front side, admin side or auth side
 switch ($url[0]) {
   case 'admin':
-  require_once "controller/Back.php";
-    $ctrl = new Back($session);
+    $ctrl = new \blog\controller\Back($session);
     $template = "back";
     break;
   case 'auth':
-  require_once "controller/Auth.php";
-    $ctrl = new Auth($session);
+    $ctrl = new \blog\controller\Auth($session);
     $template = "auth";
     break;
   default:
-    require_once "controller/Front.php";
-    $ctrl = new Front();
+    $ctrl = new \blog\controller\Front();
     $template = "front";
     break;
 }
 
+
+function sendHeader($value) {
+  header($value);
+}
+
+function sendExit($value) {
+  exit($value);
+}
+
+
 $page = $ctrl->getPage($url);
-print_r(htmlspecialchars_decode(View::makeHtml($page, $template)));
+print_r(htmlspecialchars_decode(\blog\view\View::makeHtml($page, $template)));

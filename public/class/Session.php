@@ -1,5 +1,7 @@
 <?php
 
+namespace blog\apps;
+
 class Session {
 
   static $instance;

@@ -1,5 +1,7 @@
 <?php
 
+namespace blog\model;
+
 class PostManager {
 
   public function listPosts(){
@@ -12,7 +14,7 @@ class PostManager {
       "from"  => "posts"
     ];
     $data = Model::select($req);
-    $html = View::makeLoopHtml($data["data"], "articleTitle");
+    $html = \blog\view\View::makeLoopHtml($data["data"], "articleTitle");
 
     return $html;
   }
@@ -28,7 +30,7 @@ class PostManager {
       "from"  => "posts"
     ];
     $data = Model::select($req);
-    $html = View::makeHtml($data["data"], $template);
+    $html = \blog\view\View::makeHtml($data["data"], $template);
 
     return $html;
   }
@@ -46,7 +48,7 @@ class PostManager {
       "where" => ["ID= " .$postId]
     ];
     $data = Model::select($req);
-    $html = View::makeHtml($data["data"], $template);
+    $html = \blog\view\View::makeHtml($data["data"], $template);
 
     return $html;
   }
@@ -72,7 +74,7 @@ class PostManager {
       global $prefixeFront;
       $data["data"][$i]["{{ url }}"] = $prefixeFront."chapitre/".$data["data"][$i]["{{ id }}"];
     }
-    $html = View::makeLoopHtml($data["data"], $template);
+    $html = \blog\view\View::makeLoopHtml($data["data"], $template);
 
     return $html;
   }

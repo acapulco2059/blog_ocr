@@ -1,7 +1,6 @@
 <?php
 
-require_once "model/PostManager.php";
-require_once "model/CommentManager.php";
+namespace blog\controller;
 
 class Front {
 
@@ -13,10 +12,10 @@ class Front {
 
   public function __construct()
   {
-    $this->commentManager = new CommentManager();
-    $this->postManager = new PostManager();
-    $this->reporting = new Reporting();
-    $this->comment = new Comment();
+    $this->commentManager = new \blog\model\CommentManager();
+    $this->postManager = new \blog\model\PostManager();
+    $this->reporting = new \blog\apps\Reporting();
+    $this->comment = new \blog\apps\Comment();
   }
 
   public function getPage($url){
@@ -83,7 +82,7 @@ class Front {
 
 
     $this->comment->setComment($this->url[1]);
-    header("Location: ".$prefixeFront."chapitre/" .$this->url[1]);
+    sendHeader("Location: ".$prefixeFront."chapitre/" .$this->url[1]);
 
   }
 }

@@ -1,7 +1,9 @@
 <?php
 
+namespace blog\model;
+
 class CommentManager {
-  
+
   public function showModerateComment($template){
     //affiche arcticle à la une
     $req = [
@@ -26,7 +28,7 @@ class CommentManager {
       array_push($data["data"], $tmp);
     }
 
-    $html = View::makeLoopHtml($data["data"], $template);
+    $html = \blog\view\View::makeLoopHtml($data["data"], $template);
     return $html;
   }
 
@@ -57,7 +59,7 @@ class CommentManager {
       array_push($data["data"], $tmp);
     }
 
-    $html = View::makeLoopHtml($data["data"], $template);
+    $html = \blog\view\View::makeLoopHtml($data["data"], $template);
     return $html;
   }
 
@@ -139,7 +141,7 @@ class CommentManager {
       $data["data"][$i]["{{ prefixe }}"] = $prefixeFront;
 
     }
-    $html = View::makeLoopHtml($data["data"], "comment");
+    $html = \blog\view\View::makeLoopHtml($data["data"], "comment");
 
     return $html;
   }
@@ -154,11 +156,11 @@ class CommentManager {
         'DATE_FORMAT(date, \'%d/%m/%Y\') AS "{{ date }}"',
         'report AS "{{ report }}"'
       ],
-      "where" => [ "ID =" .$commentId ],
+      "where" => [ "ID = " .$commentId ],
       "from" => "comments"
     ];
     $data = Model::select($req);
-    $html = View::makeHtml($data["data"], "comment");
+    $html = \blog\view\View::makeHtml($data["data"], "comment");
 
     return $html;
   }
@@ -168,7 +170,7 @@ class CommentManager {
       "data" => [
         'report'
       ],
-      "where" => [ "ID =" .$commentId ],
+      "where" => [ "ID = " .$commentId ],
       "from" => "comments"
     ];
     $data = Model::select($req);
@@ -229,7 +231,7 @@ class CommentManager {
   public function deleteComment($commentId){
     $req = [
       "from" => "comments",
-      "where" => "ID =" .$commentId
+      "where" => "ID = " .$commentId
     ];
     Model::delete($req);
   }
@@ -237,7 +239,7 @@ class CommentManager {
   public function deleteComments($postId){
     $req = [
       "from" => "comments",
-      "where" => "idPost =" .$postId
+      "where" => "idPost = " .$postId
     ];
     Model::delete($req);
   }

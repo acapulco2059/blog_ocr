@@ -1,5 +1,7 @@
 <?php
 
+namespace blog\apps;
+
 class Reporting {
 
   private $commentManager;
@@ -9,22 +11,22 @@ class Reporting {
   const COMFIRMED = 2;
 
   public function __construct() {
-    $this->commentManager = new CommentManager();
+    $this->commentManager = new \blog\model\CommentManager();
   }
 
   public function increment($url){
     $statut = $this->commentManager->commentStatut($url[2]);
+
     $data = [
       "report" => (int)$statut["data"]["report"] +1,
       "reportDate" => date('Y-m-d'),
       "id" => $url[2]
     ];
 
-
     $this->commentManager->incrementReport($data);
     global $prefixeFront;
 
-    header("Location: ".$prefixeFront."chapitre/" .$url[1]);
+    sendHeader("Location: ".$prefixeFront."chapitre/" .$url[1]);
   }
 
   public function toValidate($url){

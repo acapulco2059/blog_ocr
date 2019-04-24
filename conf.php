@@ -4,7 +4,7 @@
 $envProd = false;
 
 //database connexion
-$db = [
+$dbLog = [
   "host"     => 'localhost',
   "user"     => 'root',
   "password" => 'root',

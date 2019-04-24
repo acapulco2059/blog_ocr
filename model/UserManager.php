@@ -1,5 +1,7 @@
 <?php
 
+namespace blog\model;
+
 class UserManager {
 
   public function verify($value){
