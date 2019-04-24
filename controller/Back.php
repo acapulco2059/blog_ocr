@@ -22,7 +22,9 @@ class Back {
     $this->reporting = new \blog\apps\Reporting();
     $this->session = $session;
 
-    if(!isset($_SESSION['auth'])) {
+    die(var_dump($this->session->get('auth')));
+
+    if($this->session->get('auth') != NULL) {
       $this->session->setFlash("danger", "Vous n'avez pas l'autorisation d'accèder à cette page, identifiez vous");
       sendHeader("location: ".$prefixeAuth);
     }
