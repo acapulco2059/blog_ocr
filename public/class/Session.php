@@ -5,6 +5,7 @@ namespace blog\apps;
 class Session{
 
   private $data;
+
   public function __construct(){
     session_start();
     $this->data = $_SESSION;
@@ -12,11 +13,12 @@ class Session{
 
   public function get($key){
     return $this->data[$key];
+    die(var_dump($this->data));
+
   }
 
   public function set($key, $value){
     $this->data[$key] = $value;
-    return true;
   }
 
   public function setFlash($key, $message) {

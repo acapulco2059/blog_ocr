@@ -33,7 +33,7 @@ class Auth {
 
 
   public function connect($user){
-    $this->session->set('auth', $user);
+    $this->session->set('auth', $user['data']);
   }
 
   public function login(){

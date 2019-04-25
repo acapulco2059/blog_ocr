@@ -7,6 +7,7 @@ require_once "conf.php";
 blog\model\Model::init();
 
 $session = new blog\apps\Session();
+var_dump($session);
 
 // show error when debug
 if (!$GLOBALS["envProd"]) {

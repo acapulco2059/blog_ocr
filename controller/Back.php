@@ -20,10 +20,9 @@ class Back {
     $this->postManager = new \blog\model\PostManager();
     $this->post= new \blog\apps\Post();
     $this->reporting = new \blog\apps\Reporting();
-    $this->session = $session;
 
-    if($this->session->get('auth') != NULL) {
-      $this->session->setFlash("danger", "Vous n'avez pas l'autorisation d'accèder à cette page, identifiez vous");
+    if($session->get('auth') == null) {
+      $session->setFlash("danger", "Vous n'avez pas l'autorisation d'accèder à cette page, identifiez vous");
       sendHeader("location: ".$prefixeAuth);
     }
   }
