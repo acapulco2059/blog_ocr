@@ -4,17 +4,15 @@ namespace blog\apps;
 
 class Session{
 
-  private $data;
+  protected $data;
 
   public function __construct(){
     session_start();
     $this->data = $_SESSION;
-  }
+   }
 
   public function get($key){
     return $this->data[$key];
-    die(var_dump($this->data));
-
   }
 
   public function set($key, $value){

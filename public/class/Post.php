@@ -5,11 +5,9 @@ namespace blog\apps;
 class Post {
 
   protected $postManager;
-  protected $view;
 
   public function __construct() {
     $this->postManager = new \blog\Model\PostManager();
-    $this->view = new \blog\view\View();
   }
 
   public function selectAll() {
@@ -97,7 +95,7 @@ class Post {
       "{{ articleTitle }}" => "Titre du chapitre",
       "{{ articleContent }}" => "Contenu du chapitre"
     ];
-    $html = $this->view->makehtml($data, "backTINYMCE");
+    $html = \blog\view\View::makehtml($data, "backTINYMCE");
     return $html;
   }
 

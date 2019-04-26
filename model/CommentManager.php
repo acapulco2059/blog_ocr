@@ -177,15 +177,15 @@ class CommentManager {
     return $data;
   }
 
-  public function addComment($value){
+  public function addComment($data){
     $req = [
       "into" => "comments",
       "data" => [
-        "author" => $value["commentator"],
-        'comment'=> $value["comment"],
-        'idPost'=> $value["idPost"],
-        'date' => $value["date"],
-        'reportStatut' => $value["reportStatut"]
+        "author" => $data["commentator"],
+        'comment'=> $data["comment"],
+        'idPost'=> $data["idPost"],
+        'date' => $data["date"],
+        'reportStatut' => $data["reportStatut"]
       ],
     ];
     Model::insert($req);

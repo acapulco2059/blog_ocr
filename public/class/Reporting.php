@@ -4,7 +4,7 @@ namespace blog\apps;
 
 class Reporting {
 
-  private $commentManager;
+  protected $commentManager;
 
   const TO_VALIDATE = 0;
   const VALIDATE = 1;

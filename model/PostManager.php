@@ -92,16 +92,16 @@ class PostManager {
   }
 
 
-  public function addPost($value){
+  public function addPost($data){
     $req = [
       "into" => "posts",
       "data" => [
-        'title' => $value["title"],
-        'content' => $value["content"],
-        'published' => $value["published"]
+        'title' => $data["title"],
+        'content' => $data["content"],
+        'published' => $data["published"]
       ],
     ];
-    Model::insert($req, $value);
+    Model::insert($req, $data);
   }
 
   public function updatePost($data){

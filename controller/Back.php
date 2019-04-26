@@ -179,4 +179,5 @@ class Back {
     sendHeader("Location: ".$prefixeBack. "commentReport/");
   }
 
+
 }

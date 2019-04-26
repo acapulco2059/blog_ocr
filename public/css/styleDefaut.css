@@ -1,3 +1,16 @@
+/* Code CSS pour la page front */
+
+#frontBackground {
+background-image: url("../img/FrontBackground.jpg");
+background-position: center;
+background-size: cover;
+background-repeat: no-repeat;
+background-attachment: fixed;
+backg
+z-index: 1;
+}
+
+
 #frontFooter {
 border-top: 3px solid black;
 background-color: #707880;
@@ -9,12 +22,14 @@ margin-bottom: -100px;
 }
 
 #article {
-  background-color: #DEEEFF;
+  background-color: #FFF;
   border: 2px solid #668CB3;
   border-radius: 3%;
   margin-bottom: 1em;
   padding: 1em;
 }
+
+
 /* Code CSS pour la page d'administration */
 #backSection {
 
