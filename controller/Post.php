@@ -1,6 +1,6 @@
 <?php
 
-namespace blog\apps;
+namespace blog\controller;
 
 class Post {
 
@@ -83,6 +83,50 @@ class Post {
 
     $html = \blog\view\View::makehtml($data, "table");
     return $html;
+  }
+
+  public function addTinyMCE(){
+    global $prefixeFront;
+    global $prefixeBack;
+    global $prefixeAuth;
+
+    $title = "Ajout d'un nouveau Chapitre";
+    $content = $this->tinyMCEinit();
+    $data = [
+      "{{ title }}" => $title,
+      "{{ content }}" => $content,
+      "{{ urlAdmin }}" => $prefixeBack,
+      "{{ urlAuth }}" => $prefixeAuth,
+      "{{ urlFront }}" => $prefixeFront
+    ];
+    return $data;
+  }
+
+  public function modifyTinyMCE($url) {
+    global $prefixeFront;
+    global $prefixeBack;
+    global $prefixeAuth;
+
+    if(!empty($url)){
+      $title = "Modification de chapitre";
+      $table = $this->postManager->allPosts("postTitleTable");
+      $content = $this->getChaptersListTable();
+      $content .= $this->tinyMCEmodify($url);
+    } else {
+      $title = "Modification de chapitre";
+      $table = $this->postManager->allPosts("postTitleTable");
+      $content = $this->getChaptersListTable();
+      $content .= $this->tinyMCEinit();
+    }
+    $data = [
+      "{{ title }}" => $title,
+      "{{ content }}" => $content,
+      "{{ tableBody }}" => $table,
+      "{{ urlAdmin }}" => $prefixeBack,
+      "{{ urlAuth }}" => $prefixeAuth,
+      "{{ urlFront }}" => $prefixeFront
+    ];
+    return $data;
   }
 
 

@@ -14,8 +14,8 @@ class Front {
   {
     $this->commentManager = new \blog\model\CommentManager();
     $this->postManager = new \blog\model\PostManager();
-    $this->reporting = new \blog\apps\Reporting();
-    $this->comment = new \blog\apps\Comment();
+    $this->reporting = new \blog\controller\Reporting();
+    $this->comment = new \blog\controller\Comment();
   }
 
   public function getPage($url){

@@ -16,10 +16,10 @@ class Back {
     global $prefixeAuth;
 
     $this->commentManager = new \blog\model\CommentManager();
-    $this->comment = new \blog\apps\Comment();
+    $this->comment = new \blog\controller\Comment();
     $this->postManager = new \blog\model\PostManager();
-    $this->post= new \blog\apps\Post();
-    $this->reporting = new \blog\apps\Reporting();
+    $this->post= new \blog\controller\Post();
+    $this->reporting = new \blog\controller\Reporting();
 
     if($session->get('auth') == null) {
       $session->setFlash("danger", "Vous n'avez pas l'autorisation d'accèder à cette page, identifiez vous");
@@ -55,84 +55,24 @@ class Back {
   }
 
   public function commentValidate(){
-    global $prefixeFront;
-    global $prefixeBack;
-    global $prefixeAuth;
-
-    $title = "Commentaire(s) à valider";
-    $content = $this->comment->getModerateCommentsTable();
-    $table = $this->comment->getModerateComments("moderateCommentTable");
-
-    return [
-      "{{ title }}" => $title,
-      "{{ content }}" => $content,
-      "{{ tableBody }}" => $table,
-      "{{ urlAdmin }}" => $prefixeBack,
-      "{{ urlAuth }}" => $prefixeAuth,
-      "{{ urlFront }}" => $prefixeFront
-    ];
+    $html = $this->comment->validate();
+    return $html;
   }
 
   public function commentReport(){
-    global $prefixeFront;
-    global $prefixeBack;
-    global $prefixeAuth;
-
-    $title = "Commentaire(s) signalé(s)";
-    $content = $this->comment->getReportCommentsTable();
-    $table = $this->comment->getReportComments("reportCommentTable");
-    return [
-      "{{ title }}" => $title,
-      "{{ content }}" => $content,
-      "{{ tableBody }}" => $table,
-      "{{ urlAdmin }}" => $prefixeBack,
-      "{{ urlAuth }}" => $prefixeAuth,
-      "{{ urlFront }}" => $prefixeFront
-    ];
+    $html = $this->comment->getReport();
+    return $html;
   }
 
 
   public function chapterAdd(){
-    global $prefixeFront;
-    global $prefixeBack;
-    global $prefixeAuth;
-
-    $title = "Ajout d'un nouveau Chapitre";
-    $content = $this->post->tinyMCEinit();
-    return [
-      "{{ title }}" => $title,
-      "{{ content }}" => $content,
-      "{{ urlAdmin }}" => $prefixeBack,
-      "{{ urlAuth }}" => $prefixeAuth,
-      "{{ urlFront }}" => $prefixeFront
-    ];
+    $html = $this->post->addTinyMCE();
+    return $html;
   }
 
   public function chapterModify(){
-    global $prefixeFront;
-    global $prefixeBack;
-    global $prefixeAuth;
-
-    if(!empty($this->url[2])){
-      $title = "Modification de chapitre";
-      $table = $this->postManager->allPosts("postTitleTable");
-      $content = $this->post->getChaptersListTable();
-      $content .= $this->post->tinyMCEmodify($this->url[2]);
-    } else {
-      $title = "Modification de chapitre";
-      $table = $this->postManager->allPosts("postTitleTable");
-      $content = $this->post->getChaptersListTable();
-      $content .= $this->post->tinyMCEinit();
-    }
-    return [
-      "{{ title }}" => $title,
-      "{{ content }}" => $content,
-      "{{ tableBody }}" => $table,
-      "{{ urlAdmin }}" => $prefixeBack,
-      "{{ urlAuth }}" => $prefixeAuth,
-      "{{ urlFront }}" => $prefixeFront
-
-    ];
+    $html = $this->post->modifyTinyMCE($this->url[2]);
+    return $html;
   }
 
   public function deleteCo(){

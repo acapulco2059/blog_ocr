@@ -1,6 +1,6 @@
 <?php
 
-namespace blog\apps;
+namespace blog\controller;
 
 class Reporting {
 
