@@ -62,7 +62,7 @@ class Comment {
 
     $title = "Commentaire(s) à valider";
     $content = $this->getModerateCommentsTable();
-    $table = $this->getModerateComments("moderateCommentTable");
+    $table = $this->getModerateComments("commentModerateTable");
 
     $data = [
       "{{ title }}" => $title,
@@ -96,7 +96,7 @@ class Comment {
 
     $title = "Commentaire(s) signalé(s)";
     $content = $this->getReportCommentsTable();
-    $table = $this->getReportComments("reportCommentTable");
+    $table = $this->getReportComments("commentReportTable");
     $data = [
       "{{ title }}" => $title,
       "{{ content }}" => $content,

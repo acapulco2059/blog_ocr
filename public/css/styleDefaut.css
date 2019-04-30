@@ -1,6 +1,29 @@
+@font-face {
+    font-family: 'gook_kitt';
+    src: url('fonts/gook_kitt_-_personal_use-webfont.woff') format('woff2'),
+         url('fonts/gook_kitt_-_personal_use-webfont.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+}
+
+
 /* Code CSS pour la page front */
 
-#frontBackground {
+#fontNav {
+  border-bottom: 3px solid black;
+}
+
+#blogTitle {
+  font-family: gook_kitt;
+  font-size: 4.5rem;
+  color: #FFF;
+}
+
+#frontNavLink {
+  font-size: 2rem;
+}
+
+#frontBody {
 background-image: url("../img/FrontBackground.jpg");
 background-position: center;
 background-size: cover;
@@ -21,19 +44,27 @@ margin-bottom: -100px;
   color: white;
 }
 
-#article {
+#post, #comments {
   background-color: #FFF;
-  border: 2px solid #668CB3;
-  border-radius: 3%;
+  border: 2px solid #000;
+  border-radius: 2rem;
   margin-bottom: 1em;
   padding: 1em;
 }
 
+.postTitle {
+  margin-top: 1rem;
+  text-align: center;
+  font-size: 2.5rem;
+}
+
+
+
 
 /* Code CSS pour la page d'administration */
-#backSection {
 
-
+#backTitlePage {
+  font-size: 2rem;
 }
 
 #backTitle {
@@ -46,20 +77,10 @@ margin-bottom: -100px;
 
 }
 
-#backContent {
-
-
-
-}
-
 #commentTable {
   margin-bottom: 2rem;
 }
-
-#tableHead {
-
-}
-
+z
 #backHome a {
   color: black;
   text-decoration: none;

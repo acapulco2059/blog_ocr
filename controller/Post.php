@@ -17,7 +17,7 @@ class Post {
     if($count != 0) {
       return $posts;
     } else {
-      $posts = "Il n'y a pas encore d'article sur le blog, veuillez nous en excuser";
+      $posts = "Il n'y a pas encore de chapitre sur le blog, veuillez nous en excuser";
       return $posts;
     }
   }
@@ -136,8 +136,8 @@ class Post {
     $data = [
       "{{ urlAdmin }}" => $prefixeBack,
       "{{ postFunc }}" => "addPo",
-      "{{ articleTitle }}" => "Titre du chapitre",
-      "{{ articleContent }}" => "Contenu du chapitre"
+      "{{ postTitle }}" => "Titre du chapitre",
+      "{{ postContent }}" => "Contenu du chapitre"
     ];
     $html = \blog\view\View::makehtml($data, "backTINYMCE");
     return $html;
@@ -146,15 +146,15 @@ class Post {
   public function tinyMCEmodify($url){
     global $prefixeBack;
 
-    $articleTitle = $this->postManager->showSinglePost($url, "title");
-    $articleContent = $this->postManager->showSinglePost($url, "content");
+    $postTitle = $this->postManager->showSinglePost($url, "title");
+    $postContent = $this->postManager->showSinglePost($url, "content");
     $postFunc = "updatePo/".$url;
 
     $data = [
       "{{ urlAdmin }}" => $prefixeBack,
       "{{ postFunc }}" => $postFunc,
-      "{{ articleTitle }}" => $articleTitle,
-      "{{ articleContent }}" => $articleContent
+      "{{ postTitle }}" => $postTitle,
+      "{{ postContent }}" => $postContent
     ];
     $html = \blog\view\View::makehtml($data, "backTINYMCE");
     return $html;

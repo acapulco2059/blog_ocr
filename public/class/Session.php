@@ -1,6 +1,6 @@
 <?php
 
-namespace blog\controller;
+namespace blog\apps;
 
 class Session{
 

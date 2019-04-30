@@ -5,7 +5,7 @@ namespace blog\model;
 class PostManager {
 
   public function listPosts(){
-    //affiche la liste des articles
+    //affiche la liste des post (chapitres)
     $req = [
       "data"  => [
         'ID AS "{{ id }}"',
@@ -14,7 +14,7 @@ class PostManager {
       "from"  => "posts"
     ];
     $data = Model::select($req);
-    $html = \blog\view\View::makeLoopHtml($data["data"], "articleTitle");
+    $html = \blog\view\View::makeLoopHtml($data["data"], "postTitle");
 
     return $html;
   }
@@ -36,7 +36,7 @@ class PostManager {
   }
 
   public function showSinglePost($postId, $template){
-    //affiche un article
+    //affiche un post (chapitre)
     $req = [
       "data" => [
         'ID AS "{{ id }}" ',
@@ -54,7 +54,7 @@ class PostManager {
   }
 
   public function allPosts($template){
-    //affiche la liste des articles
+    //affiche la liste des post (chapitres)
     $req = [
       "data"  => [
         'ID AS "{{ id }}"',

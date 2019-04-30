@@ -30,9 +30,9 @@ class Front {
 
   public function home(){                                  // affiche la page d'accueil
     global $prefixeFront;
-    //affcihe le dernier article publié
+    //affcihe le dernier post (chapitre) publié
     $postId = "(SELECT MAX(id) FROM posts)";
-    $content = $this->postManager->showSinglePost($postId, "article");
+    $content = $this->postManager->showSinglePost($postId, "post");
 
     return [
       "{{ pageTitle }}"=> "Billet simple pour l'Alaska",
@@ -45,7 +45,7 @@ class Front {
   public function chapitre(){
     global $prefixeFront;
     // affiche la page d'un chapitre
-    $content = $this->postManager->showSinglePost($this->url[1], "articleSingle");
+    $content = $this->postManager->showSinglePost($this->url[1], "postSingle");
     $comments = $this->comment->getComments($this->url[1]);
     $title = $this->postManager->showSinglePost($this->url[1], "title");
 
@@ -61,7 +61,7 @@ class Front {
   public function chapitres(){                             // affiche une page listant les chapitres
     global $prefixeFront;
 
-    $content = $this->postManager->allPosts("articleShort");
+    $content = $this->postManager->allPosts("postShort");
 
     return [
       "{{ pageTitle }}"=> "Ensemble des chapitres",
