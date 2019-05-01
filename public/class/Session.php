@@ -4,7 +4,7 @@ namespace blog\apps;
 
 class Session{
 
-  protected $data;
+  public $data;
 
   public function __construct(){
     session_start();

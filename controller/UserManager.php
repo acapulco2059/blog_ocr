@@ -1,6 +1,6 @@
 <?php
 
-namespace blog\model;
+namespace blog\controller;
 
 class UserManager {
 
@@ -15,7 +15,7 @@ class UserManager {
       "where" => ["username = '" .$data['username']."'"]
     ];
 
-    $data = Model::select($req);
+    $data = \blog\model\Model::select($req);
     return $data;
   }
 

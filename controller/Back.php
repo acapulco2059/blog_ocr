@@ -15,9 +15,9 @@ class Back {
   public function __construct($session) {
     global $prefixeAuth;
 
-    $this->commentManager = new \blog\model\CommentManager();
+    $this->commentManager = new \blog\controller\CommentManager();
     $this->comment = new \blog\controller\Comment();
-    $this->postManager = new \blog\model\PostManager();
+    $this->postManager = new \blog\controller\PostManager();
     $this->post= new \blog\controller\Post();
     $this->reporting = new \blog\controller\Reporting();
 

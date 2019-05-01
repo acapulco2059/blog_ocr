@@ -7,7 +7,7 @@ class Post {
   protected $postManager;
 
   public function __construct() {
-    $this->postManager = new \blog\Model\PostManager();
+    $this->postManager = new \blog\controller\PostManager();
   }
 
   public function selectAll() {

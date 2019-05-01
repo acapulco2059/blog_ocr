@@ -7,7 +7,7 @@ class Comment {
   protected $commentManager;
 
   public function __construct() {
-    $this->commentManager = new \blog\model\CommentManager();
+    $this->commentManager = new \blog\controller\CommentManager();
   }
 
   public function setComment($url) {

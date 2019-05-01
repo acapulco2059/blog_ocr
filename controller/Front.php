@@ -12,8 +12,8 @@ class Front {
 
   public function __construct()
   {
-    $this->commentManager = new \blog\model\CommentManager();
-    $this->postManager = new \blog\model\PostManager();
+    $this->commentManager = new \blog\controller\CommentManager();
+    $this->postManager = new \blog\controller\PostManager();
     $this->reporting = new \blog\controller\Reporting();
     $this->comment = new \blog\controller\Comment();
   }

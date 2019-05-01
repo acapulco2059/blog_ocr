@@ -11,7 +11,7 @@ class Reporting {
   const COMFIRMED = 2;
 
   public function __construct() {
-    $this->commentManager = new \blog\model\CommentManager();
+    $this->commentManager = new \blog\controller\CommentManager();
   }
 
   public function increment($url){
