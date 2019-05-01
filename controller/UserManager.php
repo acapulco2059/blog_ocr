@@ -1,10 +1,10 @@
 <?php
 
-namespace blog\model;
+namespace blog\controller;
 
 class UserManager {
 
-  public function verify($value){
+  public function verify($data){
     $req = [
       "data" => [
         'ID',
@@ -12,10 +12,10 @@ class UserManager {
         'password'
       ],
       "from"  => "users",
-      "where" => ["username = '" .$value['username']."'"]
+      "where" => ["username = '" .$data['username']."'"]
     ];
 
-    $data = Model::select($req);
+    $data = \blog\model\Model::select($req);
     return $data;
   }
 

@@ -87,8 +87,6 @@ class Model {
     return self::request($req);
   }
 
-
-
   public static function selectRequest($sql, $data=NULL) {
 
     try {

@@ -9,7 +9,7 @@ class Auth {
 
   public function __construct($session = NULL){
     $this->session = $session;
-    $this->user = new \blog\model\UserManager();
+    $this->user = new \blog\controller\UserManager();
   }
 
 
@@ -33,7 +33,7 @@ class Auth {
 
 
   public function connect($user){
-    $this->session->write('auth', $user);
+    $this->session->set('auth', $user['data']);
   }
 
   public function login(){

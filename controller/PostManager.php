@@ -1,11 +1,11 @@
 <?php
 
-namespace blog\model;
+namespace blog\controller;
 
 class PostManager {
 
   public function listPosts(){
-    //affiche la liste des articles
+    //affiche la liste des post (chapitres)
     $req = [
       "data"  => [
         'ID AS "{{ id }}"',
@@ -13,8 +13,8 @@ class PostManager {
       ],
       "from"  => "posts"
     ];
-    $data = Model::select($req);
-    $html = \blog\view\View::makeLoopHtml($data["data"], "articleTitle");
+    $data = \blog\model\Model::select($req);
+    $html = \blog\view\View::makeLoopHtml($data["data"], "postTitle");
 
     return $html;
   }
@@ -29,14 +29,14 @@ class PostManager {
       ],
       "from"  => "posts"
     ];
-    $data = Model::select($req);
+    $data = \blog\model\Model::select($req);
     $html = \blog\view\View::makeHtml($data["data"], $template);
 
     return $html;
   }
 
   public function showSinglePost($postId, $template){
-    //affiche un article
+    //affiche un post (chapitre)
     $req = [
       "data" => [
         'ID AS "{{ id }}" ',
@@ -47,14 +47,14 @@ class PostManager {
       "from" => "posts",
       "where" => ["ID= " .$postId]
     ];
-    $data = Model::select($req);
+    $data = \blog\model\Model::select($req);
     $html = \blog\view\View::makeHtml($data["data"], $template);
 
     return $html;
   }
 
   public function allPosts($template){
-    //affiche la liste des articles
+    //affiche la liste des post (chapitres)
     $req = [
       "data"  => [
         'ID AS "{{ id }}"',
@@ -68,7 +68,7 @@ class PostManager {
     ];
 
 
-    $data = Model::select($req);
+    $data = \blog\model\Model::select($req);
     $count = count($data["data"]);
     for($i=0; $i < $count; $i++) {
       global $prefixeFront;
@@ -87,21 +87,21 @@ class PostManager {
       "from" => "posts",
     ];
 
-    $data = Model::selectCount($req);
+    $data = \blog\model\Model::selectCount($req);
     return $data;
   }
 
 
-  public function addPost($value){
+  public function addPost($data){
     $req = [
       "into" => "posts",
       "data" => [
-        'title' => $value["title"],
-        'content' => $value["content"],
-        'published' => $value["published"]
+        'title' => $data["title"],
+        'content' => $data["content"],
+        'published' => $data["published"]
       ],
     ];
-    Model::insert($req, $value);
+    \blog\model\Model::insert($req, $data);
   }
 
   public function updatePost($data){
@@ -114,7 +114,7 @@ class PostManager {
       ],
       "where" => "ID = " .$data["id"]
     ];
-    Model::update($req);
+    \blog\model\Model::update($req);
   }
 
   public function deletePost($postId){
@@ -122,6 +122,6 @@ class PostManager {
       "from" => "posts",
       "where" => "ID =" .$postId
     ];
-    Model::delete($req);
+    \blog\model\Model::delete($req);
   }
 }

@@ -1,13 +1,13 @@
 <?php
 
-namespace blog\apps;
+namespace blog\controller;
 
 class Comment {
 
   protected $commentManager;
 
   public function __construct() {
-    $this->commentManager = new \blog\model\CommentManager();
+    $this->commentManager = new \blog\controller\CommentManager();
   }
 
   public function setComment($url) {
@@ -55,6 +55,26 @@ class Comment {
     }
   }
 
+  public function validate() {
+    global $prefixeFront;
+    global $prefixeBack;
+    global $prefixeAuth;
+
+    $title = "Commentaire(s) à valider";
+    $content = $this->getModerateCommentsTable();
+    $table = $this->getModerateComments("commentModerateTable");
+
+    $data = [
+      "{{ title }}" => $title,
+      "{{ content }}" => $content,
+      "{{ tableBody }}" => $table,
+      "{{ urlAdmin }}" => $prefixeBack,
+      "{{ urlAuth }}" => $prefixeAuth,
+      "{{ urlFront }}" => $prefixeFront
+    ];
+    return $data;
+  }
+
 
   public function getModerateCommentsTable(){
     $data = [
@@ -67,6 +87,25 @@ class Comment {
 
     $html = \blog\view\View::makehtml($data, "table");
     return $html;
+  }
+
+  public function getReport() {
+    global $prefixeFront;
+    global $prefixeBack;
+    global $prefixeAuth;
+
+    $title = "Commentaire(s) signalé(s)";
+    $content = $this->getReportCommentsTable();
+    $table = $this->getReportComments("commentReportTable");
+    $data = [
+      "{{ title }}" => $title,
+      "{{ content }}" => $content,
+      "{{ tableBody }}" => $table,
+      "{{ urlAdmin }}" => $prefixeBack,
+      "{{ urlAuth }}" => $prefixeAuth,
+      "{{ urlFront }}" => $prefixeFront
+    ];
+    return $data;
   }
 
   public function getReportCommentsTable(){

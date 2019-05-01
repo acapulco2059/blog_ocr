@@ -1,17 +1,17 @@
 <?php
 
-namespace blog\apps;
+namespace blog\controller;
 
 class Reporting {
 
-  private $commentManager;
+  protected $commentManager;
 
   const TO_VALIDATE = 0;
   const VALIDATE = 1;
   const COMFIRMED = 2;
 
   public function __construct() {
-    $this->commentManager = new \blog\model\CommentManager();
+    $this->commentManager = new \blog\controller\CommentManager();
   }
 
   public function increment($url){

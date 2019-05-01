@@ -1,6 +1,6 @@
 <?php
 
-namespace blog\model;
+namespace blog\controller;
 
 class CommentManager {
 
@@ -20,7 +20,7 @@ class CommentManager {
       "from"  => "comments",
       "order" => "Date DESC"
     ];
-    $data = Model::select($req);
+    $data = \blog\model\Model::select($req);
 
     if (!isset($data['data'][0])) {
       $tmp = $data["data"];
@@ -51,7 +51,7 @@ class CommentManager {
       "from"  => "comments",
       "order" => "reportDate DESC"
     ];
-    $data = Model::select($req);
+    $data = \blog\model\Model::select($req);
 
     if (!isset($data['data'][0])) {
       $tmp = $data["data"];
@@ -75,7 +75,7 @@ class CommentManager {
       ]
     ];
 
-    $data = Model::selectCount($req);
+    $data = \blog\model\Model::selectCount($req);
     return $data;
   }
 
@@ -90,7 +90,7 @@ class CommentManager {
       ]
     ];
 
-    $data = Model::selectCount($req);
+    $data = \blog\model\Model::selectCount($req);
     return $data;
   }
 
@@ -106,7 +106,7 @@ class CommentManager {
       ]
     ];
 
-    $data = Model::selectCount($req);
+    $data = \blog\model\Model::selectCount($req);
     return $data;
   }
 
@@ -127,7 +127,7 @@ class CommentManager {
       "from" => "comments",
       "order" => "report ASC"
     ];
-    $data = Model::select($req);
+    $data = \blog\model\Model::select($req);
 
     if (!isset($data['data'][0])) {
       $tmp = $data["data"];
@@ -159,7 +159,7 @@ class CommentManager {
       "where" => [ "ID = " .$commentId ],
       "from" => "comments"
     ];
-    $data = Model::select($req);
+    $data = \blog\model\Model::select($req);
     $html = \blog\view\View::makeHtml($data["data"], "comment");
 
     return $html;
@@ -173,22 +173,22 @@ class CommentManager {
       "where" => [ "ID = " .$commentId ],
       "from" => "comments"
     ];
-    $data = Model::select($req);
+    $data = \blog\model\Model::select($req);
     return $data;
   }
 
-  public function addComment($value){
+  public function addComment($data){
     $req = [
       "into" => "comments",
       "data" => [
-        "author" => $value["commentator"],
-        'comment'=> $value["comment"],
-        'idPost'=> $value["idPost"],
-        'date' => $value["date"],
-        'reportStatut' => $value["reportStatut"]
+        "author" => $data["commentator"],
+        'comment'=> $data["comment"],
+        'idPost'=> $data["idPost"],
+        'date' => $data["date"],
+        'reportStatut' => $data["reportStatut"]
       ],
     ];
-    Model::insert($req);
+    \blog\model\Model::insert($req);
   }
 
   public function updateComment($data){
@@ -202,7 +202,7 @@ class CommentManager {
       ],
       "where" => ["ID = " .$data["id"]]
     ];
-    Model::update($req);
+    \blog\model\Model::update($req);
   }
 
   public function incrementReport($data){
@@ -214,7 +214,7 @@ class CommentManager {
       ],
       "where" => "ID = ".$data["id"]
     ];
-    Model::update($req);
+    \blog\model\Model::update($req);
   }
 
   public function reportStatut($data){
@@ -225,7 +225,7 @@ class CommentManager {
       ],
       'where' => "ID = ".$data["id"]
     ];
-    Model::update($req);
+    \blog\model\Model::update($req);
   }
 
   public function deleteComment($commentId){
@@ -233,7 +233,7 @@ class CommentManager {
       "from" => "comments",
       "where" => "ID = " .$commentId
     ];
-    Model::delete($req);
+    \blog\model\Model::delete($req);
   }
 
   public function deleteComments($postId){
@@ -241,7 +241,7 @@ class CommentManager {
       "from" => "comments",
       "where" => "idPost = " .$postId
     ];
-    Model::delete($req);
+    \blog\model\Model::delete($req);
   }
 
 }

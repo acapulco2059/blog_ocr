@@ -1,15 +1,13 @@
 <?php
 
-namespace blog\apps;
+namespace blog\controller;
 
 class Post {
 
   protected $postManager;
-  protected $view;
 
   public function __construct() {
-    $this->postManager = new \blog\Model\PostManager();
-    $this->view = new \blog\view\View();
+    $this->postManager = new \blog\controller\PostManager();
   }
 
   public function selectAll() {
@@ -19,7 +17,7 @@ class Post {
     if($count != 0) {
       return $posts;
     } else {
-      $posts = "Il n'y a pas encore d'article sur le blog, veuillez nous en excuser";
+      $posts = "Il n'y a pas encore de chapitre sur le blog, veuillez nous en excuser";
       return $posts;
     }
   }
@@ -87,6 +85,50 @@ class Post {
     return $html;
   }
 
+  public function addTinyMCE(){
+    global $prefixeFront;
+    global $prefixeBack;
+    global $prefixeAuth;
+
+    $title = "Ajout d'un nouveau Chapitre";
+    $content = $this->tinyMCEinit();
+    $data = [
+      "{{ title }}" => $title,
+      "{{ content }}" => $content,
+      "{{ urlAdmin }}" => $prefixeBack,
+      "{{ urlAuth }}" => $prefixeAuth,
+      "{{ urlFront }}" => $prefixeFront
+    ];
+    return $data;
+  }
+
+  public function modifyTinyMCE($url) {
+    global $prefixeFront;
+    global $prefixeBack;
+    global $prefixeAuth;
+
+    if(!empty($url)){
+      $title = "Modification de chapitre";
+      $table = $this->postManager->allPosts("postTitleTable");
+      $content = $this->getChaptersListTable();
+      $content .= $this->tinyMCEmodify($url);
+    } else {
+      $title = "Modification de chapitre";
+      $table = $this->postManager->allPosts("postTitleTable");
+      $content = $this->getChaptersListTable();
+      $content .= $this->tinyMCEinit();
+    }
+    $data = [
+      "{{ title }}" => $title,
+      "{{ content }}" => $content,
+      "{{ tableBody }}" => $table,
+      "{{ urlAdmin }}" => $prefixeBack,
+      "{{ urlAuth }}" => $prefixeAuth,
+      "{{ urlFront }}" => $prefixeFront
+    ];
+    return $data;
+  }
+
 
   public function tinyMCEinit(){
     global $prefixeBack;
@@ -94,25 +136,25 @@ class Post {
     $data = [
       "{{ urlAdmin }}" => $prefixeBack,
       "{{ postFunc }}" => "addPo",
-      "{{ articleTitle }}" => "Titre du chapitre",
-      "{{ articleContent }}" => "Contenu du chapitre"
+      "{{ postTitle }}" => "Titre du chapitre",
+      "{{ postContent }}" => "Contenu du chapitre"
     ];
-    $html = $this->view->makehtml($data, "backTINYMCE");
+    $html = \blog\view\View::makehtml($data, "backTINYMCE");
     return $html;
   }
 
   public function tinyMCEmodify($url){
     global $prefixeBack;
 
-    $articleTitle = $this->postManager->showSinglePost($url, "title");
-    $articleContent = $this->postManager->showSinglePost($url, "content");
+    $postTitle = $this->postManager->showSinglePost($url, "title");
+    $postContent = $this->postManager->showSinglePost($url, "content");
     $postFunc = "updatePo/".$url;
 
     $data = [
       "{{ urlAdmin }}" => $prefixeBack,
       "{{ postFunc }}" => $postFunc,
-      "{{ articleTitle }}" => $articleTitle,
-      "{{ articleContent }}" => $articleContent
+      "{{ postTitle }}" => $postTitle,
+      "{{ postContent }}" => $postContent
     ];
     $html = \blog\view\View::makehtml($data, "backTINYMCE");
     return $html;
