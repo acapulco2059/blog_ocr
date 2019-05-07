@@ -12,11 +12,15 @@ class Session{
    }
 
   public function get($key){
-    return $this->data[$key];
+    if(isset($_SESSION[$key]))
+      return $_SESSION[$key];
+    else {
+      return null;
+    }
   }
 
   public function set($key, $value){
-    $this->data[$key] = $value;
+    $_SESSION[$key] = $value;
   }
 
   public function setFlash($key, $message) {
@@ -32,6 +36,6 @@ class Session{
   }
 
   public function delete($key) {
-    unset($this->data[$key]);
+    unset($_SESSION[$key]);
   }
 }
