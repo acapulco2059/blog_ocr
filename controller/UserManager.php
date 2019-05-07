@@ -2,21 +2,27 @@
 
 namespace blog\controller;
 
-class UserManager {
+use blog\model\Model;
 
-  public function verify($data){
-    $req = [
-      "data" => [
-        'ID',
-        'username',
-        'password'
-      ],
-      "from"  => "users",
-      "where" => ["username = '" .$data['username']."'"]
-    ];
+class UserManager
+{
 
-    $data = \blog\model\Model::select($req);
-    return $data;
-  }
+    public function verify($data)
+    {
+        $req = [
+            "data" => [
+                'ID',
+                'username',
+            ],
+            "from" => "users",
+            "where" => [
+                "username = '" . $data['username'] . "'",
+                "password = '" . $data['password'] . "'"
+            ]
+        ];
+
+        $data = Model::select($req);
+        return $data;
+    }
 
 }

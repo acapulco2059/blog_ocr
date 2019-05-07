@@ -41,14 +41,18 @@ class Auth {
     global $prefixeAuth;
     $username = filter_input(INPUT_POST, 'username', FILTER_SANITIZE_SPECIAL_CHARS);
     $password = filter_input(INPUT_POST, 'password', FILTER_SANITIZE_SPECIAL_CHARS);
-    $value = [
-      "username" => $username
-    ];
+    $password = "jean" . $password . "forteroche";
+    $password_hash = hash('sha512', $password);
+
 
     if(!empty($username) && !empty($password)) {
-
+      $value = [
+        "username" => $username,
+        "password" => $password_hash
+      ];
       $user = $this->user->verify($value);
-      if(password_verify($password, $user["data"]["password"])){
+
+      if(isset($user["data"]["ID"])){
         $this->connect($user);
         sendExit(sendHeader("Location: ".$prefixeBack));
       }
