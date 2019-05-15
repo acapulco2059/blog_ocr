@@ -13,11 +13,11 @@ class UserManager
             "data" => [
                 'ID',
                 'username',
-                'password'
             ],
             "from" => "users",
             "where" => [
                 "username = '" . $data['username'] . "'",
+                "password = '" . $data['password'] . "'"
             ]
         ];
 

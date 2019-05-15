@@ -41,28 +41,28 @@ class Auth
         $this->session->set('auth', $user['data']);
     }
 
-    public function login()
-    {
-        global $prefixeBack;
-        global $prefixeAuth;
-        $username = filter_input(INPUT_POST, 'username', FILTER_SANITIZE_SPECIAL_CHARS);
-        $password = filter_input(INPUT_POST, 'password', FILTER_SANITIZE_SPECIAL_CHARS);
-        $value = [
-            "username" => $username
-        ];
+  public function login(){
+    global $prefixeBack;
+    global $prefixeAuth;
+    $username = filter_input(INPUT_POST, 'username', FILTER_SANITIZE_SPECIAL_CHARS);
+    $password = filter_input(INPUT_POST, 'password', FILTER_SANITIZE_SPECIAL_CHARS);
+    $password = "jean" . $password . "forteroche";
+    $password_hash = hash('sha512', $password);
 
-        if (!empty($username) && !empty($password)) {
 
-            $user = $this->user->verify($value);
-            if (password_verify($password, $user["data"]["password"])) {
-                $this->connect($user);
-                sendExit(sendHeader("Location: " . $prefixeBack));
-            }
-            $this->session->setFlash("danger", "Mot de passe ou identifiant incorrect");
-            sendHeader("location: " . $prefixeAuth);
-        }
-        sendHeader("location: " . $prefixeAuth);
+    if(!empty($username) && !empty($password)) {
+      $value = [
+        "username" => $username,
+        "password" => $password_hash
+      ];
+      $user = $this->user->verify($value);
 
+      if(isset($user["data"]["ID"])){
+        $this->connect($user);
+        sendExit(sendHeader("Location: ".$prefixeBack));
+      }
+      $this->session->setFlash("danger", "Mot de passe ou identifiant incorrect");
+      sendHeader("location: ".$prefixeAuth);
     }
 
     public function logout()
